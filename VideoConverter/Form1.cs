@@ -172,6 +172,37 @@ namespace VideoConverter
 
         private async Task<TimeSpan?> GetVideoDurationAsync(string inputFile)
         {
+            // If input is a .txt concat list, sum durations of all files in the list
+            if (inputFile.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    var total = TimeSpan.Zero;
+                    var dir = Path.GetDirectoryName(inputFile);
+                    foreach (var line in File.ReadAllLines(inputFile))
+                    {
+                        var match = System.Text.RegularExpressions.Regex.Match(line, "file '(.+)'", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                        if (match.Success)
+                        {
+                            string videoPath = match.Groups[1].Value;
+                            // If not absolute, combine with .txt file's directory
+                            if (!Path.IsPathRooted(videoPath))
+                                videoPath = Path.Combine(dir, videoPath);
+                            var dur = await GetSingleVideoDurationAsync(videoPath);
+                            if (dur != null)
+                                total += dur.Value;
+                        }
+                    }
+                    return total;
+                }
+                catch { return null; }
+            }
+            // Otherwise, single file as before
+            return await GetSingleVideoDurationAsync(inputFile);
+        }
+
+        private async Task<TimeSpan?> GetSingleVideoDurationAsync(string inputFile)
+        {
             return await Task.Run<TimeSpan?>(() =>
             {
                 try
