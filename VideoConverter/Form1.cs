@@ -7,14 +7,14 @@ namespace VideoConverter
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSelectVid_Click(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Video Files|*.mp4;*.avi;*.mov;*.wmv;*.mkv|All Files|*.*";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    label1.Text = openFileDialog.FileName;
+                    lblSelectedFile.Text = openFileDialog.FileName;
                 }
             }
         }
@@ -27,22 +27,22 @@ namespace VideoConverter
             comboBoxInterpolation.SelectedItem = "minterpolate";
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnOutputDir_Click(object sender, EventArgs e)
         {
             using (var folderDialog = new FolderBrowserDialog())
             {
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
-                    label7.Text = folderDialog.SelectedPath;
+                    lblOutputDir.Text = folderDialog.SelectedPath;
                 }
             }
         }
 
-        private async void button2_Click(object sender, EventArgs e)
+        private async void btnConvert_Click(object sender, EventArgs e)
         {
             // Get input file and output directory
-            string inputFile = label1.Text;
-            string outputDir = label7.Text;
+            string inputFile = lblSelectedFile.Text;
+            string outputDir = lblOutputDir.Text;
             string newFileName = txtFileName.Text.Trim() ?? "outputVideo.mp4";
             if (!newFileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
             {
@@ -163,6 +163,10 @@ namespace VideoConverter
                 progressBar1.Value = 100;
                 labelProgress.Text = "100%";
                 MessageBox.Show("Conversion completed successfully!");
+                // Reset progress bar and clear input file name
+                progressBar1.Value = 0;
+                labelProgress.Text = "0%";
+                lblSelectedFile.Text = string.Empty;
             }
             else
             {
@@ -247,7 +251,7 @@ namespace VideoConverter
             return null;
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnConcat_Click(object sender, EventArgs e)
         {
             // Select multiple video files
             using (var openFileDialog = new OpenFileDialog())
@@ -256,7 +260,7 @@ namespace VideoConverter
                 openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string outputDir = label7.Text;
+                    string outputDir = lblOutputDir.Text;
                     if (string.IsNullOrWhiteSpace(outputDir))
                     {
                         MessageBox.Show("You must select an output folder first.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -280,7 +284,8 @@ namespace VideoConverter
                             writer.WriteLine($"file '{fileName}'");
                         }
                     }
-                    MessageBox.Show($"Text file created: {Path.GetFileName(txtFile)}. Use this txt file as video input.");                    
+                    MessageBox.Show($"Text file created: {Path.GetFileName(txtFile)}. Use this txt file as video input.");     
+                    lblSelectedFile.Text = txtFile;
                 }
             }
         }
