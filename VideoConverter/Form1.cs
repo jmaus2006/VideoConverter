@@ -38,6 +38,11 @@ namespace VideoConverter
             }
         }
 
+        private string pendingArgs = null;
+        private string pendingOutputFile = null;
+        private TimeSpan? pendingDuration = null;
+        private string pendingInputFile = null;
+        private string pendingOutputDir = null;
         private async void btnConvert_Click(object sender, EventArgs e)
         {
             // Get input file and output directory
@@ -53,8 +58,6 @@ namespace VideoConverter
                 MessageBox.Show("Please select both an input file and output directory.");
                 return;
             }
-
-            // Validation: require input file and output directory
             if (string.IsNullOrWhiteSpace(inputFile))
             {
                 MessageBox.Show("You must select an input video file before converting.", "Missing Input File", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -65,14 +68,10 @@ namespace VideoConverter
                 MessageBox.Show("You must select an output folder before converting.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            // Get options from ComboBoxes
             string frameRate = comboBoxFrameRate.SelectedItem?.ToString() ?? "29.97";
             string bitrate = comboBoxBitrate.SelectedItem?.ToString()?.Replace(" Mbps", "M") ?? "25M";
             string codec = comboBoxCodec.SelectedItem?.ToString() ?? "libx264";
             string interpolation = comboBoxInterpolation.SelectedItem?.ToString() ?? "minterpolate";
-
-            // Build output file path
             string baseName = Path.GetFileNameWithoutExtension(newFileName);
             string ext = Path.GetExtension(newFileName);
             string outputFile = Path.Combine(outputDir, newFileName);
@@ -82,14 +81,12 @@ namespace VideoConverter
                 outputFile = Path.Combine(outputDir, $"{baseName} ({count}){ext}");
                 count++;
             }
-
-            // Build ffmpeg arguments with conditional -vf and -r
             string vfArg = "";
             string rArg = $"-r {frameRate} ";
             if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
             {
                 vfArg = $"-vf \"minterpolate=fps={frameRate}\" ";
-                rArg = ""; // Do not add -r if minterpolate is used
+                rArg = "";
             }
             else if (interpolation.Equals("tblend", StringComparison.OrdinalIgnoreCase))
             {
@@ -99,8 +96,6 @@ namespace VideoConverter
             {
                 vfArg = "";
             }
-
-            // Determine input argument based on file type
             string inputArg;
             if (inputFile.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
             {
@@ -110,36 +105,44 @@ namespace VideoConverter
             {
                 inputArg = $"-i \"{inputFile}\" ";
             }
-
             string args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 \"{outputFile}\"";
+            txtArgs.Text = "ffmpeg " + args;
+            btnRun.Enabled = true;
+            pendingArgs = args;
+            pendingOutputFile = outputFile;
+            pendingInputFile = inputFile;
+            pendingOutputDir = outputDir;
+            pendingDuration = await GetVideoDurationAsync(inputFile);
+        }
 
+        private async void btnRun_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(pendingArgs) || string.IsNullOrWhiteSpace(pendingOutputFile) || string.IsNullOrWhiteSpace(pendingInputFile) || string.IsNullOrWhiteSpace(pendingOutputDir))
+            {
+                MessageBox.Show("No command to run.");
+                return;
+            }
             progressBar1.Value = 0;
             labelProgress.Text = "0%";
-
-            // Get duration first
-            TimeSpan? duration = await GetVideoDurationAsync(inputFile);
+            var duration = pendingDuration;
             if (duration == null)
             {
                 MessageBox.Show("Could not determine video duration.");
                 return;
             }
-
             var process = new System.Diagnostics.Process();
             process.StartInfo.FileName = "ffmpeg.exe";
-            process.StartInfo.Arguments = args;
+            process.StartInfo.Arguments = pendingArgs;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.CreateNoWindow = true;
             process.EnableRaisingEvents = true;
-
             process.Start();
-
             await Task.Run(() =>
             {
                 string line;
                 var stderr = process.StandardError;
-                TimeSpan lastTime = TimeSpan.Zero;
                 while ((line = stderr.ReadLine()) != null)
                 {
                     var time = ParseFfmpegTime(line);
@@ -156,14 +159,11 @@ namespace VideoConverter
                 }
                 process.WaitForExit();
             });
-
-            // Check if file was created
-            if (System.IO.File.Exists(outputFile))
+            if (System.IO.File.Exists(pendingOutputFile))
             {
                 progressBar1.Value = 100;
                 labelProgress.Text = "100%";
                 MessageBox.Show("Conversion completed successfully!");
-                // Reset progress bar and clear input file name
                 progressBar1.Value = 0;
                 labelProgress.Text = "0%";
                 lblSelectedFile.Text = string.Empty;
@@ -172,6 +172,13 @@ namespace VideoConverter
             {
                 MessageBox.Show("Conversion failed. Output file was not created.");
             }
+            btnRun.Enabled = false;
+            txtArgs.Text = string.Empty;
+            pendingArgs = null;
+            pendingOutputFile = null;
+            pendingInputFile = null;
+            pendingOutputDir = null;
+            pendingDuration = null;
         }
 
         private async Task<TimeSpan?> GetVideoDurationAsync(string inputFile)
@@ -284,10 +291,11 @@ namespace VideoConverter
                             writer.WriteLine($"file '{fileName}'");
                         }
                     }
-                    MessageBox.Show($"Text file created: {Path.GetFileName(txtFile)}. Use this txt file as video input.");     
+                    MessageBox.Show($"Text file created: {Path.GetFileName(txtFile)}. Use this txt file as video input.");
                     lblSelectedFile.Text = txtFile;
                 }
             }
         }
+          
     }
 }
