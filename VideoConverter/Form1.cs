@@ -25,6 +25,10 @@ namespace VideoConverter
             lblFpsValue.Text = string.Empty;
             lblBitrateValue.Text = string.Empty;
             lblCodecValue.Text = "No video selected";
+            // Set only the background image for btnGenerateBluray and stretch it
+            btnGenerateBluray.BackgroundImage = Properties.Resources.bluray; // Replace 'bluray' with your actual resource name
+            btnGenerateBluray.BackgroundImageLayout = ImageLayout.Stretch;
+            btnGenerateBluray.Text = string.Empty;
         }
 
         private void btnSelectVid_Click(object sender, EventArgs e)
@@ -377,6 +381,38 @@ namespace VideoConverter
                 }
             }
         }
-          
+        
+        private void btnGenerateBluray_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "MKV Files|*.mkv";
+                openFileDialog.Multiselect = true;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string outputDir = lblOutputDir.Text;
+                    if (string.IsNullOrWhiteSpace(outputDir))
+                    {
+                        MessageBox.Show("You must select an output folder first.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    string metaFile = Path.Combine(outputDir, "bluray.meta");
+                    using (var writer = new StreamWriter(metaFile, false))
+                    {
+                        for (int i = 0; i < openFileDialog.FileNames.Length; i++)
+                        {
+                            string file = Path.GetFileName(openFileDialog.FileNames[i]);
+                            writer.WriteLine("MUXOPT --blu-ray --auto-chapters=5 --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500");
+                            writer.WriteLine($"V_MPEG4/ISO/AVC, \"{file}\", track=1");
+                            writer.WriteLine($"A_AC3, \"{file}\", track=2");
+                            if (i < openFileDialog.FileNames.Length - 1)
+                                writer.WriteLine("--start-segment");
+                        }
+                    }
+                    MessageBox.Show($"bluray.meta file created in {outputDir}");             
+                                 
+                }
+            }
+        }
     }
 }
