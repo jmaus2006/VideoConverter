@@ -13,3 +13,7 @@ Clears progress bar upon completion and resets input video label.<br><br>
 Creates MKV files if checked<br>
 Added bluray button ( creates .meta file currently)<br>
 Does not currently create blu-ray folder structure, only the .meta file for tsmuxer
+<br><br>
+<hr>
+<h2>12/18/2025</h2>
+Blu-ray structure creation now works if using mkv files
