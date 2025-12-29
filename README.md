@@ -1,4 +1,4 @@
-# VideoConverter
+# Video2BluRay
 <h1>1.0  -  12/9/2025</h1><br><br>
 Video encoding utility using ffmpeg. Single video file input and multiple file concatenation option via text file. Blu-ray formats available<br><br>
 <b>Options include:</b><br>
@@ -28,4 +28,7 @@ Icon added<br>
 Audio settings group box added<br>
 Audio bitrate settings<br>
 AC3 checkbox for blu-ray compliance<br>
-
+<hr><br><br>
+<h1>1.4 - New Release</h1>
+Tabs added<br>
+Updated UI<br>
