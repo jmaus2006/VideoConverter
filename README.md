@@ -1,4 +1,4 @@
-# VideoConverter
+# VideoConverter / Blu-ray creator
 <h1>1.0  -  12/9/2025</h1><br><br>
 Video encoding utility using ffmpeg. Single video file input and multiple file concatenation option via text file. Blu-ray formats available<br><br>
 <b>Options include:</b><br>
