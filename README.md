@@ -22,4 +22,10 @@ Blu-ray structure creation now works if using mkv files<br>
 Added settings files to save user choice for output directory<br>
 Updated UI<br>
 Added text above blu-ray button
+<hr><br><br>
+<h1>1.3  -  12/28/2025</h1>
+Icon added<br>
+Audio settings group box added<br>
+Audio bitrate settings<br>
+AC3 checkbox for blu-ray compliance<br>
 
