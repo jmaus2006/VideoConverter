@@ -73,6 +73,7 @@
             stepsToConvertTab = new TabPage();
             label5 = new Label();
             richTextBox1 = new RichTextBox();
+            checkboxUpscale = new CheckBox();
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
             ConverterTab.SuspendLayout();
@@ -360,6 +361,7 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(checkboxUpscale);
             groupBox3.Controls.Add(label4);
             groupBox3.Controls.Add(checkboxAC3);
             groupBox3.Controls.Add(comboBoxAudioBitrate);
@@ -369,7 +371,7 @@
             groupBox3.Size = new Size(241, 332);
             groupBox3.TabIndex = 33;
             groupBox3.TabStop = false;
-            groupBox3.Text = "Output Audio";
+            groupBox3.Text = "Additional Options";
             // 
             // label4
             // 
@@ -539,9 +541,9 @@
             label5.Font = new Font("Arial Narrow", 28F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(66, 47);
             label5.Name = "label5";
-            label5.Size = new Size(620, 66);
+            label5.Size = new Size(872, 66);
             label5.TabIndex = 1;
-            label5.Text = "How to make a blu-ray folder";
+            label5.Text = "How to make a blu-ray folder from videos";
             // 
             // richTextBox1
             // 
@@ -552,6 +554,16 @@
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
+            // checkboxUpscale
+            // 
+            checkboxUpscale.AutoSize = true;
+            checkboxUpscale.Location = new Point(19, 156);
+            checkboxUpscale.Name = "checkboxUpscale";
+            checkboxUpscale.Size = new Size(191, 33);
+            checkboxUpscale.TabIndex = 9;
+            checkboxUpscale.Text = "Upscale to 1080p";
+            checkboxUpscale.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -559,7 +571,7 @@
             ClientSize = new Size(1175, 894);
             Controls.Add(tabControl1);
             Name = "Form1";
-            Text = "Video Converter 1.4";
+            Text = "Video2BluRay 1.4";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
@@ -622,5 +634,6 @@
         private TabPage stepsToConvertTab;
         private RichTextBox richTextBox1;
         private Label label5;
+        private CheckBox checkboxUpscale;
     }
 }

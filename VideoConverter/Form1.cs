@@ -138,6 +138,7 @@ namespace VideoConverter
             string inputFile = lblSelectedFile.Text;
             string outputDir = lblOutputDir.Text;
             string newFileName = txtFileName.Text.Trim();
+            string filterArg = "";
             if (string.IsNullOrWhiteSpace(newFileName))
             {
                 MessageBox.Show("You must enter a new file name before creating ffmpeg parameters.", "Missing File Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -154,7 +155,12 @@ namespace VideoConverter
                 if (!newFileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
                     newFileName += ".mp4";
             }
-            if (string.IsNullOrWhiteSpace(inputFile) && string.IsNullOrWhiteSpace(outputDir))
+            bool isBeingUpscaled = checkboxUpscale != null && checkboxUpscale.Checked;
+            if (isBeingUpscaled)
+            {
+                filterArg = "-vf \"scale=1920:-1:flags=lanczos,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,unsharp=5:5:0.8:3:3:0.0\" ";
+            }
+                if (string.IsNullOrWhiteSpace(inputFile) && string.IsNullOrWhiteSpace(outputDir))
             {
                 MessageBox.Show("Please select both an input file and output directory.");
                 return;
@@ -215,11 +221,11 @@ namespace VideoConverter
             if (isMKV)
             {
                 // Blu-ray compliant mkv
-                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 30000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
+                args = $"{inputArg}{vfArg}{filterArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 30000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
             }
             else
             {
-                args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 {audioArg}\"{outputFile}\"";
+                args = $"{inputArg}{vfArg}{filterArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 {audioArg}\"{outputFile}\"";
             }
             txtArgs.Text = "ffmpeg " + args;
             btnRun.Enabled = true;
