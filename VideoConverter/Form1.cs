@@ -154,12 +154,7 @@ namespace VideoConverter
             {
                 if (!newFileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
                     newFileName += ".mp4";
-            }
-            bool isBeingUpscaled = checkboxUpscale != null && checkboxUpscale.Checked;
-            if (isBeingUpscaled)
-            {
-                filterArg = "-vf \"scale=1920:-1:flags=lanczos,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,unsharp=5:5:0.8:3:3:0.0\" ";
-            }
+            }           
                 if (string.IsNullOrWhiteSpace(inputFile) && string.IsNullOrWhiteSpace(outputDir))
             {
                 MessageBox.Show("Please select both an input file and output directory.");
@@ -190,18 +185,26 @@ namespace VideoConverter
             }
             string vfArg = "";
             string rArg = $"-r {frameRate} ";
+            string upscaleFilter = "scale=1920:-1:flags=lanczos,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,unsharp=5:5:0.8:3:3:0.0";
+            bool isBeingUpscaled = checkboxUpscale != null && checkboxUpscale.Checked;
             if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
             {
-                vfArg = $"-vf \"minterpolate=fps={frameRate}\" ";
+                vfArg = isBeingUpscaled
+                    ? $"-vf \"minterpolate=fps={frameRate},{upscaleFilter}\" "
+                    : $"-vf \"minterpolate=fps={frameRate}\" ";
                 rArg = "";
             }
             else if (interpolation.Equals("tblend", StringComparison.OrdinalIgnoreCase))
             {
-                vfArg = "-vf \"tblend=all_mode=average\" ";
+                vfArg = isBeingUpscaled
+                    ? $"-vf \"tblend=all_mode=average,{upscaleFilter}\" "
+                    : "-vf \"tblend=all_mode=average\" ";
             }
             else if (interpolation.Equals("None", StringComparison.OrdinalIgnoreCase))
             {
-                vfArg = "";
+                vfArg = isBeingUpscaled
+                    ? $"-vf \"{upscaleFilter}\" "
+                    : "";
             }
             string inputArg;
             if (inputFile.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
@@ -221,11 +224,11 @@ namespace VideoConverter
             if (isMKV)
             {
                 // Blu-ray compliant mkv
-                args = $"{inputArg}{vfArg}{filterArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 30000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
+                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 30000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
             }
             else
             {
-                args = $"{inputArg}{vfArg}{filterArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 {audioArg}\"{outputFile}\"";
+                args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 {audioArg}\"{outputFile}\"";
             }
             txtArgs.Text = "ffmpeg " + args;
             btnRun.Enabled = true;
