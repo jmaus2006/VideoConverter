@@ -117,15 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="richTextBox1.Text" xml:space="preserve">
-    <value>1. Open one or multiple video files
-2. Use MKV checkbox for easy blu-ray conversion
-3. Create ffmpeg parameters then run parameters
-4. This will create mkv files from smaller phone video files
-5. Once done, open blu-ray tab and click to create blu-ray
-6. Select all the mkv files you want on your disc, choose order
-7. Use your favorite disc burning program to burn BDMV to disc 
-or create image file
-8. Enjoy your home movies on physical media</value>
-  </data>
 </root>

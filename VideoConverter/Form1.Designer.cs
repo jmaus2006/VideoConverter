@@ -57,6 +57,7 @@
             tabControl1 = new TabControl();
             ConverterTab = new TabPage();
             groupBox3 = new GroupBox();
+            checkboxUpscale = new CheckBox();
             label4 = new Label();
             checkboxAC3 = new CheckBox();
             comboBoxAudioBitrate = new ComboBox();
@@ -73,7 +74,6 @@
             stepsToConvertTab = new TabPage();
             label5 = new Label();
             richTextBox1 = new RichTextBox();
-            checkboxUpscale = new CheckBox();
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
             ConverterTab.SuspendLayout();
@@ -373,6 +373,16 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Additional Options";
             // 
+            // checkboxUpscale
+            // 
+            checkboxUpscale.AutoSize = true;
+            checkboxUpscale.Location = new Point(19, 156);
+            checkboxUpscale.Name = "checkboxUpscale";
+            checkboxUpscale.Size = new Size(191, 33);
+            checkboxUpscale.TabIndex = 9;
+            checkboxUpscale.Text = "Upscale to 1080p";
+            checkboxUpscale.UseVisualStyleBackColor = true;
+            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -493,7 +503,7 @@
             label3.AllowDrop = true;
             label3.AutoSize = true;
             label3.Font = new Font("Arial Narrow", 24F);
-            label3.Location = new Point(273, 230);
+            label3.Location = new Point(111, 252);
             label3.Name = "label3";
             label3.Size = new Size(591, 57);
             label3.TabIndex = 35;
@@ -504,7 +514,7 @@
             label2.AllowDrop = true;
             label2.AutoSize = true;
             label2.Font = new Font("Arial Narrow", 24F);
-            label2.Location = new Point(247, 173);
+            label2.Location = new Point(85, 195);
             label2.Name = "label2";
             label2.Size = new Size(646, 57);
             label2.TabIndex = 34;
@@ -516,9 +526,9 @@
             btnGenerateBlurayBlurayTab.BackgroundImageLayout = ImageLayout.Stretch;
             btnGenerateBlurayBlurayTab.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGenerateBlurayBlurayTab.ImageAlign = ContentAlignment.TopRight;
-            btnGenerateBlurayBlurayTab.Location = new Point(247, 324);
+            btnGenerateBlurayBlurayTab.Location = new Point(111, 343);
             btnGenerateBlurayBlurayTab.Name = "btnGenerateBlurayBlurayTab";
-            btnGenerateBlurayBlurayTab.Size = new Size(646, 395);
+            btnGenerateBlurayBlurayTab.Size = new Size(591, 356);
             btnGenerateBlurayBlurayTab.TabIndex = 33;
             btnGenerateBlurayBlurayTab.UseVisualStyleBackColor = true;
             btnGenerateBlurayBlurayTab.Click += btnGenerateBluray_Click;
@@ -554,16 +564,6 @@
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
-            // checkboxUpscale
-            // 
-            checkboxUpscale.AutoSize = true;
-            checkboxUpscale.Location = new Point(19, 156);
-            checkboxUpscale.Name = "checkboxUpscale";
-            checkboxUpscale.Size = new Size(191, 33);
-            checkboxUpscale.TabIndex = 9;
-            checkboxUpscale.Text = "Upscale to 1080p";
-            checkboxUpscale.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -571,7 +571,7 @@
             ClientSize = new Size(1175, 894);
             Controls.Add(tabControl1);
             Name = "Form1";
-            Text = "Video2BluRay 1.4";
+            Text = "Video2BluRay v1.5";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);

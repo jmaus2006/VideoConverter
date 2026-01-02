@@ -228,7 +228,7 @@ namespace VideoConverter
             }
             else
             {
-                args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 {audioArg}\"{outputFile}\"";
+                args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 -pix_fmt yuv420p {audioArg}\"{outputFile}\"";
             }
             txtArgs.Text = "ffmpeg " + args;
             btnRun.Enabled = true;
@@ -438,13 +438,22 @@ namespace VideoConverter
                 openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    // Show file order dialog before proceeding
+                    var fileOrderDialog = new FileOrderDialog(openFileDialog.FileNames.ToList());
+                    if (fileOrderDialog.ShowDialog() != DialogResult.OK)
+                    {
+                        // User cancelled, abort
+                        return;
+                    }
+                    var orderedFiles = fileOrderDialog.OrderedFiles;
+
                     string outputDir = lblOutputDir.Text;
                     if (string.IsNullOrWhiteSpace(outputDir))
                     {
                         MessageBox.Show("You must select an output folder first.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    int fileCount = openFileDialog.FileNames.Length;
+                    int fileCount = orderedFiles.Count;
                     progressBar1.Minimum = 0;
                     progressBar1.Maximum = fileCount;
                     progressBar1.Value = 0;
@@ -457,7 +466,7 @@ namespace VideoConverter
                     string[] metaFiles = new string[fileCount];
                     for (int i = 0; i < fileCount; i++)
                     {
-                        string filePath = openFileDialog.FileNames[i];
+                        string filePath = orderedFiles[i];
                         string metaFile = Path.Combine(outputDir, fileCount == 1 ? "bluray.meta" : $"bluray{i + 1}.meta");
                         metaFiles[i] = metaFile;
                         using (var writer = new StreamWriter(metaFile, false))
