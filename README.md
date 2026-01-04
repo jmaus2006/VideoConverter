@@ -34,4 +34,8 @@ Tabs added<br>
 Updated UI<br>
 <hr>
 <h1>1.5 - 1/2/2026</h1>
-Added ordering for blu-ray files<br>
+Added ordering for blu-ray files<br><br>
+<h2>1/4/2026</h2>
+Added tab for logs<br>
+Added copy buttons<br>
+Drag and drop functionality for bluray<br>
