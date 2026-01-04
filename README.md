@@ -32,3 +32,6 @@ AC3 checkbox for blu-ray compliance<br>
 <h1>1.4 - New Release</h1>
 Tabs added<br>
 Updated UI<br>
+<hr>
+<h1>1.5 - 1/2/2026</h1>
+Added ordering for blu-ray files<br>
