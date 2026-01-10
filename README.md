@@ -29,9 +29,15 @@ Audio settings group box added<br>
 Audio bitrate settings<br>
 AC3 checkbox for blu-ray compliance<br>
 <hr><br><br>
-<h1>1.4 - New Release</h1>
+<h1>1.4 - Release</h1>
 Tabs added<br>
 Updated UI<br>
 <hr>
 <h1>1.5 - 1/2/2026</h1>
-Added ordering for blu-ray files<br>
+Added ordering for blu-ray files<br><br>
+<h2>1/4/2026</h2>
+Added tab for logs<br>
+Added copy buttons<br>
+Drag and drop functionality for bluray<br><br>
+<h1>1.6 - Release</h1>
+Includes 1/4/2026 updates
