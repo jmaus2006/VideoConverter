@@ -18,6 +18,23 @@ namespace VideoConverter
         }
         private VideoInfo selectedVideoInfo = null;
 
+        private bool IsExeInPath(string exeName)
+        {
+            var paths = Environment.GetEnvironmentVariable("PATH");
+            if (string.IsNullOrEmpty(paths)) return false;
+            foreach (var path in paths.Split(';'))
+            {
+                try
+                {
+                    var exePath = System.IO.Path.Combine(path.Trim(), exeName);
+                    if (System.IO.File.Exists(exePath))
+                        return true;
+                }
+                catch { }
+            }
+            return false;
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             comboBoxFrameRate.SelectedItem = "29.97";
@@ -40,9 +57,28 @@ namespace VideoConverter
                 lblOutputDir.Text = lastDir;
                 lblOutputDirectoryBlurayTab.Text = lastDir;
             }
+            // Load last ImgBurn directory location if available
+            string lastDirImgBurn = Properties.Settings.Default.ImgBurnFileLocation;
+            if (!string.IsNullOrWhiteSpace(lastDirImgBurn))
+            {
+                ImgBurnLocationLabel.Text = lastDirImgBurn;
+            }
+            else
+            {
+                ImgBurnLocationLabel.Text = "C:\\Program Files(x86)\\ImgBurn\\ImgBurn.exe";
+            }
             btnGenerateBlurayBlurayTab.AllowDrop = true;
             btnGenerateBlurayBlurayTab.DragEnter += btnGenerateBlurayBlurayTab_DragEnter;
             btnGenerateBlurayBlurayTab.DragDrop += btnGenerateBlurayBlurayTab_DragDrop;
+
+            // Check for ffmpeg and tsmuxer in PATH
+            bool ffmpegFound = IsExeInPath("ffmpeg.exe");
+            bool tsmuxerFound = IsExeInPath("tsmuxer.exe");
+            if (!ffmpegFound || !tsmuxerFound)
+            {
+                string missing = (!ffmpegFound && !tsmuxerFound) ? "ffmpeg.exe and tsmuxer.exe" : (!ffmpegFound ? "ffmpeg.exe" : "tsmuxer.exe");
+                MessageBox.Show($"{missing} not found in your system PATH. Please install or add them to PATH for full functionality.", "Missing Executable", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnSelectVid_Click(object sender, EventArgs e)
@@ -599,6 +635,30 @@ namespace VideoConverter
                     labelProgress.Text = "0%";
                     progressBarBluRayTab.Value = 0;
                     labelProgressBluray.Text = "0%";
+
+                    // Launch ImgBurn if checkbox is checked
+                    if (checkboxImgBurn != null && checkboxImgBurn.Checked)
+                    {
+                        try
+                        {
+                            string imgburnExe = Properties.Settings.Default.ImgBurnFileLocation;
+                            if (string.IsNullOrWhiteSpace(imgburnExe))
+                            {
+                                imgburnExe = @"C:\Program Files (x86)\ImgBurn\ImgBurn.exe";
+                                Properties.Settings.Default.ImgBurnFileLocation = imgburnExe;
+                                Properties.Settings.Default.Save();
+                            }
+                            var process = new System.Diagnostics.Process();
+                            process.StartInfo.FileName = imgburnExe;
+                            process.StartInfo.Arguments = $"\"{mergedBDMV}\"";
+                            process.StartInfo.UseShellExecute = true;
+                            process.Start();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to launch ImgBurn: {ex.Message}");
+                        }
+                    }
                 }
             }
         }
@@ -823,6 +883,51 @@ namespace VideoConverter
             labelProgress.Text = "0%";
             progressBarBluRayTab.Value = 0;
             labelProgressBluray.Text = "0%";
+
+            // Launch ImgBurn if checkbox is checked
+            if (checkboxImgBurn != null && checkboxImgBurn.Checked)
+            {
+                try
+                {
+                    string imgburnExe = Properties.Settings.Default.ImgBurnFileLocation;
+                    if (string.IsNullOrWhiteSpace(imgburnExe))
+                    {
+                        imgburnExe = @"C:\Program Files (x86)\ImgBurn\ImgBurn.exe";
+                        Properties.Settings.Default.ImgBurnFileLocation = imgburnExe;
+                        Properties.Settings.Default.Save();
+                    }
+                    var process = new System.Diagnostics.Process();
+                    process.StartInfo.FileName = imgburnExe;
+                    process.StartInfo.Arguments = $"\"{mergedBDMV}\"";
+                    process.StartInfo.UseShellExecute = true;
+                    process.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to launch ImgBurn: {ex.Message}");
+                }
+            }
+        }
+
+        private void btnImgBurnLocation_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Executable Files|*.exe";
+                openFileDialog.Title = "Select ImgBurn Executable";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Properties.Settings.Default.ImgBurnFileLocation = openFileDialog.FileName;
+                    Properties.Settings.Default.Save();
+                    MessageBox.Show($"ImgBurn location saved: {openFileDialog.FileName}");
+                    ImgBurnLocationLabel.Text = Properties.Settings.Default.ImgBurnFileLocation;
+                }
+            }
+        }
+
+        private void BlurayTab_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

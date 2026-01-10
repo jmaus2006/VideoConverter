@@ -1,8 +1,11 @@
 <?xml version='1.0' encoding='iso-8859-1'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VideoConverter.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="LastOutputDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ImgBurnFileLocation" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

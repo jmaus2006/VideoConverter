@@ -65,6 +65,11 @@
             checkboxMKV = new CheckBox();
             groupBox2 = new GroupBox();
             BlurayTab = new TabPage();
+            label7 = new Label();
+            ImgBurnLocationLabel = new Label();
+            btnImgBurnLocation = new Button();
+            checkboxImgBurn = new CheckBox();
+            label6 = new Label();
             labelProgressBluray = new Label();
             progressBarBluRayTab = new ProgressBar();
             lblOutputDirectoryBlurayTab = new Label();
@@ -78,7 +83,6 @@
             tabPage1 = new TabPage();
             button1 = new Button();
             logOutput = new RichTextBox();
-            label6 = new Label();
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
             ConverterTab.SuspendLayout();
@@ -103,10 +107,10 @@
             // lblSelectedFile
             // 
             lblSelectedFile.AutoSize = true;
-            lblSelectedFile.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSelectedFile.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSelectedFile.Location = new Point(20, 72);
             lblSelectedFile.Name = "lblSelectedFile";
-            lblSelectedFile.Size = new Size(0, 32);
+            lblSelectedFile.Size = new Size(0, 28);
             lblSelectedFile.TabIndex = 1;
             // 
             // comboBoxFrameRate
@@ -198,10 +202,10 @@
             // lblOutputDir
             // 
             lblOutputDir.AutoSize = true;
-            lblOutputDir.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblOutputDir.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblOutputDir.Location = new Point(20, 568);
             lblOutputDir.Name = "lblOutputDir";
-            lblOutputDir.Size = new Size(0, 32);
+            lblOutputDir.Size = new Size(0, 28);
             lblOutputDir.TabIndex = 13;
             // 
             // btnOutputDir
@@ -234,9 +238,9 @@
             // 
             // txtFileName
             // 
-            txtFileName.Location = new Point(558, 413);
+            txtFileName.Location = new Point(574, 413);
             txtFileName.Name = "txtFileName";
-            txtFileName.Size = new Size(324, 35);
+            txtFileName.Size = new Size(308, 35);
             txtFileName.TabIndex = 6;
             // 
             // btnConcat
@@ -278,7 +282,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(412, 410);
+            label1.Location = new Point(422, 417);
             label1.Name = "label1";
             label1.Size = new Size(146, 29);
             label1.TabIndex = 21;
@@ -436,10 +440,10 @@
             // checkboxMKV
             // 
             checkboxMKV.AutoSize = true;
-            checkboxMKV.Font = new Font("Arial Narrow", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkboxMKV.Location = new Point(17, 402);
+            checkboxMKV.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkboxMKV.Location = new Point(73, 415);
             checkboxMKV.Name = "checkboxMKV";
-            checkboxMKV.Size = new Size(348, 41);
+            checkboxMKV.Size = new Size(263, 33);
             checkboxMKV.TabIndex = 27;
             checkboxMKV.Text = "Create MKV File (Blu-ray)";
             checkboxMKV.UseVisualStyleBackColor = true;
@@ -466,6 +470,10 @@
             // BlurayTab
             // 
             BlurayTab.BackColor = SystemColors.Control;
+            BlurayTab.Controls.Add(label7);
+            BlurayTab.Controls.Add(ImgBurnLocationLabel);
+            BlurayTab.Controls.Add(btnImgBurnLocation);
+            BlurayTab.Controls.Add(checkboxImgBurn);
             BlurayTab.Controls.Add(label6);
             BlurayTab.Controls.Add(labelProgressBluray);
             BlurayTab.Controls.Add(progressBarBluRayTab);
@@ -480,6 +488,58 @@
             BlurayTab.Size = new Size(1167, 851);
             BlurayTab.TabIndex = 0;
             BlurayTab.Text = "Create Blu-ray";
+            BlurayTab.Click += BlurayTab_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Arial Narrow", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Location = new Point(844, 702);
+            label7.Name = "label7";
+            label7.Size = new Size(148, 33);
+            label7.TabIndex = 44;
+            label7.Text = "with ImgBurn";
+            // 
+            // ImgBurnLocationLabel
+            // 
+            ImgBurnLocationLabel.AutoSize = true;
+            ImgBurnLocationLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ImgBurnLocationLabel.Location = new Point(643, 103);
+            ImgBurnLocationLabel.Name = "ImgBurnLocationLabel";
+            ImgBurnLocationLabel.Size = new Size(0, 28);
+            ImgBurnLocationLabel.TabIndex = 43;
+            // 
+            // btnImgBurnLocation
+            // 
+            btnImgBurnLocation.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnImgBurnLocation.Location = new Point(700, 23);
+            btnImgBurnLocation.Name = "btnImgBurnLocation";
+            btnImgBurnLocation.Size = new Size(354, 80);
+            btnImgBurnLocation.TabIndex = 42;
+            btnImgBurnLocation.Text = "Set ImgBurn Location";
+            btnImgBurnLocation.UseVisualStyleBackColor = true;
+            btnImgBurnLocation.Click += btnImgBurnLocation_Click;
+            // 
+            // checkboxImgBurn
+            // 
+            checkboxImgBurn.AutoSize = true;
+            checkboxImgBurn.Font = new Font("Arial Narrow", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkboxImgBurn.Location = new Point(761, 662);
+            checkboxImgBurn.Name = "checkboxImgBurn";
+            checkboxImgBurn.Size = new Size(295, 37);
+            checkboxImgBurn.TabIndex = 41;
+            checkboxImgBurn.Text = "Burn Disc / Create Image";
+            checkboxImgBurn.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Arial Narrow", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(162, 713);
+            label6.Name = "label6";
+            label6.Size = new Size(502, 42);
+            label6.TabIndex = 40;
+            label6.Text = "Drag all files at once to create blu-ray";
             // 
             // labelProgressBluray
             // 
@@ -501,10 +561,10 @@
             // lblOutputDirectoryBlurayTab
             // 
             lblOutputDirectoryBlurayTab.AutoSize = true;
-            lblOutputDirectoryBlurayTab.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblOutputDirectoryBlurayTab.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblOutputDirectoryBlurayTab.Location = new Point(27, 103);
             lblOutputDirectoryBlurayTab.Name = "lblOutputDirectoryBlurayTab";
-            lblOutputDirectoryBlurayTab.Size = new Size(0, 32);
+            lblOutputDirectoryBlurayTab.Size = new Size(0, 28);
             lblOutputDirectoryBlurayTab.TabIndex = 37;
             // 
             // outputDirectoryButtonBlurayTab
@@ -600,9 +660,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(63, 777);
+            button1.Location = new Point(21, 769);
             button1.Name = "button1";
-            button1.Size = new Size(232, 53);
+            button1.Size = new Size(321, 53);
             button1.TabIndex = 2;
             button1.Text = "Copy Log Output";
             button1.UseVisualStyleBackColor = true;
@@ -611,21 +671,11 @@
             // logOutput
             // 
             logOutput.Font = new Font("Arial Narrow", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            logOutput.Location = new Point(63, 22);
+            logOutput.Location = new Point(21, 22);
             logOutput.Name = "logOutput";
-            logOutput.Size = new Size(1083, 730);
+            logOutput.Size = new Size(1125, 730);
             logOutput.TabIndex = 1;
             logOutput.Text = "";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Arial Narrow", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(162, 713);
-            label6.Name = "label6";
-            label6.Size = new Size(502, 42);
-            label6.TabIndex = 40;
-            label6.Text = "Drag all files at once to create blu-ray";
             // 
             // Form1
             // 
@@ -633,8 +683,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1175, 894);
             Controls.Add(tabControl1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Video2BluRay v1.5";
+            Text = "Video2BluRay v1.7";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
@@ -704,5 +755,9 @@
         private Button button1;
         private Button button2;
         private Label label6;
+        private CheckBox checkboxImgBurn;
+        private Button btnImgBurnLocation;
+        private Label ImgBurnLocationLabel;
+        private Label label7;
     }
 }
