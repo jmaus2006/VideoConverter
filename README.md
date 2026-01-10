@@ -1,4 +1,4 @@
-# Video2BluRay
+<h1>NOTE: ffmpeg and tsmuxer are requried on your computer for this program to work. They must be part of your Environmental Variables on Windows.</h1><br><br>
 <h1>1.0  -  12/9/2025</h1><br><br>
 Video encoding utility using ffmpeg. Single video file input and multiple file concatenation option via text file. Blu-ray formats available<br><br>
 <b>Options include:</b><br>
