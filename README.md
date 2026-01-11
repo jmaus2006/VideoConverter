@@ -1,4 +1,4 @@
-<h1>NOTE: ffmpeg and tsmuxer are built into this program. They are being used under the GPL License. Licenses are attached to the source code.</h1><br><br>
+<h1>NOTE: This program is free under the GPL License. ffmpeg and tsmuxer are built into this program. ffmpeg is being used under the GPL license and tsmuxer is being used under the Apache license. Licenses are attached to the source code.</h1><br><br>
 <hr>
 <h1>1.7 - Release</h1>
 Added ImgBurn option to burn disc / make image
