@@ -1,4 +1,4 @@
-<h1>NOTE: ffmpeg and tsmuxer are requried on your computer for this program to work. They must be part of your Environmental Variables on Windows.</h1><br><br>
+<h1>NOTE: ffmpeg and tsmuxer are built into this program. They are being used under the GPL License. Licenses are attached to the source code.</h1><br><br>
 <hr>
 <h1>1.7 - Release</h1>
 Added ImgBurn option to burn disc / make image
