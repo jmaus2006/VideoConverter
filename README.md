@@ -1,4 +1,7 @@
 <h1>NOTE: This program is free under the GPL License. ffmpeg and tsmuxer are built into this program. ffmpeg is being used under the GPL license and tsmuxer is being used under the Apache license. Licenses are attached to the source code.</h1><br><br>
+<img width="585" height="469" alt="image" src="https://github.com/user-attachments/assets/6aea14ae-57a1-4dae-8e53-fbcd62532954" />
+<br>
+ffmpeg and tsmuxer are included, it should work fine, but if issues appear running ffmpeg, you may need to download the latest version and add them to the Program Files for this program :)
 <hr>
 <h1>1.7 - Release</h1>
 Added ImgBurn option to burn disc / make image
