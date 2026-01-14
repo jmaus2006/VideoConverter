@@ -100,7 +100,7 @@
             btnSelectVid.Name = "btnSelectVid";
             btnSelectVid.Size = new Size(337, 53);
             btnSelectVid.TabIndex = 0;
-            btnSelectVid.Text = "Select Single Video";
+            btnSelectVid.Text = "Select Video";
             btnSelectVid.UseVisualStyleBackColor = true;
             btnSelectVid.Click += btnSelectVid_Click;
             // 
@@ -112,12 +112,13 @@
             lblSelectedFile.Name = "lblSelectedFile";
             lblSelectedFile.Size = new Size(0, 28);
             lblSelectedFile.TabIndex = 1;
+            lblSelectedFile.TextChanged += lblSelectedFile_TextChanged;
             // 
             // comboBoxFrameRate
             // 
             comboBoxFrameRate.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxFrameRate.FormattingEnabled = true;
-            comboBoxFrameRate.Items.AddRange(new object[] { "23.976", "24", "25", "29.97", "50", "59.94" });
+            comboBoxFrameRate.Items.AddRange(new object[] { "Original", "23.976", "24", "25", "29.97", "50", "59.94" });
             comboBoxFrameRate.Location = new Point(195, 52);
             comboBoxFrameRate.Name = "comboBoxFrameRate";
             comboBoxFrameRate.Size = new Size(223, 37);
@@ -238,10 +239,11 @@
             // 
             // txtFileName
             // 
-            txtFileName.Location = new Point(574, 413);
+            txtFileName.Location = new Point(620, 414);
             txtFileName.Name = "txtFileName";
-            txtFileName.Size = new Size(308, 35);
+            txtFileName.Size = new Size(226, 35);
             txtFileName.TabIndex = 6;
+            txtFileName.TextChanged += txtFileName_TextChanged;
             // 
             // btnConcat
             // 
@@ -269,12 +271,12 @@
             // btnRun
             // 
             btnRun.Enabled = false;
-            btnRun.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRun.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnRun.Location = new Point(776, 477);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(371, 80);
             btnRun.TabIndex = 10;
-            btnRun.Text = "Run ffmpeg (Encode video)";
+            btnRun.Text = "Convert Video (ffmpeg)";
             btnRun.UseVisualStyleBackColor = true;
             btnRun.Click += btnRun_Click;
             // 
@@ -282,7 +284,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(422, 417);
+            label1.Location = new Point(468, 417);
             label1.Name = "label1";
             label1.Size = new Size(146, 29);
             label1.TabIndex = 21;
@@ -369,7 +371,7 @@
             ConverterTab.Name = "ConverterTab";
             ConverterTab.Size = new Size(1167, 851);
             ConverterTab.TabIndex = 1;
-            ConverterTab.Text = "Converter";
+            ConverterTab.Text = "Convert";
             // 
             // button2
             // 
@@ -440,12 +442,12 @@
             // checkboxMKV
             // 
             checkboxMKV.AutoSize = true;
-            checkboxMKV.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkboxMKV.Location = new Point(73, 415);
+            checkboxMKV.Font = new Font("Arial Narrow", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            checkboxMKV.Location = new Point(31, 408);
             checkboxMKV.Name = "checkboxMKV";
-            checkboxMKV.Size = new Size(263, 33);
+            checkboxMKV.Size = new Size(362, 41);
             checkboxMKV.TabIndex = 27;
-            checkboxMKV.Text = "Create MKV File (Blu-ray)";
+            checkboxMKV.Text = "Blu-Ray Compliant (MKV)";
             checkboxMKV.UseVisualStyleBackColor = true;
             checkboxMKV.CheckedChanged += checkboxMKV_CheckedChanged;
             // 
@@ -574,7 +576,7 @@
             outputDirectoryButtonBlurayTab.Name = "outputDirectoryButtonBlurayTab";
             outputDirectoryButtonBlurayTab.Size = new Size(373, 80);
             outputDirectoryButtonBlurayTab.TabIndex = 36;
-            outputDirectoryButtonBlurayTab.Text = "Select Output Directory";
+            outputDirectoryButtonBlurayTab.Text = "Choose Output Directory";
             outputDirectoryButtonBlurayTab.UseVisualStyleBackColor = true;
             outputDirectoryButtonBlurayTab.Click += btnOutputDir_Click;
             // 
@@ -583,22 +585,22 @@
             label3.AllowDrop = true;
             label3.AutoSize = true;
             label3.Font = new Font("Arial Narrow", 24F);
-            label3.Location = new Point(148, 252);
+            label3.Location = new Point(201, 252);
             label3.Name = "label3";
-            label3.Size = new Size(495, 57);
+            label3.Size = new Size(413, 57);
             label3.TabIndex = 35;
-            label3.Text = "files to create BDMV folder";
+            label3.Text = "to create BDMV folder";
             // 
             // label2
             // 
             label2.AllowDrop = true;
             label2.AutoSize = true;
             label2.Font = new Font("Arial Narrow", 24F);
-            label2.Location = new Point(111, 195);
+            label2.Location = new Point(148, 195);
             label2.Name = "label2";
-            label2.Size = new Size(576, 57);
+            label2.Size = new Size(539, 57);
             label2.TabIndex = 34;
-            label2.Text = "Click image below or drag MKV";
+            label2.Text = "Click or drag MKV files below";
             // 
             // btnGenerateBlurayBlurayTab
             // 
@@ -685,7 +687,7 @@
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Video2BluRay v1.7";
+            Text = "Video2BluRay v1.8";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);

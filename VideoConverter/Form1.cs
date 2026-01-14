@@ -30,6 +30,7 @@ namespace VideoConverter
             public double? Fps { get; set; }
             public string? Bitrate { get; set; }
             public string? AudioCodec { get; set; } // Added audio codec
+            public double? OriginalFPS { get; set; }
         }
         private VideoInfo selectedVideoInfo = null;
 
@@ -67,6 +68,7 @@ namespace VideoConverter
             btnGenerateBlurayBlurayTab.Text = string.Empty;
             // Load last output directory if available
             string lastDir = Properties.Settings.Default.LastOutputDir;
+            btnConvert.Enabled = false; //must select video first
             if (!string.IsNullOrWhiteSpace(lastDir) && System.IO.Directory.Exists(lastDir))
             {
                 lblOutputDir.Text = lastDir;
@@ -96,6 +98,18 @@ namespace VideoConverter
                 {
                     lblSelectedFile.Text = openFileDialog.FileName;
                     selectedVideoInfo = GetVideoInfo(openFileDialog.FileName);
+                    // Set output directory to input file's folder only if output dir is empty
+                    if (string.IsNullOrWhiteSpace(lblOutputDir.Text) || !System.IO.Directory.Exists(lblOutputDir.Text))
+                    {
+                        string inputDir = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
+                        if (!string.IsNullOrWhiteSpace(inputDir))
+                        {
+                            lblOutputDir.Text = inputDir;
+                            lblOutputDirectoryBlurayTab.Text = inputDir;
+                            Properties.Settings.Default.LastOutputDir = inputDir;
+                            Properties.Settings.Default.Save();
+                        }
+                    }
                     // Update UI labels for video info
                     if (selectedVideoInfo != null)
                     {
@@ -103,12 +117,15 @@ namespace VideoConverter
                         lblBitrateValue.Text = $"Bitrate: {selectedVideoInfo.Bitrate ?? "N/A"}";
                         lblCodecValue.Text = $"Codec: {selectedVideoInfo.Codec ?? "N/A"}";
                         lblAudioCodec.Text = $"Audio: {selectedVideoInfo.AudioCodec ?? "N/A"}";
+                        selectedVideoInfo.OriginalFPS = selectedVideoInfo.Fps ?? 29.97;
+
                     }
                     else
                     {
                         lblFpsValue.Text = "Frames per second: N/A";
                         lblBitrateValue.Text = "Bitrate: N/A";
                         lblCodecValue.Text = "Codec: N/A";
+                        selectedVideoInfo.OriginalFPS = 29.97;
                     }
                 }
                 else
@@ -117,6 +134,7 @@ namespace VideoConverter
                     lblFpsValue.Text = string.Empty;
                     lblBitrateValue.Text = string.Empty;
                     lblCodecValue.Text = "No video selected";
+                    selectedVideoInfo.OriginalFPS = 29.97;
                 }
             }
         }
@@ -229,13 +247,22 @@ namespace VideoConverter
             string ext = Path.GetExtension(newFileName);
             string outputFile = Path.Combine(outputDir, newFileName);
             int count = 1;
-            while (File.Exists(outputFile))
-            {
-                outputFile = Path.Combine(outputDir, $"{baseName} ({count}){ext}");
-                count++;
-            }
             string vfArg = "";
             string rArg = $"-r {frameRate} ";
+
+            if (frameRate.Equals("Original", StringComparison.OrdinalIgnoreCase) && selectedVideoInfo != null && selectedVideoInfo.OriginalFPS != null)
+            {
+                frameRate = selectedVideoInfo.OriginalFPS.Value.ToString("0.00");
+                rArg = ""; // No need to set -r if using original fps
+            }
+
+                while (File.Exists(outputFile))
+                {
+                    outputFile = Path.Combine(outputDir, $"{baseName} ({count}){ext}");
+                    count++;
+                }
+           
+
             string upscaleFilter = "scale=1920:-1:flags=lanczos,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,unsharp=5:5:0.8:3:3:0.0";
             bool isBeingUpscaled = checkboxUpscale != null && checkboxUpscale.Checked;
             if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
@@ -710,6 +737,18 @@ namespace VideoConverter
             }
         }
 
+        private void lblSelectedFile_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(lblSelectedFile.Text) && !string.IsNullOrEmpty(txtFileName.Text))
+            {
+                btnConvert.Enabled = true;
+            }
+            else
+            {
+                btnConvert.Enabled = false;
+            }
+        }
+
         private void comboBoxAudioBitrate_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxAudioBitrate.SelectedItem != null && comboBoxAudioBitrate.SelectedItem.ToString() != "640k")
@@ -726,6 +765,18 @@ namespace VideoConverter
         private void button2_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(txtArgs.Text);
+        }
+
+        private void txtFileName_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtFileName.Text) && !string.IsNullOrEmpty(lblSelectedFile.Text))
+            {
+                btnConvert.Enabled = true;
+            }
+            else
+            {
+                btnConvert.Enabled = false;
+            }
         }
 
         private void btnGenerateBlurayBlurayTab_DragEnter(object sender, DragEventArgs e)
