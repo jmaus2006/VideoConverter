@@ -73,9 +73,9 @@ namespace VideoConverter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Video2Bluray {
+        internal static System.Drawing.Bitmap Video2BlurayBG {
             get {
-                object obj = ResourceManager.GetObject("Video2Bluray", resourceCulture);
+                object obj = ResourceManager.GetObject("Video2BlurayBG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

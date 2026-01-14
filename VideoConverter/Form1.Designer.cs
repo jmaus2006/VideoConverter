@@ -124,7 +124,7 @@
             // 
             comboBoxFrameRate.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxFrameRate.FormattingEnabled = true;
-            comboBoxFrameRate.Items.AddRange(new object[] { "Original", "23.976", "24", "25", "29.97", "50", "59.94" });
+            comboBoxFrameRate.Items.AddRange(new object[] { "Same as source", "23.976", "24", "25", "29.97", "50", "59.94" });
             comboBoxFrameRate.Location = new Point(195, 52);
             comboBoxFrameRate.Name = "comboBoxFrameRate";
             comboBoxFrameRate.Size = new Size(223, 37);
@@ -382,7 +382,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.Video2Bluray;
+            pictureBox1.Image = Properties.Resources.Video2BlurayBG;
             pictureBox1.Location = new Point(567, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(627, 202);
@@ -512,7 +512,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.Video2Bluray;
+            pictureBox2.Image = Properties.Resources.Video2BlurayBG;
             pictureBox2.Location = new Point(567, 0);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(627, 202);
@@ -658,7 +658,8 @@
             // 
             // pictureBox3
             // 
-            pictureBox3.Image = Properties.Resources.Video2Bluray;
+            pictureBox3.BackgroundImage = Properties.Resources.Video2BlurayBG;
+            pictureBox3.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox3.Location = new Point(567, 0);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(627, 202);

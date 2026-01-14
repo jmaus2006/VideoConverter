@@ -250,7 +250,7 @@ namespace VideoConverter
             string vfArg = "";
             string rArg = $"-r {frameRate} ";
 
-            if (frameRate.Equals("Original", StringComparison.OrdinalIgnoreCase) && selectedVideoInfo != null && selectedVideoInfo.OriginalFPS != null)
+            if (frameRate.Equals("Same as source", StringComparison.OrdinalIgnoreCase) && selectedVideoInfo != null && selectedVideoInfo.OriginalFPS != null)
             {
                 frameRate = selectedVideoInfo.OriginalFPS.Value.ToString("0.00");
                 rArg = ""; // No need to set -r if using original fps
