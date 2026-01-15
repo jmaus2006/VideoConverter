@@ -118,10 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="bluray" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bluray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="xCreateFfmpegParameters" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xCreateFfmpegParameters.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xJoinMultipleVideos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xJoinMultipleVideos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xSelectVideo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xSelectVideo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xConvertVideo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xConvertVideo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Video2BlurayBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Video2BlurayBG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bluray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bluray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xSelectOutputFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xSelectOutputFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xSetImgBurnLocation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xSetImgBurnLocation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

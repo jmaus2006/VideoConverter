@@ -118,14 +118,13 @@ namespace VideoConverter
                         lblCodecValue.Text = $"Codec: {selectedVideoInfo.Codec ?? "N/A"}";
                         lblAudioCodec.Text = $"Audio: {selectedVideoInfo.AudioCodec ?? "N/A"}";
                         selectedVideoInfo.OriginalFPS = selectedVideoInfo.Fps ?? 29.97;
-
                     }
                     else
                     {
                         lblFpsValue.Text = "Frames per second: N/A";
                         lblBitrateValue.Text = "Bitrate: N/A";
                         lblCodecValue.Text = "Codec: N/A";
-                        selectedVideoInfo.OriginalFPS = 29.97;
+                        selectedVideoInfo = new VideoInfo { OriginalFPS = 29.97 };
                     }
                 }
                 else
@@ -134,7 +133,7 @@ namespace VideoConverter
                     lblFpsValue.Text = string.Empty;
                     lblBitrateValue.Text = string.Empty;
                     lblCodecValue.Text = "No video selected";
-                    selectedVideoInfo.OriginalFPS = 29.97;
+                    selectedVideoInfo = new VideoInfo { OriginalFPS = 29.97 };
                 }
             }
         }

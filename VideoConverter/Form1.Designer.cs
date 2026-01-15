@@ -56,6 +56,7 @@
             lblAudioCodec = new Label();
             tabControl1 = new TabControl();
             ConverterTab = new TabPage();
+            label8 = new Label();
             pictureBox1 = new PictureBox();
             button2 = new Button();
             groupBox3 = new GroupBox();
@@ -86,6 +87,8 @@
             tabPage1 = new TabPage();
             button1 = new Button();
             logOutput = new RichTextBox();
+            label9 = new Label();
+            label10 = new Label();
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
             ConverterTab.SuspendLayout();
@@ -101,13 +104,17 @@
             // 
             // btnSelectVid
             // 
+            btnSelectVid.BackColor = SystemColors.Control;
+            btnSelectVid.BackgroundImage = Properties.Resources.xSelectVideo;
+            btnSelectVid.BackgroundImageLayout = ImageLayout.Zoom;
+            btnSelectVid.FlatAppearance.BorderSize = 0;
+            btnSelectVid.FlatStyle = FlatStyle.Flat;
             btnSelectVid.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSelectVid.Location = new Point(67, 37);
+            btnSelectVid.Location = new Point(67, 36);
             btnSelectVid.Name = "btnSelectVid";
-            btnSelectVid.Size = new Size(373, 53);
+            btnSelectVid.Size = new Size(373, 54);
             btnSelectVid.TabIndex = 0;
-            btnSelectVid.Text = "Select Video";
-            btnSelectVid.UseVisualStyleBackColor = true;
+            btnSelectVid.UseVisualStyleBackColor = false;
             btnSelectVid.Click += btnSelectVid_Click;
             // 
             // lblSelectedFile
@@ -197,12 +204,15 @@
             // 
             // btnConvert
             // 
+            btnConvert.BackgroundImage = Properties.Resources.xCreateFfmpegParameters;
+            btnConvert.BackgroundImageLayout = ImageLayout.Zoom;
+            btnConvert.FlatAppearance.BorderSize = 0;
+            btnConvert.FlatStyle = FlatStyle.Flat;
             btnConvert.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConvert.Location = new Point(462, 638);
+            btnConvert.Location = new Point(449, 638);
             btnConvert.Name = "btnConvert";
-            btnConvert.Size = new Size(355, 80);
+            btnConvert.Size = new Size(370, 80);
             btnConvert.TabIndex = 8;
-            btnConvert.Text = "Create ffmpeg parameters";
             btnConvert.UseVisualStyleBackColor = true;
             btnConvert.Click += btnConvert_Click;
             // 
@@ -217,12 +227,15 @@
             // 
             // btnOutputDir
             // 
+            btnOutputDir.BackgroundImage = Properties.Resources.xSelectOutputFolder;
+            btnOutputDir.BackgroundImageLayout = ImageLayout.Zoom;
+            btnOutputDir.FlatAppearance.BorderSize = 0;
+            btnOutputDir.FlatStyle = FlatStyle.Flat;
             btnOutputDir.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnOutputDir.Location = new Point(67, 638);
+            btnOutputDir.Location = new Point(52, 638);
             btnOutputDir.Name = "btnOutputDir";
             btnOutputDir.Size = new Size(373, 80);
             btnOutputDir.TabIndex = 7;
-            btnOutputDir.Text = "Select Output Directory";
             btnOutputDir.UseVisualStyleBackColor = true;
             btnOutputDir.Click += btnOutputDir_Click;
             // 
@@ -247,19 +260,22 @@
             // 
             txtFileName.Location = new Point(667, 575);
             txtFileName.Name = "txtFileName";
-            txtFileName.Size = new Size(226, 35);
+            txtFileName.Size = new Size(226, 49);
             txtFileName.TabIndex = 6;
             txtFileName.TextChanged += txtFileName_TextChanged;
             // 
             // btnConcat
             // 
             btnConcat.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnConcat.BackgroundImage = Properties.Resources.xJoinMultipleVideos;
+            btnConcat.BackgroundImageLayout = ImageLayout.Zoom;
+            btnConcat.FlatAppearance.BorderSize = 0;
+            btnConcat.FlatStyle = FlatStyle.Flat;
             btnConcat.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConcat.Location = new Point(67, 128);
+            btnConcat.Location = new Point(67, 126);
             btnConcat.Name = "btnConcat";
-            btnConcat.Size = new Size(373, 53);
+            btnConcat.Size = new Size(373, 55);
             btnConcat.TabIndex = 1;
-            btnConcat.Text = "Join Multiple Videos";
             btnConcat.UseVisualStyleBackColor = true;
             btnConcat.Click += btnConcat_Click;
             // 
@@ -276,13 +292,16 @@
             // 
             // btnRun
             // 
+            btnRun.BackgroundImage = Properties.Resources.xConvertVideo;
+            btnRun.BackgroundImageLayout = ImageLayout.Zoom;
             btnRun.Enabled = false;
+            btnRun.FlatAppearance.BorderSize = 0;
+            btnRun.FlatStyle = FlatStyle.Flat;
             btnRun.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(823, 638);
+            btnRun.Location = new Point(838, 638);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(371, 80);
             btnRun.TabIndex = 10;
-            btnRun.Text = "Convert Video (ffmpeg)";
             btnRun.UseVisualStyleBackColor = true;
             btnRun.Click += btnRun_Click;
             // 
@@ -355,6 +374,8 @@
             // ConverterTab
             // 
             ConverterTab.BackColor = SystemColors.Control;
+            ConverterTab.BackgroundImageLayout = ImageLayout.None;
+            ConverterTab.Controls.Add(label8);
             ConverterTab.Controls.Add(pictureBox1);
             ConverterTab.Controls.Add(button2);
             ConverterTab.Controls.Add(btnSelectVid);
@@ -373,12 +394,24 @@
             ConverterTab.Controls.Add(groupBox1);
             ConverterTab.Controls.Add(txtFileName);
             ConverterTab.Controls.Add(label1);
+            ConverterTab.Font = new Font("Arial Narrow", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ConverterTab.Location = new Point(4, 41);
             ConverterTab.Margin = new Padding(0);
             ConverterTab.Name = "ConverterTab";
             ConverterTab.Size = new Size(1270, 1044);
             ConverterTab.TabIndex = 1;
             ConverterTab.Text = "Convert";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.BackColor = Color.Transparent;
+            label8.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label8.Location = new Point(1129, 174);
+            label8.Name = "label8";
+            label8.Size = new Size(54, 37);
+            label8.TabIndex = 36;
+            label8.Text = "2.0";
             // 
             // pictureBox1
             // 
@@ -489,6 +522,7 @@
             // BlurayTab
             // 
             BlurayTab.BackColor = SystemColors.Control;
+            BlurayTab.Controls.Add(label9);
             BlurayTab.Controls.Add(pictureBox2);
             BlurayTab.Controls.Add(label7);
             BlurayTab.Controls.Add(ImgBurnLocationLabel);
@@ -534,19 +568,22 @@
             // 
             ImgBurnLocationLabel.AutoSize = true;
             ImgBurnLocationLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ImgBurnLocationLabel.Location = new Point(30, 95);
+            ImgBurnLocationLabel.Location = new Point(31, 122);
             ImgBurnLocationLabel.Name = "ImgBurnLocationLabel";
             ImgBurnLocationLabel.Size = new Size(0, 28);
             ImgBurnLocationLabel.TabIndex = 43;
             // 
             // btnImgBurnLocation
             // 
+            btnImgBurnLocation.BackgroundImage = Properties.Resources.xSetImgBurnLocation;
+            btnImgBurnLocation.BackgroundImageLayout = ImageLayout.Zoom;
+            btnImgBurnLocation.FlatAppearance.BorderSize = 0;
+            btnImgBurnLocation.FlatStyle = FlatStyle.Flat;
             btnImgBurnLocation.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnImgBurnLocation.Location = new Point(87, 15);
+            btnImgBurnLocation.Location = new Point(87, 24);
             btnImgBurnLocation.Name = "btnImgBurnLocation";
-            btnImgBurnLocation.Size = new Size(354, 80);
+            btnImgBurnLocation.Size = new Size(373, 90);
             btnImgBurnLocation.TabIndex = 42;
-            btnImgBurnLocation.Text = "Set ImgBurn Location";
             btnImgBurnLocation.UseVisualStyleBackColor = true;
             btnImgBurnLocation.Click += btnImgBurnLocation_Click;
             // 
@@ -592,19 +629,22 @@
             // 
             lblOutputDirectoryBlurayTab.AutoSize = true;
             lblOutputDirectoryBlurayTab.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOutputDirectoryBlurayTab.Location = new Point(84, 261);
+            lblOutputDirectoryBlurayTab.Location = new Point(87, 273);
             lblOutputDirectoryBlurayTab.Name = "lblOutputDirectoryBlurayTab";
             lblOutputDirectoryBlurayTab.Size = new Size(0, 28);
             lblOutputDirectoryBlurayTab.TabIndex = 37;
             // 
             // outputDirectoryButtonBlurayTab
             // 
+            outputDirectoryButtonBlurayTab.BackgroundImage = Properties.Resources.xSelectOutputFolder;
+            outputDirectoryButtonBlurayTab.BackgroundImageLayout = ImageLayout.Zoom;
+            outputDirectoryButtonBlurayTab.FlatAppearance.BorderSize = 0;
+            outputDirectoryButtonBlurayTab.FlatStyle = FlatStyle.Flat;
             outputDirectoryButtonBlurayTab.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
             outputDirectoryButtonBlurayTab.Location = new Point(87, 181);
             outputDirectoryButtonBlurayTab.Name = "outputDirectoryButtonBlurayTab";
             outputDirectoryButtonBlurayTab.Size = new Size(373, 80);
             outputDirectoryButtonBlurayTab.TabIndex = 36;
-            outputDirectoryButtonBlurayTab.Text = "Choose Output Directory";
             outputDirectoryButtonBlurayTab.UseVisualStyleBackColor = true;
             outputDirectoryButtonBlurayTab.Click += btnOutputDir_Click;
             // 
@@ -645,6 +685,7 @@
             // 
             // stepsToConvertTab
             // 
+            stepsToConvertTab.Controls.Add(label10);
             stepsToConvertTab.Controls.Add(pictureBox3);
             stepsToConvertTab.Controls.Add(label5);
             stepsToConvertTab.Controls.Add(richTextBox1);
@@ -719,6 +760,28 @@
             logOutput.TabIndex = 1;
             logOutput.Text = "";
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.Transparent;
+            label9.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label9.Location = new Point(1129, 174);
+            label9.Name = "label9";
+            label9.Size = new Size(54, 37);
+            label9.TabIndex = 46;
+            label9.Text = "2.0";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.BackColor = Color.Transparent;
+            label10.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label10.Location = new Point(1129, 174);
+            label10.Name = "label10";
+            label10.Size = new Size(54, 37);
+            label10.TabIndex = 47;
+            label10.Text = "2.0";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -727,7 +790,7 @@
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Video2BluRay v1.9";
+            Text = "Video2BluRay v2.0";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
@@ -807,5 +870,8 @@
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
+        private Label label8;
+        private Label label9;
+        private Label label10;
     }
 }
