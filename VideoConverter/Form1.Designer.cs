@@ -67,6 +67,7 @@
             checkboxMKV = new CheckBox();
             groupBox2 = new GroupBox();
             BlurayTab = new TabPage();
+            label9 = new Label();
             pictureBox2 = new PictureBox();
             label7 = new Label();
             ImgBurnLocationLabel = new Label();
@@ -81,14 +82,13 @@
             label2 = new Label();
             btnGenerateBlurayBlurayTab = new Button();
             stepsToConvertTab = new TabPage();
+            label10 = new Label();
             pictureBox3 = new PictureBox();
             label5 = new Label();
             richTextBox1 = new RichTextBox();
             tabPage1 = new TabPage();
             button1 = new Button();
             logOutput = new RichTextBox();
-            label9 = new Label();
-            label10 = new Label();
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
             ConverterTab.SuspendLayout();
@@ -258,9 +258,10 @@
             // 
             // txtFileName
             // 
-            txtFileName.Location = new Point(667, 575);
+            txtFileName.Font = new Font("Arial Narrow", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtFileName.Location = new Point(667, 570);
             txtFileName.Name = "txtFileName";
-            txtFileName.Size = new Size(226, 49);
+            txtFileName.Size = new Size(261, 44);
             txtFileName.TabIndex = 6;
             txtFileName.TextChanged += txtFileName_TextChanged;
             // 
@@ -309,7 +310,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(515, 578);
+            label1.Location = new Point(515, 577);
             label1.Name = "label1";
             label1.Size = new Size(146, 29);
             label1.TabIndex = 21;
@@ -544,6 +545,17 @@
             BlurayTab.Text = "Create Blu-ray";
             BlurayTab.Click += BlurayTab_Click;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.Transparent;
+            label9.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label9.Location = new Point(1129, 174);
+            label9.Name = "label9";
+            label9.Size = new Size(54, 37);
+            label9.TabIndex = 46;
+            label9.Text = "2.0";
+            // 
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.Video2BlurayBG;
@@ -697,6 +709,17 @@
             stepsToConvertTab.Text = "Steps to converting";
             stepsToConvertTab.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.BackColor = Color.Transparent;
+            label10.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label10.Location = new Point(1129, 174);
+            label10.Name = "label10";
+            label10.Size = new Size(54, 37);
+            label10.TabIndex = 47;
+            label10.Text = "2.0";
+            // 
             // pictureBox3
             // 
             pictureBox3.BackgroundImage = Properties.Resources.Video2BlurayBG;
@@ -759,28 +782,6 @@
             logOutput.Size = new Size(1224, 888);
             logOutput.TabIndex = 1;
             logOutput.Text = "";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.BackColor = Color.Transparent;
-            label9.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label9.Location = new Point(1129, 174);
-            label9.Name = "label9";
-            label9.Size = new Size(54, 37);
-            label9.TabIndex = 46;
-            label9.Text = "2.0";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.BackColor = Color.Transparent;
-            label10.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label10.Location = new Point(1129, 174);
-            label10.Name = "label10";
-            label10.Size = new Size(54, 37);
-            label10.TabIndex = 47;
-            label10.Text = "2.0";
             // 
             // Form1
             // 

@@ -301,7 +301,7 @@ namespace VideoConverter
             if (isMKV)
             {
                 // Blu-ray compliant mkv
-                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 30000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
+                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 24000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
             }
             else
             {
@@ -483,6 +483,15 @@ namespace VideoConverter
                 openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    // Show file order dialog before proceeding
+                    var fileOrderDialog = new FileOrderDialog(openFileDialog.FileNames.ToList());
+                    if (fileOrderDialog.ShowDialog() != DialogResult.OK)
+                    {
+                        // User cancelled, abort
+                        return;
+                    }
+                    var orderedFiles = fileOrderDialog.OrderedFiles;
+
                     string outputDir = lblOutputDir.Text;
                     if (string.IsNullOrWhiteSpace(outputDir))
                     {
@@ -498,10 +507,10 @@ namespace VideoConverter
                         fileNum++;
                     } while (File.Exists(txtFile));
 
-                    // Write selected files to txtFile
+                    // Write ordered files to txtFile
                     using (var writer = new StreamWriter(txtFile))
                     {
-                        foreach (var file in openFileDialog.FileNames)
+                        foreach (var file in orderedFiles)
                         {
                             string fileName = Path.GetFileName(file);
                             writer.WriteLine($"file '{fileName}'");
@@ -707,12 +716,14 @@ namespace VideoConverter
             {
                 comboBoxCodec.SelectedItem = "libx264";
                 comboBoxCodec.Enabled = false;
-                comboBoxFrameRate.SelectedItem = "29.97";
+                comboBoxFrameRate.SelectedItem = "23.976";
                 comboBoxFrameRate.Enabled = false;
                 checkboxAC3.Checked = true;
                 checkboxAC3.Enabled = false;
                 comboBoxAudioBitrate.SelectedItem = "640k";
                 comboBoxAudioBitrate.Enabled = false;
+                comboBoxInterpolation.SelectedItem = "minterpolate";
+                comboBoxInterpolation.Enabled = false;
             }
             else
             {
@@ -720,6 +731,7 @@ namespace VideoConverter
                 comboBoxFrameRate.Enabled = true;
                 checkboxAC3.Enabled = true;
                 comboBoxAudioBitrate.Enabled = true;
+                comboBoxInterpolation.Enabled = true;
             }
         }
 
