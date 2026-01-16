@@ -211,7 +211,7 @@ namespace VideoConverter
             {
                 MessageBox.Show("You must enter a new file name before creating ffmpeg parameters.", "Missing File Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
+            }            
             bool isMKV = checkboxMKV != null && checkboxMKV.Checked;
             if (isMKV)
             {
@@ -248,19 +248,18 @@ namespace VideoConverter
             int count = 1;
             string vfArg = "";
             string rArg = $"-r {frameRate} ";
-
             if (frameRate.Equals("Same as source", StringComparison.OrdinalIgnoreCase) && selectedVideoInfo != null && selectedVideoInfo.OriginalFPS != null)
             {
                 frameRate = selectedVideoInfo.OriginalFPS.Value.ToString("0.00");
                 rArg = ""; // No need to set -r if using original fps
             }
 
-                while (File.Exists(outputFile))
-                {
-                    outputFile = Path.Combine(outputDir, $"{baseName} ({count}){ext}");
-                    count++;
-                }
-           
+            while (File.Exists(outputFile))
+            {
+                outputFile = Path.Combine(outputDir, $"{baseName} ({count}){ext}");
+                count++;
+            }
+
 
             string upscaleFilter = "scale=1920:-1:flags=lanczos,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,unsharp=5:5:0.8:3:3:0.0";
             bool isBeingUpscaled = checkboxUpscale != null && checkboxUpscale.Checked;
@@ -297,6 +296,18 @@ namespace VideoConverter
             if (checkboxAC3 != null && checkboxAC3.Checked)
             {
                 audioArg = "-c:a ac3 -b:a 640k ";
+            }
+            if (btnAudioOnly.Checked)
+            {
+                args = $"-i \"{inputFile}\" -c:v copy -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
+                txtArgs.Text = "ffmpeg " + args;
+                btnRun.Enabled = true;
+                pendingArgs = args;
+                pendingOutputFile = outputFile;
+                pendingInputFile = inputFile;
+                pendingOutputDir = outputDir;
+                pendingDuration = await GetVideoDurationAsync(inputFile);
+                return;
             }
             if (isMKV)
             {
@@ -1002,6 +1013,29 @@ namespace VideoConverter
         private void BlurayTab_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (btnAudioOnly.Checked) {    
+                comboBoxFrameRate.Enabled = false;
+                comboBoxInterpolation.Enabled = false;
+                comboBoxCodec.Enabled = false;
+                comboBoxBitrate.Enabled = false;
+                checkboxMKV.Checked = false;
+                checkboxMKV.Enabled = false;
+                checkboxAC3.Checked = true;
+                checkboxAC3.Enabled = false;
+            }
+            else
+            {
+                comboBoxFrameRate.Enabled = true;
+                comboBoxInterpolation.Enabled = true;
+                comboBoxCodec.Enabled = true;
+                comboBoxBitrate.Enabled = true;
+                checkboxMKV.Enabled = true;
+                checkboxAC3.Enabled = true;
+            }
         }
     }
 }

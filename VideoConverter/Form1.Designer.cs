@@ -60,6 +60,8 @@
             pictureBox1 = new PictureBox();
             button2 = new Button();
             groupBox3 = new GroupBox();
+            label11 = new Label();
+            btnAudioOnly = new CheckBox();
             checkboxUpscale = new CheckBox();
             label4 = new Label();
             checkboxAC3 = new CheckBox();
@@ -412,7 +414,7 @@
             label8.Name = "label8";
             label8.Size = new Size(54, 37);
             label8.TabIndex = 36;
-            label8.Text = "2.0";
+            label8.Text = "2.1";
             // 
             // pictureBox1
             // 
@@ -437,6 +439,8 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(label11);
+            groupBox3.Controls.Add(btnAudioOnly);
             groupBox3.Controls.Add(checkboxUpscale);
             groupBox3.Controls.Add(label4);
             groupBox3.Controls.Add(checkboxAC3);
@@ -448,6 +452,26 @@
             groupBox3.TabIndex = 33;
             groupBox3.TabStop = false;
             groupBox3.Text = "Additional Options";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(16, 253);
+            label11.Name = "label11";
+            label11.Size = new Size(198, 29);
+            label11.TabIndex = 11;
+            label11.Text = "to blu-ray compliance";
+            // 
+            // btnAudioOnly
+            // 
+            btnAudioOnly.AutoSize = true;
+            btnAudioOnly.Location = new Point(16, 217);
+            btnAudioOnly.Name = "btnAudioOnly";
+            btnAudioOnly.Size = new Size(201, 33);
+            btnAudioOnly.TabIndex = 10;
+            btnAudioOnly.Text = "Only change audio";
+            btnAudioOnly.UseVisualStyleBackColor = true;
+            btnAudioOnly.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // checkboxUpscale
             // 
@@ -554,7 +578,7 @@
             label9.Name = "label9";
             label9.Size = new Size(54, 37);
             label9.TabIndex = 46;
-            label9.Text = "2.0";
+            label9.Text = "2.1";
             // 
             // pictureBox2
             // 
@@ -718,7 +742,7 @@
             label10.Name = "label10";
             label10.Size = new Size(54, 37);
             label10.TabIndex = 47;
-            label10.Text = "2.0";
+            label10.Text = "2.1";
             // 
             // pictureBox3
             // 
@@ -791,7 +815,7 @@
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Video2BluRay v2.0";
+            Text = "Video2BluRay v2.1";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
@@ -874,5 +898,7 @@
         private Label label8;
         private Label label9;
         private Label label10;
+        private CheckBox btnAudioOnly;
+        private Label label11;
     }
 }
