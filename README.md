@@ -4,6 +4,13 @@
 <br>
 ffmpeg and tsmuxer are included, it should work fine, but if issues appear running ffmpeg, you may need to download the latest version and add them to the Program Files for this program :)
 <hr>
+<h1>2.0</h1>
+Updated UI with nice blue graphics!<br>
+Several different versions exist now:<br><br><strong>
+64-bit self-contained program<br>
+64-bit Core version (requires .NET10)<br>
+ARM64 Core version (requires .NET10)</strong><br><br>
+<hr>
 <h1>1.7 - Release</h1>
 Added ImgBurn option to burn disc / make image
 Message box check if ffmpeg and tsmuxer are in PATH variables<br><br>
