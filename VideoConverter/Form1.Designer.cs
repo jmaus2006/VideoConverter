@@ -171,7 +171,7 @@
             // lblFps
             // 
             lblFps.AutoSize = true;
-            lblFps.Location = new Point(14, 55);
+            lblFps.Location = new Point(8, 55);
             lblFps.Name = "lblFps";
             lblFps.Size = new Size(183, 29);
             lblFps.TabIndex = 6;
@@ -180,25 +180,25 @@
             // lblBitrate
             // 
             lblBitrate.AutoSize = true;
-            lblBitrate.Location = new Point(120, 105);
+            lblBitrate.Location = new Point(65, 104);
             lblBitrate.Name = "lblBitrate";
-            lblBitrate.Size = new Size(69, 29);
+            lblBitrate.Size = new Size(124, 29);
             lblBitrate.TabIndex = 7;
-            lblBitrate.Text = "Bitrate";
+            lblBitrate.Text = "Video Bitrate";
             // 
             // lblCodec
             // 
             lblCodec.AutoSize = true;
-            lblCodec.Location = new Point(122, 152);
+            lblCodec.Location = new Point(62, 152);
             lblCodec.Name = "lblCodec";
-            lblCodec.Size = new Size(70, 29);
+            lblCodec.Size = new Size(125, 29);
             lblCodec.TabIndex = 8;
-            lblCodec.Text = "Codec";
+            lblCodec.Text = "Video Codec";
             // 
             // lblInterpolate
             // 
             lblInterpolate.AutoSize = true;
-            lblInterpolate.Location = new Point(63, 202);
+            lblInterpolate.Location = new Point(69, 202);
             lblInterpolate.Name = "lblInterpolate";
             lblInterpolate.Size = new Size(119, 29);
             lblInterpolate.TabIndex = 9;
@@ -211,9 +211,9 @@
             btnConvert.FlatAppearance.BorderSize = 0;
             btnConvert.FlatStyle = FlatStyle.Flat;
             btnConvert.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConvert.Location = new Point(449, 638);
+            btnConvert.Location = new Point(440, 638);
             btnConvert.Name = "btnConvert";
-            btnConvert.Size = new Size(370, 80);
+            btnConvert.Size = new Size(383, 80);
             btnConvert.TabIndex = 8;
             btnConvert.UseVisualStyleBackColor = true;
             btnConvert.Click += btnConvert_Click;
@@ -260,10 +260,10 @@
             // 
             // txtFileName
             // 
-            txtFileName.Font = new Font("Arial Narrow", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtFileName.Font = new Font("Arial Narrow", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtFileName.Location = new Point(667, 570);
             txtFileName.Name = "txtFileName";
-            txtFileName.Size = new Size(261, 44);
+            txtFileName.Size = new Size(261, 40);
             txtFileName.TabIndex = 6;
             txtFileName.TextChanged += txtFileName_TextChanged;
             // 
@@ -301,9 +301,9 @@
             btnRun.FlatAppearance.BorderSize = 0;
             btnRun.FlatStyle = FlatStyle.Flat;
             btnRun.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(838, 638);
+            btnRun.Location = new Point(836, 636);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(371, 80);
+            btnRun.Size = new Size(380, 80);
             btnRun.TabIndex = 10;
             btnRun.UseVisualStyleBackColor = true;
             btnRun.Click += btnRun_Click;
@@ -431,7 +431,7 @@
             button2.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.Location = new Point(1017, 850);
             button2.Name = "button2";
-            button2.Size = new Size(177, 80);
+            button2.Size = new Size(199, 80);
             button2.TabIndex = 34;
             button2.Text = "Copy Parameters";
             button2.UseVisualStyleBackColor = true;
@@ -456,7 +456,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(16, 253);
+            label11.Location = new Point(20, 253);
             label11.Name = "label11";
             label11.Size = new Size(198, 29);
             label11.TabIndex = 11;
@@ -465,7 +465,7 @@
             // btnAudioOnly
             // 
             btnAudioOnly.AutoSize = true;
-            btnAudioOnly.Location = new Point(16, 217);
+            btnAudioOnly.Location = new Point(20, 217);
             btnAudioOnly.Name = "btnAudioOnly";
             btnAudioOnly.Size = new Size(201, 33);
             btnAudioOnly.TabIndex = 10;
@@ -476,11 +476,11 @@
             // checkboxUpscale
             // 
             checkboxUpscale.AutoSize = true;
-            checkboxUpscale.Location = new Point(19, 156);
+            checkboxUpscale.Location = new Point(19, 158);
             checkboxUpscale.Name = "checkboxUpscale";
-            checkboxUpscale.Size = new Size(191, 33);
+            checkboxUpscale.Size = new Size(211, 33);
             checkboxUpscale.TabIndex = 9;
-            checkboxUpscale.Text = "Upscale to 1080p";
+            checkboxUpscale.Text = "Force size to 1080p";
             checkboxUpscale.UseVisualStyleBackColor = true;
             // 
             // label4

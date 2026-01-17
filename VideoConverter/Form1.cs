@@ -31,6 +31,7 @@ namespace VideoConverter
             public string? Bitrate { get; set; }
             public string? AudioCodec { get; set; } // Added audio codec
             public double? OriginalFPS { get; set; }
+            public int? Height { get; set; } // Video height for 1080p check
         }
         private VideoInfo selectedVideoInfo = null;
 
@@ -175,6 +176,10 @@ namespace VideoConverter
                 var audioMatch = System.Text.RegularExpressions.Regex.Match(output, @"Audio: ([^,]+)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
                 if (audioMatch.Success)
                     info.AudioCodec = audioMatch.Groups[1].Value.Trim();
+                // Height (resolution)
+                var resMatch = System.Text.RegularExpressions.Regex.Match(output, @"(\d{2,5})x(\d{2,5})");
+                if (resMatch.Success && int.TryParse(resMatch.Groups[2].Value, out int height))
+                    info.Height = height;
                 return info;
             }
             catch { return null; }
@@ -277,10 +282,19 @@ namespace VideoConverter
                     : "-vf \"tblend=all_mode=average\" ";
             }
             else if (interpolation.Equals("None", StringComparison.OrdinalIgnoreCase))
-            {
-                vfArg = isBeingUpscaled
-                    ? $"-vf \"{upscaleFilter}\" "
-                    : "";
+            { 
+                if (rArg != "")
+                {
+                    vfArg = isBeingUpscaled
+                        ? $"-vf \"{upscaleFilter}\" "
+                        : $"-vf \"framerate={frameRate}\" ";
+                    rArg = "";
+                }
+                else
+                {
+                    vfArg = "";
+                }
+               
             }
             string inputArg;
             if (inputFile.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
@@ -312,7 +326,7 @@ namespace VideoConverter
             if (isMKV)
             {
                 // Blu-ray compliant mkv
-                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 24000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
+                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 30000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
             }
             else
             {
@@ -537,7 +551,7 @@ namespace VideoConverter
         {
             using (var openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "MKV Files|*.mkv";
+                openFileDialog.Filter = "Video Files|*.mkv;*.mp4";
                 openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -549,6 +563,17 @@ namespace VideoConverter
                         return;
                     }
                     var orderedFiles = fileOrderDialog.OrderedFiles;
+
+                    // Validate all files: must be 1080p and AC3 audio
+                    foreach (var file in orderedFiles)
+                    {
+                        var info = GetVideoInfo(file);
+                        if (info == null || info.AudioCodec == null || info.Height == null || info.Height != 1080 || !info.AudioCodec.ToLower().Contains("ac3"))
+                        {
+                            MessageBox.Show($"File '{System.IO.Path.GetFileName(file)}' is not Blu-ray compliant. Only 1080p video with AC3 audio is allowed.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
 
                     string outputDir = lblOutputDir.Text;
                     if (string.IsNullOrWhiteSpace(outputDir))
@@ -727,14 +752,12 @@ namespace VideoConverter
             {
                 comboBoxCodec.SelectedItem = "libx264";
                 comboBoxCodec.Enabled = false;
-                comboBoxFrameRate.SelectedItem = "23.976";
+                comboBoxFrameRate.SelectedItem = "29.97";
                 comboBoxFrameRate.Enabled = false;
                 checkboxAC3.Checked = true;
                 checkboxAC3.Enabled = false;
                 comboBoxAudioBitrate.SelectedItem = "640k";
-                comboBoxAudioBitrate.Enabled = false;
-                comboBoxInterpolation.SelectedItem = "minterpolate";
-                comboBoxInterpolation.Enabled = false;
+                comboBoxAudioBitrate.Enabled = false;                
             }
             else
             {
@@ -742,7 +765,6 @@ namespace VideoConverter
                 comboBoxFrameRate.Enabled = true;
                 checkboxAC3.Enabled = true;
                 comboBoxAudioBitrate.Enabled = true;
-                comboBoxInterpolation.Enabled = true;
             }
         }
 
