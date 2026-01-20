@@ -252,6 +252,11 @@ namespace VideoConverter
             string outputFile = Path.Combine(outputDir, newFileName);
             int count = 1;
             string vfArg = "";
+            if (frameRate == "29.97")
+                frameRate = "30000/1001";
+            else if (frameRate == "23.976")
+                frameRate = "24000/1001";
+
             string rArg = $"-r {frameRate} ";
             if (frameRate.Equals("Same as source", StringComparison.OrdinalIgnoreCase) && selectedVideoInfo != null && selectedVideoInfo.OriginalFPS != null)
             {
@@ -324,9 +329,17 @@ namespace VideoConverter
                 return;
             }
             if (isMKV)
-            {
-                // Blu-ray compliant mkv
-                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 30000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
+            {   
+                if (frameRate=="24000/1001")
+                {
+                    rArg = "-r 24000/1001";
+                }
+                else if (frameRate == "30000/1001")
+                {
+                    rArg = "-r 30000/1001";
+                }
+                    // Blu-ray compliant mkv
+                    args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p {rArg} -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
             }
             else
             {
@@ -752,12 +765,14 @@ namespace VideoConverter
             {
                 comboBoxCodec.SelectedItem = "libx264";
                 comboBoxCodec.Enabled = false;
+                comboBoxFrameRate.Items.Clear();
+                comboBoxFrameRate.Items.Add("23.976");
+                comboBoxFrameRate.Items.Add("29.97");
                 comboBoxFrameRate.SelectedItem = "29.97";
-                comboBoxFrameRate.Enabled = false;
                 checkboxAC3.Checked = true;
                 checkboxAC3.Enabled = false;
                 comboBoxAudioBitrate.SelectedItem = "640k";
-                comboBoxAudioBitrate.Enabled = false;                
+                comboBoxAudioBitrate.Enabled = false;
             }
             else
             {
@@ -765,6 +780,18 @@ namespace VideoConverter
                 comboBoxFrameRate.Enabled = true;
                 checkboxAC3.Enabled = true;
                 comboBoxAudioBitrate.Enabled = true;
+                // Restore original frame rate options
+                comboBoxFrameRate.Items.Clear();
+                comboBoxFrameRate.Items.Add("Same as source");
+                comboBoxFrameRate.Items.Add("23.976");
+                comboBoxFrameRate.Items.Add("24");
+                comboBoxFrameRate.Items.Add("25");
+                comboBoxFrameRate.Items.Add("29.97");
+                comboBoxFrameRate.Items.Add("30");
+                comboBoxFrameRate.Items.Add("50");
+                comboBoxFrameRate.Items.Add("59.94");
+                comboBoxFrameRate.Items.Add("60");
+                comboBoxFrameRate.SelectedItem = "29.97";
             }
         }
 

@@ -133,7 +133,7 @@
             // 
             comboBoxFrameRate.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxFrameRate.FormattingEnabled = true;
-            comboBoxFrameRate.Items.AddRange(new object[] { "Same as source", "23.976", "24", "25", "29.97", "50", "59.94" });
+            comboBoxFrameRate.Items.AddRange(new object[] { "Same as source", "23.976", "24", "25", "29.97", "30", "50", "59.94", "60" });
             comboBoxFrameRate.Location = new Point(195, 52);
             comboBoxFrameRate.Name = "comboBoxFrameRate";
             comboBoxFrameRate.Size = new Size(223, 37);
