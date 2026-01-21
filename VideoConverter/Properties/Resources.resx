@@ -121,6 +121,9 @@
   <data name="xCreateFfmpegParameters" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\xCreateFfmpegParameters.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="xSetImgBurnLocation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xSetImgBurnLocation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="xJoinMultipleVideos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\xJoinMultipleVideos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -139,7 +142,7 @@
   <data name="xSelectOutputFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\xSelectOutputFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="xSetImgBurnLocation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\xSetImgBurnLocation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="compliant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\compliant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

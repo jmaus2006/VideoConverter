@@ -56,6 +56,7 @@
             lblAudioCodec = new Label();
             tabControl1 = new TabControl();
             ConverterTab = new TabPage();
+            pictureBox4 = new PictureBox();
             label8 = new Label();
             pictureBox1 = new PictureBox();
             button2 = new Button();
@@ -94,6 +95,7 @@
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
             ConverterTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -378,6 +380,7 @@
             // 
             ConverterTab.BackColor = SystemColors.Control;
             ConverterTab.BackgroundImageLayout = ImageLayout.None;
+            ConverterTab.Controls.Add(pictureBox4);
             ConverterTab.Controls.Add(label8);
             ConverterTab.Controls.Add(pictureBox1);
             ConverterTab.Controls.Add(button2);
@@ -404,6 +407,16 @@
             ConverterTab.Size = new Size(1270, 1044);
             ConverterTab.TabIndex = 1;
             ConverterTab.Text = "Convert";
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.BackgroundImage = Properties.Resources.compliant;
+            pictureBox4.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox4.Location = new Point(106, 555);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(292, 86);
+            pictureBox4.TabIndex = 37;
+            pictureBox4.TabStop = false;
             // 
             // label8
             // 
@@ -518,11 +531,10 @@
             // 
             checkboxMKV.AutoSize = true;
             checkboxMKV.Font = new Font("Arial Narrow", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkboxMKV.Location = new Point(78, 569);
+            checkboxMKV.Location = new Point(78, 585);
             checkboxMKV.Name = "checkboxMKV";
-            checkboxMKV.Size = new Size(362, 41);
+            checkboxMKV.Size = new Size(22, 21);
             checkboxMKV.TabIndex = 27;
-            checkboxMKV.Text = "Blu-Ray Compliant (MKV)";
             checkboxMKV.UseVisualStyleBackColor = true;
             checkboxMKV.CheckedChanged += checkboxMKV_CheckedChanged;
             // 
@@ -821,6 +833,7 @@
             tabControl1.ResumeLayout(false);
             ConverterTab.ResumeLayout(false);
             ConverterTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
@@ -900,5 +913,6 @@
         private Label label10;
         private CheckBox btnAudioOnly;
         private Label label11;
+        private PictureBox pictureBox4;
     }
 }
