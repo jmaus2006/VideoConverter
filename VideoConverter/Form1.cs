@@ -119,6 +119,32 @@ namespace VideoConverter
                         lblCodecValue.Text = $"Codec: {selectedVideoInfo.Codec ?? "N/A"}";
                         lblAudioCodec.Text = $"Audio: {selectedVideoInfo.AudioCodec ?? "N/A"}";
                         selectedVideoInfo.OriginalFPS = selectedVideoInfo.Fps ?? 29.97;
+                        if (lblFpsValue.Text.Contains("29.97") || lblFpsValue.Text.Contains("23.976") || lblFpsValue.Text.Contains("23.98") || lblFpsValue.Text.Contains("24"))
+                        {
+                            lblFpsValue.ForeColor = Color.Green;
+                        }
+                        else
+                        {
+                            lblFpsValue.ForeColor = Color.Black;
+                        }
+
+                        if (lblCodecValue.Text.Contains("h264") || lblCodecValue.Text.Contains("vc1"))
+                        {
+                            lblCodecValue.ForeColor = Color.Green;
+                        }
+                        else
+                        {
+                            lblCodecValue.ForeColor = Color.Black;
+                        }
+
+                        if (lblAudioCodec.Text.Contains("ac3"))
+                        {
+                            lblAudioCodec.ForeColor = Color.Green;
+                        }
+                        else
+                        {
+                            lblAudioCodec.ForeColor = Color.Black;
+                        }
                     }
                     else
                     {
@@ -767,6 +793,7 @@ namespace VideoConverter
                 comboBoxCodec.Enabled = false;
                 comboBoxFrameRate.Items.Clear();
                 comboBoxFrameRate.Items.Add("23.976");
+                comboBoxFrameRate.Items.Add("24");
                 comboBoxFrameRate.Items.Add("29.97");
                 comboBoxFrameRate.SelectedItem = "29.97";
                 checkboxAC3.Checked = true;
