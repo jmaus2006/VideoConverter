@@ -296,8 +296,8 @@ namespace VideoConverter
                 count++;
             }
 
-
-            string upscaleFilter = "scale=1920:-1:flags=lanczos,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,unsharp=5:5:0.8:3:3:0.0";
+            // Repurpose 'Upscale to HD' to output 1920x816 (2.35:1) with black bars (letterboxing) to 1920x1080
+            string upscaleFilter = "crop=1920:816:0:132,pad=1920:1080:0:132,unsharp=5:5:0.8:3:3:0.0";
             bool isBeingUpscaled = checkboxUpscale != null && checkboxUpscale.Checked;
             if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
             {
@@ -313,7 +313,7 @@ namespace VideoConverter
                     : "-vf \"tblend=all_mode=average\" ";
             }
             else if (interpolation.Equals("None", StringComparison.OrdinalIgnoreCase))
-            { 
+            {
                 if (rArg != "")
                 {
                     vfArg = isBeingUpscaled
@@ -323,9 +323,10 @@ namespace VideoConverter
                 }
                 else
                 {
-                    vfArg = "";
+                    vfArg = isBeingUpscaled
+                        ? $"-vf \"{upscaleFilter}\" "
+                        : "";
                 }
-               
             }
             string inputArg;
             if (inputFile.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))

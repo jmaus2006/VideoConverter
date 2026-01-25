@@ -491,9 +491,9 @@
             checkboxUpscale.AutoSize = true;
             checkboxUpscale.Location = new Point(19, 158);
             checkboxUpscale.Name = "checkboxUpscale";
-            checkboxUpscale.Size = new Size(211, 33);
+            checkboxUpscale.Size = new Size(192, 33);
             checkboxUpscale.TabIndex = 9;
-            checkboxUpscale.Text = "Force size to 1080p";
+            checkboxUpscale.Text = "Force 2.35:1 ratio";
             checkboxUpscale.UseVisualStyleBackColor = true;
             // 
             // label4
