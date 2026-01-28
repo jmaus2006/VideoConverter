@@ -410,11 +410,11 @@
             // 
             // pictureBox4
             // 
-            pictureBox4.BackgroundImage = Properties.Resources.compliant;
+            pictureBox4.BackgroundImage = (Image)resources.GetObject("pictureBox4.BackgroundImage");
             pictureBox4.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox4.Location = new Point(106, 555);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(292, 86);
+            pictureBox4.Size = new Size(344, 89);
             pictureBox4.TabIndex = 37;
             pictureBox4.TabStop = false;
             // 
@@ -427,7 +427,7 @@
             label8.Name = "label8";
             label8.Size = new Size(54, 37);
             label8.TabIndex = 36;
-            label8.Text = "2.1";
+            label8.Text = "2.2";
             // 
             // pictureBox1
             // 
@@ -590,7 +590,7 @@
             label9.Name = "label9";
             label9.Size = new Size(54, 37);
             label9.TabIndex = 46;
-            label9.Text = "2.1";
+            label9.Text = "2.2";
             // 
             // pictureBox2
             // 
@@ -754,7 +754,7 @@
             label10.Name = "label10";
             label10.Size = new Size(54, 37);
             label10.TabIndex = 47;
-            label10.Text = "2.1";
+            label10.Text = "2.2";
             // 
             // pictureBox3
             // 
@@ -827,7 +827,7 @@
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Video2BluRay v2.1";
+            Text = "Video2BluRay v2.2";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);

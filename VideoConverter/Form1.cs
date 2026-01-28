@@ -57,7 +57,7 @@ namespace VideoConverter
             comboBoxFrameRate.SelectedItem = "29.97";
             comboBoxBitrate.SelectedItem = "25M";
             comboBoxCodec.SelectedItem = "libx264";
-            comboBoxInterpolation.SelectedItem = "minterpolate";
+            comboBoxInterpolation.SelectedItem = "None";
             // Set video info labels to initial state
             lblFpsValue.Text = string.Empty;
             lblBitrateValue.Text = string.Empty;
