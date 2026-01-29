@@ -412,12 +412,14 @@ namespace VideoConverter
             {
                 string line;
                 var stderr = process.StandardError;
+                DateTime ffmpegStart = DateTime.Now;
                 while ((line = stderr.ReadLine()) != null)
                 {
                     var time = ParseFfmpegTime(line);
+                    int percent = 0;
                     if (time != null && duration.Value.TotalSeconds > 0)
                     {
-                        int percent = (int)(time.Value.TotalSeconds / duration.Value.TotalSeconds * 100);
+                        percent = (int)(time.Value.TotalSeconds / duration.Value.TotalSeconds * 100);
                         if (percent > 100) percent = 100;
                         this.Invoke(new Action(() =>
                         {
@@ -427,6 +429,38 @@ namespace VideoConverter
                             labelProgressBluray.Text = percent + "%";
                         }));
                     }
+
+                    // Only check speed after 8 seconds from ffmpeg start
+                    if ((DateTime.Now - ffmpegStart).TotalSeconds > 8)
+                    {
+                        int speedIdx = line.IndexOf("speed=");
+                        if (speedIdx != -1)
+                        {
+                            int xIdx = line.IndexOf('x', speedIdx);
+                            if (xIdx > speedIdx)
+                            {
+                                string speedStr = line.Substring(speedIdx + 6, xIdx - (speedIdx + 6));
+                                if (double.TryParse(speedStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double speedVal))
+                                {
+                                    if (speedVal < 1.5)
+                                    {
+                                        try { process.Kill(); } catch { }
+                                        this.Invoke(new Action(() =>
+                                        {
+                                            logOutput.Clear();
+                                            progressBar1.Value = 0;
+                                            labelProgress.Text = "0%";
+                                            progressBarBluRayTab.Value = 0;
+                                            labelProgressBluray.Text = "0%";
+                                            MessageBox.Show("Conversion failed: This is likely due to a file parameter mismatch or performance issue.", "Conversion Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }));
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     // Append ffmpeg output to logOutput RichTextBox in real time
                     this.Invoke(new Action(() =>
                     {
