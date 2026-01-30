@@ -612,7 +612,7 @@ namespace VideoConverter
                         foreach (var file in orderedFiles)
                         {
                             string fileName = Path.GetFileName(file);
-                            writer.WriteLine($"file '{fileName}'");
+                            writer.WriteLine($"file '{file}'");
                         }
                     }
                     MessageBox.Show($"Text file created: {Path.GetFileName(txtFile)}. Use this txt file as video input.");
