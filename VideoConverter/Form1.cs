@@ -231,6 +231,9 @@ namespace VideoConverter
         private TimeSpan? pendingDuration = null;
         private string pendingInputFile = null;
         private string pendingOutputDir = null;
+
+        // Class-level ffmpeg process for control from any method
+        private System.Diagnostics.Process? ffmpegProcess = null;
         private async void btnConvert_Click(object sender, EventArgs e)
         {
             // Get input file and output directory
@@ -242,7 +245,7 @@ namespace VideoConverter
             {
                 MessageBox.Show("You must enter a new file name before creating ffmpeg parameters.", "Missing File Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }            
+            }
             bool isMKV = checkboxMKV != null && checkboxMKV.Checked;
             if (isMKV)
             {
@@ -356,8 +359,8 @@ namespace VideoConverter
                 return;
             }
             if (isMKV)
-            {   
-                if (frameRate=="24000/1001")
+            {
+                if (frameRate == "24000/1001")
                 {
                     rArg = "-r 24000/1001";
                 }
@@ -365,8 +368,8 @@ namespace VideoConverter
                 {
                     rArg = "-r 30000/1001";
                 }
-                    // Blu-ray compliant mkv
-                    args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p {rArg} -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
+                // Blu-ray compliant mkv
+                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p {rArg} -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
             }
             else
             {
@@ -399,19 +402,19 @@ namespace VideoConverter
                 MessageBox.Show("Could not determine video duration.");
                 return;
             }
-            var process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = GetBundledExePath("ffmpeg.exe");
-            process.StartInfo.Arguments = pendingArgs;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.CreateNoWindow = true;
-            process.EnableRaisingEvents = true;
-            process.Start();
+            ffmpegProcess = new System.Diagnostics.Process();
+            ffmpegProcess.StartInfo.FileName = GetBundledExePath("ffmpeg.exe");
+            ffmpegProcess.StartInfo.Arguments = pendingArgs;
+            ffmpegProcess.StartInfo.UseShellExecute = false;
+            ffmpegProcess.StartInfo.RedirectStandardOutput = true;
+            ffmpegProcess.StartInfo.RedirectStandardError = true;
+            ffmpegProcess.StartInfo.CreateNoWindow = true;
+            ffmpegProcess.EnableRaisingEvents = true;
+            ffmpegProcess.Start();
             await Task.Run(() =>
             {
                 string line;
-                var stderr = process.StandardError;
+                var stderr = ffmpegProcess.StandardError;
                 DateTime ffmpegStart = DateTime.Now;
                 while ((line = stderr.ReadLine()) != null)
                 {
@@ -444,7 +447,7 @@ namespace VideoConverter
                                 {
                                     if (speedVal < 1.5)
                                     {
-                                        try { process.Kill(); } catch { }
+                                        try { ffmpegProcess.Kill(); } catch { }
                                         this.Invoke(new Action(() =>
                                         {
                                             logOutput.Clear();
@@ -467,7 +470,7 @@ namespace VideoConverter
                         logOutput.AppendText(line + Environment.NewLine);
                     }));
                 }
-                process.WaitForExit();
+                ffmpegProcess.WaitForExit();
             });
             if (System.IO.File.Exists(pendingOutputFile))
             {
@@ -1128,7 +1131,8 @@ namespace VideoConverter
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (btnAudioOnly.Checked) {    
+            if (btnAudioOnly.Checked)
+            {
                 comboBoxFrameRate.Enabled = false;
                 comboBoxInterpolation.Enabled = false;
                 comboBoxCodec.Enabled = false;
@@ -1146,6 +1150,32 @@ namespace VideoConverter
                 comboBoxBitrate.Enabled = true;
                 checkboxMKV.Enabled = true;
                 checkboxAC3.Enabled = true;
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (ffmpegProcess != null && !ffmpegProcess.HasExited)
+            {
+                {
+                    var result = MessageBox.Show("Are you sure you want to stop the conversion?", "Confirm Stop", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            ffmpegProcess.Kill();
+                            progressBar1.Value = 0;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to stop the conversion: {ex.Message}");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No conversion is currently running.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

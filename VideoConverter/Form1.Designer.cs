@@ -56,6 +56,7 @@
             lblAudioCodec = new Label();
             tabControl1 = new TabControl();
             ConverterTab = new TabPage();
+            button3 = new Button();
             pictureBox4 = new PictureBox();
             label8 = new Label();
             pictureBox1 = new PictureBox();
@@ -380,6 +381,7 @@
             // 
             ConverterTab.BackColor = SystemColors.Control;
             ConverterTab.BackgroundImageLayout = ImageLayout.None;
+            ConverterTab.Controls.Add(button3);
             ConverterTab.Controls.Add(pictureBox4);
             ConverterTab.Controls.Add(label8);
             ConverterTab.Controls.Add(pictureBox1);
@@ -407,6 +409,17 @@
             ConverterTab.Size = new Size(1270, 1044);
             ConverterTab.TabIndex = 1;
             ConverterTab.Text = "Convert";
+            // 
+            // button3
+            // 
+            button3.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.Location = new Point(1017, 778);
+            button3.Name = "button3";
+            button3.Size = new Size(197, 94);
+            button3.TabIndex = 38;
+            button3.Text = "Cancel Conversion";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // pictureBox4
             // 
@@ -442,9 +455,9 @@
             // button2
             // 
             button2.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(1017, 850);
+            button2.Location = new Point(1017, 878);
             button2.Name = "button2";
-            button2.Size = new Size(199, 80);
+            button2.Size = new Size(199, 52);
             button2.TabIndex = 34;
             button2.Text = "Copy Parameters";
             button2.UseVisualStyleBackColor = true;
@@ -914,5 +927,6 @@
         private CheckBox btnAudioOnly;
         private Label label11;
         private PictureBox pictureBox4;
+        private Button button3;
     }
 }
