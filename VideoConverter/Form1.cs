@@ -1164,7 +1164,11 @@ namespace VideoConverter
                         try
                         {
                             ffmpegProcess.Kill();
+                            logOutput.Clear();
                             progressBar1.Value = 0;
+                            labelProgress.Text = "0%";
+                            progressBarBluRayTab.Value = 0;
+                            labelProgressBluray.Text = "0%";
                         }
                         catch (Exception ex)
                         {
