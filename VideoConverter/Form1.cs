@@ -35,36 +35,17 @@ namespace VideoConverter
         }
         private VideoInfo selectedVideoInfo = null;
 
-        private bool IsExeInPath(string exeName)
-        {
-            var paths = Environment.GetEnvironmentVariable("PATH");
-            if (string.IsNullOrEmpty(paths)) return false;
-            foreach (var path in paths.Split(';'))
-            {
-                try
-                {
-                    var exePath = System.IO.Path.Combine(path.Trim(), exeName);
-                    if (System.IO.File.Exists(exePath))
-                        return true;
-                }
-                catch { }
-            }
-            return false;
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             comboBoxFrameRate.SelectedItem = "29.97";
             comboBoxBitrate.SelectedItem = "25M";
             comboBoxCodec.SelectedItem = "libx264";
             comboBoxInterpolation.SelectedItem = "None";
-            // Set video info labels to initial state
             lblFpsValue.Text = string.Empty;
             lblBitrateValue.Text = string.Empty;
             lblCodecValue.Text = "No video selected";
             comboBoxAudioBitrate.SelectedItem = "Original";
-            // Set only the background image for btnGenerateBluray and stretch it
-            btnGenerateBlurayBlurayTab.BackgroundImage = Properties.Resources.bluray; // Replace 'bluray' with your actual resource name
+            btnGenerateBlurayBlurayTab.BackgroundImage = Properties.Resources.bluray; 
             btnGenerateBlurayBlurayTab.BackgroundImageLayout = ImageLayout.Stretch;
             btnGenerateBlurayBlurayTab.Text = string.Empty;
             // Load last output directory if available
@@ -78,13 +59,10 @@ namespace VideoConverter
             // Load last ImgBurn directory location if available
             string lastDirImgBurn = Properties.Settings.Default.ImgBurnFileLocation;
             if (!string.IsNullOrWhiteSpace(lastDirImgBurn))
-            {
-                ImgBurnLocationLabel.Text = lastDirImgBurn;
-            }
-            else
-            {
+                 ImgBurnLocationLabel.Text = lastDirImgBurn;            
+            else            
                 ImgBurnLocationLabel.Text = "C:\\Program Files(x86)\\ImgBurn\\ImgBurn.exe";
-            }
+            
             btnGenerateBlurayBlurayTab.AllowDrop = true;
             btnGenerateBlurayBlurayTab.DragEnter += btnGenerateBlurayBlurayTab_DragEnter;
             btnGenerateBlurayBlurayTab.DragDrop += btnGenerateBlurayBlurayTab_DragDrop;
@@ -120,31 +98,19 @@ namespace VideoConverter
                         lblAudioCodec.Text = $"Audio: {selectedVideoInfo.AudioCodec ?? "N/A"}";
                         selectedVideoInfo.OriginalFPS = selectedVideoInfo.Fps ?? 29.97;
                         if (lblFpsValue.Text.Contains("29.97") || lblFpsValue.Text.Contains("23.976") || lblFpsValue.Text.Contains("23.98") || lblFpsValue.Text.Contains("24"))
-                        {
-                            lblFpsValue.ForeColor = Color.Green;
-                        }
-                        else
-                        {
-                            lblFpsValue.ForeColor = Color.Black;
-                        }
+                            lblFpsValue.ForeColor = Color.Green;                        
+                        else                        
+                            lblFpsValue.ForeColor = Color.Black;                        
 
                         if (lblCodecValue.Text.Contains("h264") || lblCodecValue.Text.Contains("vc1"))
-                        {
-                            lblCodecValue.ForeColor = Color.Green;
-                        }
-                        else
-                        {
-                            lblCodecValue.ForeColor = Color.Black;
-                        }
+                            lblCodecValue.ForeColor = Color.Green;                        
+                        else                        
+                            lblCodecValue.ForeColor = Color.Black;                        
 
                         if (lblAudioCodec.Text.Contains("ac3"))
-                        {
-                            lblAudioCodec.ForeColor = Color.Green;
-                        }
-                        else
-                        {
-                            lblAudioCodec.ForeColor = Color.Black;
-                        }
+                            lblAudioCodec.ForeColor = Color.Green;                        
+                        else                        
+                            lblAudioCodec.ForeColor = Color.Black;                        
                     }
                     else
                     {
@@ -165,7 +131,6 @@ namespace VideoConverter
             }
         }
 
-        // Helper to get bundled exe path
         private string GetBundledExePath(string exeName)
         {
             return System.IO.Path.Combine(Application.StartupPath, exeName);
@@ -233,271 +198,8 @@ namespace VideoConverter
         private string pendingOutputDir = null;
 
         // Class-level ffmpeg process for control from any method
-        private System.Diagnostics.Process? ffmpegProcess = null;
-        private async void btnConvert_Click(object sender, EventArgs e)
-        {
-            // Get input file and output directory
-            string inputFile = lblSelectedFile.Text;
-            string outputDir = lblOutputDir.Text;
-            string newFileName = txtFileName.Text.Trim();
-            string filterArg = "";
-            if (string.IsNullOrWhiteSpace(newFileName))
-            {
-                MessageBox.Show("You must enter a new file name before creating ffmpeg parameters.", "Missing File Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            bool isMKV = checkboxMKV != null && checkboxMKV.Checked;
-            if (isMKV)
-            {
-                if (!newFileName.EndsWith(".mkv", StringComparison.OrdinalIgnoreCase))
-                    newFileName = Path.ChangeExtension(newFileName, ".mkv");
-            }
-            else
-            {
-                if (!newFileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
-                    newFileName += ".mp4";
-            }
-            if (string.IsNullOrWhiteSpace(inputFile) && string.IsNullOrWhiteSpace(outputDir))
-            {
-                MessageBox.Show("Please select both an input file and output directory.");
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(inputFile))
-            {
-                MessageBox.Show("You must select an input video file before converting.", "Missing Input File", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(outputDir))
-            {
-                MessageBox.Show("You must select an output folder before converting.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            string frameRate = comboBoxFrameRate.SelectedItem?.ToString() ?? "29.97";
-            string bitrate = comboBoxBitrate.SelectedItem?.ToString()?.Replace(" Mbps", "M") ?? "25M";
-            string codec = comboBoxCodec.SelectedItem?.ToString() ?? "libx264";
-            string interpolation = comboBoxInterpolation.SelectedItem?.ToString() ?? "minterpolate";
-            string baseName = Path.GetFileNameWithoutExtension(newFileName);
-            string ext = Path.GetExtension(newFileName);
-            string outputFile = Path.Combine(outputDir, newFileName);
-            int count = 1;
-            string vfArg = "";
-            if (frameRate == "29.97")
-                frameRate = "30000/1001";
-            else if (frameRate == "23.976")
-                frameRate = "24000/1001";
+        private System.Diagnostics.Process? ffmpegProcess = null; 
 
-            string rArg = $"-r {frameRate} ";
-            if (frameRate.Equals("Same as source", StringComparison.OrdinalIgnoreCase) && selectedVideoInfo != null && selectedVideoInfo.OriginalFPS != null)
-            {
-                frameRate = selectedVideoInfo.OriginalFPS.Value.ToString("0.00");
-                rArg = ""; // No need to set -r if using original fps
-            }
-
-            while (File.Exists(outputFile))
-            {
-                outputFile = Path.Combine(outputDir, $"{baseName} ({count}){ext}");
-                count++;
-            }
-
-            // Repurpose 'Upscale to HD' to output 1920x816 (2.35:1) with black bars (letterboxing) to 1920x1080
-            string upscaleFilter = "crop=1920:816:0:132,pad=1920:1080:0:132,unsharp=5:5:0.8:3:3:0.0";
-            bool isBeingUpscaled = checkboxUpscale != null && checkboxUpscale.Checked;
-            if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
-            {
-                vfArg = isBeingUpscaled
-                    ? $"-vf \"minterpolate=fps={frameRate},{upscaleFilter}\" "
-                    : $"-vf \"minterpolate=fps={frameRate}\" ";
-                rArg = "";
-            }
-            else if (interpolation.Equals("tblend", StringComparison.OrdinalIgnoreCase))
-            {
-                vfArg = isBeingUpscaled
-                    ? $"-vf \"tblend=all_mode=average,{upscaleFilter}\" "
-                    : "-vf \"tblend=all_mode=average\" ";
-            }
-            else if (interpolation.Equals("None", StringComparison.OrdinalIgnoreCase))
-            {
-                if (rArg != "")
-                {
-                    vfArg = isBeingUpscaled
-                        ? $"-vf \"{upscaleFilter}\" "
-                        : $"-vf \"framerate={frameRate}\" ";
-                    rArg = "";
-                }
-                else
-                {
-                    vfArg = isBeingUpscaled
-                        ? $"-vf \"{upscaleFilter}\" "
-                        : "";
-                }
-            }
-            string inputArg;
-            if (inputFile.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
-            {
-                inputArg = $"-f concat -safe 0 -i \"{inputFile}\" ";
-            }
-            else
-            {
-                inputArg = $"-i \"{inputFile}\" ";
-            }
-            string args;
-            string audioArg = "";
-            if (checkboxAC3 != null && checkboxAC3.Checked)
-            {
-                audioArg = "-c:a ac3 -b:a 640k ";
-            }
-            if (btnAudioOnly.Checked)
-            {
-                args = $"-i \"{inputFile}\" -c:v copy -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
-                txtArgs.Text = "ffmpeg " + args;
-                btnRun.Enabled = true;
-                pendingArgs = args;
-                pendingOutputFile = outputFile;
-                pendingInputFile = inputFile;
-                pendingOutputDir = outputDir;
-                pendingDuration = await GetVideoDurationAsync(inputFile);
-                return;
-            }
-            if (isMKV)
-            {
-                if (frameRate == "24000/1001")
-                {
-                    rArg = "-r 24000/1001";
-                }
-                else if (frameRate == "30000/1001")
-                {
-                    rArg = "-r 30000/1001";
-                }
-                // Blu-ray compliant mkv
-                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p {rArg} -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
-            }
-            else
-            {
-                args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 -pix_fmt yuv420p {audioArg}\"{outputFile}\"";
-            }
-            txtArgs.Text = "ffmpeg " + args;
-            btnRun.Enabled = true;
-            pendingArgs = args;
-            pendingOutputFile = outputFile;
-            pendingInputFile = inputFile;
-            pendingOutputDir = outputDir;
-            pendingDuration = await GetVideoDurationAsync(inputFile);
-        }
-
-        private async void btnRun_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(pendingArgs) || string.IsNullOrWhiteSpace(pendingOutputFile) || string.IsNullOrWhiteSpace(pendingInputFile) || string.IsNullOrWhiteSpace(pendingOutputDir))
-            {
-                MessageBox.Show("No command to run.");
-                return;
-            }
-            progressBar1.Value = 0;
-            labelProgress.Text = "0%";
-            progressBarBluRayTab.Value = 0;
-            labelProgressBluray.Text = "0%";
-            logOutput.Clear(); // Clear log before starting
-            var duration = pendingDuration;
-            if (duration == null)
-            {
-                MessageBox.Show("Could not determine video duration.");
-                return;
-            }
-            ffmpegProcess = new System.Diagnostics.Process();
-            ffmpegProcess.StartInfo.FileName = GetBundledExePath("ffmpeg.exe");
-            ffmpegProcess.StartInfo.Arguments = pendingArgs;
-            ffmpegProcess.StartInfo.UseShellExecute = false;
-            ffmpegProcess.StartInfo.RedirectStandardOutput = true;
-            ffmpegProcess.StartInfo.RedirectStandardError = true;
-            ffmpegProcess.StartInfo.CreateNoWindow = true;
-            ffmpegProcess.EnableRaisingEvents = true;
-            ffmpegProcess.Start();
-            await Task.Run(() =>
-            {
-                string line;
-                var stderr = ffmpegProcess.StandardError;
-                DateTime ffmpegStart = DateTime.Now;
-                while ((line = stderr.ReadLine()) != null)
-                {
-                    var time = ParseFfmpegTime(line);
-                    int percent = 0;
-                    if (time != null && duration.Value.TotalSeconds > 0)
-                    {
-                        percent = (int)(time.Value.TotalSeconds / duration.Value.TotalSeconds * 100);
-                        if (percent > 100) percent = 100;
-                        this.Invoke(new Action(() =>
-                        {
-                            progressBar1.Value = percent;
-                            labelProgress.Text = percent + "%";
-                            progressBarBluRayTab.Value = percent;
-                            labelProgressBluray.Text = percent + "%";
-                        }));
-                    }
-
-                    // Only check speed after 8 seconds from ffmpeg start
-                    if ((DateTime.Now - ffmpegStart).TotalSeconds > 8)
-                    {
-                        int speedIdx = line.IndexOf("speed=");
-                        if (speedIdx != -1)
-                        {
-                            int xIdx = line.IndexOf('x', speedIdx);
-                            if (xIdx > speedIdx)
-                            {
-                                string speedStr = line.Substring(speedIdx + 6, xIdx - (speedIdx + 6));
-                                if (double.TryParse(speedStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double speedVal))
-                                {
-                                    if (speedVal < 1.5)
-                                    {
-                                        try { ffmpegProcess.Kill(); } catch { }
-                                        this.Invoke(new Action(() =>
-                                        {
-                                            logOutput.Clear();
-                                            progressBar1.Value = 0;
-                                            labelProgress.Text = "0%";
-                                            progressBarBluRayTab.Value = 0;
-                                            labelProgressBluray.Text = "0%";
-                                            MessageBox.Show("Conversion failed: This is likely due to a file parameter mismatch or performance issue.", "Conversion Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        }));
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // Append ffmpeg output to logOutput RichTextBox in real time
-                    this.Invoke(new Action(() =>
-                    {
-                        logOutput.AppendText(line + Environment.NewLine);
-                    }));
-                }
-                ffmpegProcess.WaitForExit();
-            });
-            if (System.IO.File.Exists(pendingOutputFile))
-            {
-                progressBar1.Value = 100;
-                labelProgress.Text = "100%";
-                progressBarBluRayTab.Value = 100;
-                labelProgressBluray.Text = "100%";
-                MessageBox.Show("Conversion completed successfully!");
-                await Task.Delay(1000);
-                progressBar1.Value = 0;
-                labelProgress.Text = "0%";
-                progressBarBluRayTab.Value = 0;
-                labelProgressBluray.Text = "0%";
-                lblSelectedFile.Text = string.Empty;
-            }
-            else
-            {
-                MessageBox.Show("Conversion failed. Output file was not created.");
-            }
-            btnRun.Enabled = false;
-            txtArgs.Text = string.Empty;
-            pendingArgs = null;
-            pendingOutputFile = null;
-            pendingInputFile = null;
-            pendingOutputDir = null;
-            pendingDuration = null;
-        }
 
         private async Task<TimeSpan?> GetVideoDurationAsync(string inputFile)
         {
@@ -589,8 +291,7 @@ namespace VideoConverter
                     var fileOrderDialog = new FileOrderDialog(openFileDialog.FileNames.ToList());
                     if (fileOrderDialog.ShowDialog() != DialogResult.OK)
                     {
-                        // User cancelled, abort
-                        return;
+                       return;
                     }
                     var orderedFiles = fileOrderDialog.OrderedFiles;
 
@@ -620,205 +321,6 @@ namespace VideoConverter
                     }
                     MessageBox.Show($"Text file created: {Path.GetFileName(txtFile)}. Use this txt file as video input.");
                     lblSelectedFile.Text = txtFile;
-                }
-            }
-        }
-
-        private async void btnGenerateBluray_Click(object sender, EventArgs e)
-        {
-            using (var openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Video Files|*.mkv;*.mp4";
-                openFileDialog.Multiselect = true;
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    // Show file order dialog before proceeding
-                    var fileOrderDialog = new FileOrderDialog(openFileDialog.FileNames.ToList());
-                    if (fileOrderDialog.ShowDialog() != DialogResult.OK)
-                    {
-                        // User cancelled, abort
-                        return;
-                    }
-                    var orderedFiles = fileOrderDialog.OrderedFiles;
-
-                    // Validate all files: must be 1080p and AC3 audio
-                    foreach (var file in orderedFiles)
-                    {
-                        var info = GetVideoInfo(file);
-                        if (info == null || info.AudioCodec == null || info.Height == null || info.Height != 1080 || !info.AudioCodec.ToLower().Contains("ac3"))
-                        {
-                            MessageBox.Show($"File '{System.IO.Path.GetFileName(file)}' is not Blu-ray compliant. Only 1080p video with AC3 audio is allowed.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
-
-                    string outputDir = lblOutputDir.Text;
-                    if (string.IsNullOrWhiteSpace(outputDir))
-                    {
-                        MessageBox.Show("You must select an output folder first.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    int fileCount = orderedFiles.Count;
-                    progressBar1.Minimum = 0;
-                    progressBar1.Maximum = fileCount;
-                    progressBar1.Value = 0;
-                    progressBarBluRayTab.Minimum = 0;
-                    progressBarBluRayTab.Maximum = fileCount;
-                    progressBarBluRayTab.Value = 0;
-                    labelProgress.Text = $"0/{fileCount}";
-                    labelProgressBluray.Text = $"0/{fileCount}";
-                    string[] bdmvDirs = new string[fileCount];
-                    string[] metaFiles = new string[fileCount];
-                    for (int i = 0; i < fileCount; i++)
-                    {
-                        string filePath = orderedFiles[i];
-                        string metaFile = Path.Combine(outputDir, fileCount == 1 ? "bluray.meta" : $"bluray{i + 1}.meta");
-                        metaFiles[i] = metaFile;
-                        using (var writer = new StreamWriter(metaFile, false))
-                        {
-                            writer.WriteLine("MUXOPT --blu-ray --auto-chapters=5 --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500");
-                            writer.WriteLine($"V_MPEG4/ISO/AVC, \"{filePath}\", track=1");
-                            writer.WriteLine($"A_AC3, \"{filePath}\", track=2");
-                        }
-                        // Run tsmuxer for this meta file
-                        string bdmvDir = Path.Combine(outputDir, $"BDMV{i + 1}");
-                        bdmvDirs[i] = bdmvDir;
-                        try
-                        {
-                            if (!Directory.Exists(bdmvDir))
-                                Directory.CreateDirectory(bdmvDir);
-                            var process = new System.Diagnostics.Process();
-                            process.StartInfo.FileName = GetBundledExePath("tsmuxer.exe");
-                            process.StartInfo.Arguments = $"\"{metaFile}\" \"{bdmvDir}\"";
-                            process.StartInfo.UseShellExecute = false;
-                            process.StartInfo.RedirectStandardOutput = true;
-                            process.StartInfo.RedirectStandardError = true;
-                            process.StartInfo.CreateNoWindow = true;
-                            process.Start();
-                            await process.WaitForExitAsync();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Failed to run tsmuxer for {metaFile}: {ex.Message}");
-                        }
-                        // Update progress bar after each file
-                        progressBar1.Value = i + 1;
-                        labelProgress.Text = $"{i + 1}/{fileCount}";
-                        progressBarBluRayTab.Value = i + 1;
-                        labelProgressBluray.Text = $"{i + 1}/{fileCount}";
-                        await Task.Delay(100); // Small delay for UI update
-                    }
-                    // --- Merging Step ---
-                    string mergedBDMV = Path.Combine(outputDir, "BDMV");
-                    string mergedSTREAM = Path.Combine(mergedBDMV, "STREAM");
-                    string mergedPLAYLIST = Path.Combine(mergedBDMV, "PLAYLIST");
-                    string mergedCLIPINF = Path.Combine(mergedBDMV, "CLIPINF");
-                    Directory.CreateDirectory(mergedBDMV);
-                    Directory.CreateDirectory(mergedSTREAM);
-                    Directory.CreateDirectory(mergedPLAYLIST);
-                    Directory.CreateDirectory(mergedCLIPINF);
-                    // Copy index.bdmv and MovieObject.bdmv from BDMV1/BDMV
-                    string bdmv1BDMV = Path.Combine(bdmvDirs[0], "BDMV");
-                    string[] bdmvFiles = { "index.bdmv", "MovieObject.bdmv" };
-                    foreach (var file in bdmvFiles)
-                    {
-                        string src = Path.Combine(bdmv1BDMV, file);
-                        string dst = Path.Combine(mergedBDMV, file);
-                        if (File.Exists(src))
-                            File.Copy(src, dst, true);
-                    }
-                    int streamIdx = 0, playlistIdx = 0, clipinfIdx = 0;
-                    for (int i = 0; i < bdmvDirs.Length; i++)
-                    {
-                        string bdmvSub = Path.Combine(bdmvDirs[i], "BDMV");
-                        // STREAM
-                        string streamDir = Path.Combine(bdmvSub, "STREAM");
-                        if (Directory.Exists(streamDir))
-                        {
-                            foreach (var file in Directory.GetFiles(streamDir, "*.m2ts"))
-                            {
-                                string newName = streamIdx.ToString("D5") + ".m2ts";
-                                File.Copy(file, Path.Combine(mergedSTREAM, newName), true);
-                                streamIdx++;
-                            }
-                        }
-                        // PLAYLIST
-                        string playlistDir = Path.Combine(bdmvSub, "PLAYLIST");
-                        if (Directory.Exists(playlistDir))
-                        {
-                            foreach (var file in Directory.GetFiles(playlistDir, "*.mpls"))
-                            {
-                                string newName = playlistIdx.ToString("D5") + ".mpls";
-                                File.Copy(file, Path.Combine(mergedPLAYLIST, newName), true);
-                                playlistIdx++;
-                            }
-                        }
-                        // CLIPINF
-                        string clipinfDir = Path.Combine(bdmvSub, "CLIPINF");
-                        if (Directory.Exists(clipinfDir))
-                        {
-                            foreach (var file in Directory.GetFiles(clipinfDir, "*.clpi"))
-                            {
-                                string newName = clipinfIdx.ToString("D5") + ".clpi";
-                                File.Copy(file, Path.Combine(mergedCLIPINF, newName), true);
-                                clipinfIdx++;
-                            }
-                        }
-                    }
-                    // --- Remove BDMV1, BDMV2, ... directories ---
-                    foreach (var dir in bdmvDirs)
-                    {
-                        try
-                        {
-                            if (Directory.Exists(dir))
-                                Directory.Delete(dir, true);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Failed to delete {dir}: {ex.Message}");
-                        }
-                    }
-                    // --- Remove .meta files in outputDir ---
-                    try
-                    {
-                        var metaFilesToDelete = Directory.GetFiles(outputDir, "bluray*.meta");
-                        foreach (var meta in metaFilesToDelete)
-                        {
-                            try { File.Delete(meta); } catch { }
-                        }
-                    }
-                    catch { }
-                    // Reset progress bar
-                    MessageBox.Show("Blu-ray folder created successfully!");
-                    await Task.Delay(1000);
-                    progressBar1.Value = 0;
-                    labelProgress.Text = "0%";
-                    progressBarBluRayTab.Value = 0;
-                    labelProgressBluray.Text = "0%";
-
-                    // Launch ImgBurn if checkbox is checked
-                    if (checkboxImgBurn != null && checkboxImgBurn.Checked)
-                    {
-                        try
-                        {
-                            string imgburnExe = Properties.Settings.Default.ImgBurnFileLocation;
-                            if (string.IsNullOrWhiteSpace(imgburnExe))
-                            {
-                                imgburnExe = @"C:\Program Files (x86)\ImgBurn\ImgBurn.exe";
-                                Properties.Settings.Default.ImgBurnFileLocation = imgburnExe;
-                                Properties.Settings.Default.Save();
-                            }
-                            var process = new System.Diagnostics.Process();
-                            process.StartInfo.FileName = imgburnExe;
-                            process.StartInfo.Arguments = $"\"{mergedBDMV}\"";
-                            process.StartInfo.UseShellExecute = true;
-                            process.Start();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Failed to launch ImgBurn: {ex.Message}");
-                        }
-                    }
                 }
             }
         }
@@ -876,21 +378,15 @@ namespace VideoConverter
         private void lblSelectedFile_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(lblSelectedFile.Text) && !string.IsNullOrEmpty(txtFileName.Text))
-            {
-                btnConvert.Enabled = true;
-            }
-            else
-            {
-                btnConvert.Enabled = false;
-            }
+                btnConvert.Enabled = true;            
+            else            
+                btnConvert.Enabled = false;            
         }
 
         private void comboBoxAudioBitrate_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxAudioBitrate.SelectedItem != null && comboBoxAudioBitrate.SelectedItem.ToString() != "640k")
-            {
-                checkboxAC3.Checked = false;
-            }
+                checkboxAC3.Checked = false;            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -922,192 +418,7 @@ namespace VideoConverter
             else
                 e.Effect = DragDropEffects.None;
         }
-
-        private async void btnGenerateBlurayBlurayTab_DragDrop(object sender, DragEventArgs e)
-        {
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (files == null || files.Length == 0) return;
-            // Only accept MKV files
-            var mkvFiles = files.Where(f => f.EndsWith(".mkv", StringComparison.OrdinalIgnoreCase)).ToList();
-            if (mkvFiles.Count == 0)
-            {
-                MessageBox.Show("Please drop MKV files only.");
-                return;
-            }
-            // Show file order dialog before proceeding
-            var fileOrderDialog = new FileOrderDialog(mkvFiles);
-            if (fileOrderDialog.ShowDialog() != DialogResult.OK)
-                return;
-            var orderedFiles = fileOrderDialog.OrderedFiles;
-            string outputDir = lblOutputDir.Text;
-            if (string.IsNullOrWhiteSpace(outputDir))
-            {
-                MessageBox.Show("You must select an output folder first.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            int fileCount = orderedFiles.Count;
-            progressBar1.Minimum = 0;
-            progressBar1.Maximum = fileCount;
-            progressBar1.Value = 0;
-            progressBarBluRayTab.Minimum = 0;
-            progressBarBluRayTab.Maximum = fileCount;
-            progressBarBluRayTab.Value = 0;
-            labelProgress.Text = $"0/{fileCount}";
-            labelProgressBluray.Text = $"0/{fileCount}";
-            string[] bdmvDirs = new string[fileCount];
-            string[] metaFiles = new string[fileCount];
-            for (int i = 0; i < fileCount; i++)
-            {
-                string filePath = orderedFiles[i];
-                string metaFile = Path.Combine(outputDir, fileCount == 1 ? "bluray.meta" : $"bluray{i + 1}.meta");
-                metaFiles[i] = metaFile;
-                using (var writer = new StreamWriter(metaFile, false))
-                {
-                    writer.WriteLine("MUXOPT --blu-ray --auto-chapters=5 --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500");
-                    writer.WriteLine($"V_MPEG4/ISO/AVC, \"{filePath}\", track=1");
-                    writer.WriteLine($"A_AC3, \"{filePath}\", track=2");
-                }
-                // Run tsmuxer for this meta file
-                string bdmvDir = Path.Combine(outputDir, $"BDMV{i + 1}");
-                bdmvDirs[i] = bdmvDir;
-                try
-                {
-                    if (!Directory.Exists(bdmvDir))
-                        Directory.CreateDirectory(bdmvDir);
-                    var process = new System.Diagnostics.Process();
-                    process.StartInfo.FileName = GetBundledExePath("tsmuxer.exe");
-                    process.StartInfo.Arguments = $"\"{metaFile}\" \"{bdmvDir}\"";
-                    process.StartInfo.UseShellExecute = false;
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.RedirectStandardError = true;
-                    process.StartInfo.CreateNoWindow = true;
-                    process.Start();
-                    await process.WaitForExitAsync();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to run tsmuxer for {metaFile}: {ex.Message}");
-                }
-                // Update progress bar after each file
-                progressBar1.Value = i + 1;
-                labelProgress.Text = $"{i + 1}/{fileCount}";
-                progressBarBluRayTab.Value = i + 1;
-                labelProgressBluray.Text = $"{i + 1}/{fileCount}";
-                await Task.Delay(100); // Small delay for UI update
-            }
-            // --- Merging Step ---
-            string mergedBDMV = Path.Combine(outputDir, "BDMV");
-            string mergedSTREAM = Path.Combine(mergedBDMV, "STREAM");
-            string mergedPLAYLIST = Path.Combine(mergedBDMV, "PLAYLIST");
-            string mergedCLIPINF = Path.Combine(mergedBDMV, "CLIPINF");
-            Directory.CreateDirectory(mergedBDMV);
-            Directory.CreateDirectory(mergedSTREAM);
-            Directory.CreateDirectory(mergedPLAYLIST);
-            Directory.CreateDirectory(mergedCLIPINF);
-            // Copy index.bdmv and MovieObject.bdmv from BDMV1/BDMV
-            string bdmv1BDMV = Path.Combine(bdmvDirs[0], "BDMV");
-            string[] bdmvFiles = { "index.bdmv", "MovieObject.bdmv" };
-            foreach (var file in bdmvFiles)
-            {
-                string src = Path.Combine(bdmv1BDMV, file);
-                string dst = Path.Combine(mergedBDMV, file);
-                if (File.Exists(src))
-                    File.Copy(src, dst, true);
-            }
-            int streamIdx = 0, playlistIdx = 0, clipinfIdx = 0;
-            for (int i = 0; i < bdmvDirs.Length; i++)
-            {
-                string bdmvSub = Path.Combine(bdmvDirs[i], "BDMV");
-                // STREAM
-                string streamDir = Path.Combine(bdmvSub, "STREAM");
-                if (Directory.Exists(streamDir))
-                {
-                    foreach (var file in Directory.GetFiles(streamDir, "*.m2ts"))
-                    {
-                        string newName = streamIdx.ToString("D5") + ".m2ts";
-                        File.Copy(file, Path.Combine(mergedSTREAM, newName), true);
-                        streamIdx++;
-                    }
-                }
-                // PLAYLIST
-                string playlistDir = Path.Combine(bdmvSub, "PLAYLIST");
-                if (Directory.Exists(playlistDir))
-                {
-                    foreach (var file in Directory.GetFiles(playlistDir, "*.mpls"))
-                    {
-                        string newName = playlistIdx.ToString("D5") + ".mpls";
-                        File.Copy(file, Path.Combine(mergedPLAYLIST, newName), true);
-                        playlistIdx++;
-                    }
-                }
-                // CLIPINF
-                string clipinfDir = Path.Combine(bdmvSub, "CLIPINF");
-                if (Directory.Exists(clipinfDir))
-                {
-                    foreach (var file in Directory.GetFiles(clipinfDir, "*.clpi"))
-                    {
-                        string newName = clipinfIdx.ToString("D5") + ".clpi";
-                        File.Copy(file, Path.Combine(mergedCLIPINF, newName), true);
-                        clipinfIdx++;
-                    }
-                }
-            }
-            // --- Remove BDMV1, BDMV2, ... directories ---
-            foreach (var dir in bdmvDirs)
-            {
-                try
-                {
-                    if (Directory.Exists(dir))
-                        Directory.Delete(dir, true);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to delete {dir}: {ex.Message}");
-                }
-            }
-            // --- Remove .meta files in outputDir ---
-            try
-            {
-                var metaFilesToDelete = Directory.GetFiles(outputDir, "bluray*.meta");
-                foreach (var meta in metaFilesToDelete)
-                {
-                    try { File.Delete(meta); } catch { }
-                }
-            }
-            catch { }
-            // Reset progress bar
-            MessageBox.Show("Blu-ray folder created successfully!");
-            await Task.Delay(1000);
-            progressBar1.Value = 0;
-            labelProgress.Text = "0%";
-            progressBarBluRayTab.Value = 0;
-            labelProgressBluray.Text = "0%";
-
-            // Launch ImgBurn if checkbox is checked
-            if (checkboxImgBurn != null && checkboxImgBurn.Checked)
-            {
-                try
-                {
-                    string imgburnExe = Properties.Settings.Default.ImgBurnFileLocation;
-                    if (string.IsNullOrWhiteSpace(imgburnExe))
-                    {
-                        imgburnExe = @"C:\Program Files (x86)\ImgBurn\ImgBurn.exe";
-                        Properties.Settings.Default.ImgBurnFileLocation = imgburnExe;
-                        Properties.Settings.Default.Save();
-                    }
-                    var process = new System.Diagnostics.Process();
-                    process.StartInfo.FileName = imgburnExe;
-                    process.StartInfo.Arguments = $"\"{mergedBDMV}\"";
-                    process.StartInfo.UseShellExecute = true;
-                    process.Start();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to launch ImgBurn: {ex.Message}");
-                }
-            }
-        }
-
+              
         private void btnImgBurnLocation_Click(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog())
@@ -1178,9 +489,8 @@ namespace VideoConverter
                 }
             }
             else
-            {
                 MessageBox.Show("No conversion is currently running.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            
         }
     }
 }

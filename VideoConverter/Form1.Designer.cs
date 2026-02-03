@@ -440,7 +440,7 @@
             label8.Name = "label8";
             label8.Size = new Size(54, 37);
             label8.TabIndex = 36;
-            label8.Text = "2.2";
+            label8.Text = "2.3";
             // 
             // pictureBox1
             // 
@@ -603,7 +603,7 @@
             label9.Name = "label9";
             label9.Size = new Size(54, 37);
             label9.TabIndex = 46;
-            label9.Text = "2.2";
+            label9.Text = "2.3";
             // 
             // pictureBox2
             // 
@@ -767,7 +767,7 @@
             label10.Name = "label10";
             label10.Size = new Size(54, 37);
             label10.TabIndex = 47;
-            label10.Text = "2.2";
+            label10.Text = "2.3";
             // 
             // pictureBox3
             // 
@@ -840,7 +840,7 @@
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Video2BluRay v2.2";
+            Text = "Video2BluRay v2.3";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
