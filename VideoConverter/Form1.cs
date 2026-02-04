@@ -277,10 +277,8 @@ namespace VideoConverter
                 {
                     // Show file order dialog before proceeding
                     var fileOrderDialog = new FileOrderDialog(openFileDialog.FileNames.ToList());
-                    if (fileOrderDialog.ShowDialog() != DialogResult.OK)
-                    {
-                       return;
-                    }
+                    if (fileOrderDialog.ShowDialog() != DialogResult.OK) return;
+                    
                     var orderedFiles = fileOrderDialog.OrderedFiles;
 
                     string outputDir = lblOutputDir.Text;
@@ -307,7 +305,7 @@ namespace VideoConverter
                             writer.WriteLine($"file '{file}'");
                         }
                     }
-                    MessageBox.Show($"Text file created: {Path.GetFileName(txtFile)}. Use this txt file as video input.");
+                    MessageBox.Show($"File created: {Path.GetFileName(txtFile)}. Use this file as video input.");
                     lblSelectedFile.Text = txtFile;
                 }
             }

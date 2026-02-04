@@ -108,77 +108,10 @@ namespace VideoConverter
                         if (File.Exists(src))
                             File.Copy(src, dst, true);
                     }
-                    int streamIdx = 0, playlistIdx = 0, clipinfIdx = 0;
-                    for (int i = 0; i < bdmvDirs.Length; i++)
-                    {
-                        string bdmvSub = Path.Combine(bdmvDirs[i], "BDMV");
-                        // STREAM
-                        string streamDir = Path.Combine(bdmvSub, "STREAM");
-                        if (Directory.Exists(streamDir))
-                        {
-                            foreach (var file in Directory.GetFiles(streamDir, "*.m2ts"))
-                            {
-                                string newName = streamIdx.ToString("D5") + ".m2ts";
-                                File.Copy(file, Path.Combine(mergedSTREAM, newName), true);
-                                streamIdx++;
-                            }
-                        }
-                        // PLAYLIST
-                        string playlistDir = Path.Combine(bdmvSub, "PLAYLIST");
-                        if (Directory.Exists(playlistDir))
-                        {
-                            foreach (var file in Directory.GetFiles(playlistDir, "*.mpls"))
-                            {
-                                string newName = playlistIdx.ToString("D5") + ".mpls";
-                                File.Copy(file, Path.Combine(mergedPLAYLIST, newName), true);
-                                playlistIdx++;
-                            }
-                        }
-                        // CLIPINF
-                        string clipinfDir = Path.Combine(bdmvSub, "CLIPINF");
-                        if (Directory.Exists(clipinfDir))
-                        {
-                            foreach (var file in Directory.GetFiles(clipinfDir, "*.clpi"))
-                            {
-                                string newName = clipinfIdx.ToString("D5") + ".clpi";
-                                File.Copy(file, Path.Combine(mergedCLIPINF, newName), true);
-                                clipinfIdx++;
-                            }
-                        }
-                    }
-                    // --- Remove BDMV1, BDMV2, ... directories ---
-                    foreach (var dir in bdmvDirs)
-                    {
-                        try
-                        {
-                            if (Directory.Exists(dir))
-                                Directory.Delete(dir, true);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Failed to delete {dir}: {ex.Message}");
-                        }
-                    }
-                    // --- Remove .meta files in outputDir ---
-                    try
-                    {
-                        var metaFilesToDelete = Directory.GetFiles(outputDir, "bluray*.meta");
-                        foreach (var meta in metaFilesToDelete)
-                        {
-                            try { File.Delete(meta); } catch { }
-                        }
-                    }
-                    catch { }
-                    try
-                    {
-                        var concatFilesToDelete = Directory.GetFiles(outputDir, "vidClip_*.txt");
-                        foreach (var concatFile in concatFilesToDelete)
-                        {
-                            try { File.Delete(concatFile); } catch { }
-                        }
-                    }
-                    catch { }
-                    
+                    CreateBluRayFiles(bdmvDirs, mergedSTREAM, mergedPLAYLIST, mergedCLIPINF);
+
+                    RemoveTempFiles(bdmvDirs, outputDir);
+
                     // Reset progress bar
                     MessageBox.Show("Blu-ray folder created successfully!");
                     await Task.Delay(1000);
@@ -188,30 +121,69 @@ namespace VideoConverter
                     labelProgressBluray.Text = "0%";
 
                     // Launch ImgBurn if checkbox is checked
-                    if (checkboxImgBurn != null && checkboxImgBurn.Checked)
-                    {
-                        try
-                        {
-                            string imgburnExe = Properties.Settings.Default.ImgBurnFileLocation;
-                            if (string.IsNullOrWhiteSpace(imgburnExe))
-                            {
-                                imgburnExe = @"C:\Program Files (x86)\ImgBurn\ImgBurn.exe";
-                                Properties.Settings.Default.ImgBurnFileLocation = imgburnExe;
-                                Properties.Settings.Default.Save();
-                            }
-                            var process = new System.Diagnostics.Process();
-                            process.StartInfo.FileName = imgburnExe;
-                            process.StartInfo.Arguments = $"\"{mergedBDMV}\"";
-                            process.StartInfo.UseShellExecute = true;
-                            process.Start();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Failed to launch ImgBurn: {ex.Message}");
-                        }
-                    }
+                    OpenImgBurn(mergedBDMV);
                 }
             }
+        }
+
+        private void OpenImgBurn(string mergedBDMV)
+        {
+            if (checkboxImgBurn != null && checkboxImgBurn.Checked)
+            {
+                try
+                {
+                    string imgburnExe = Properties.Settings.Default.ImgBurnFileLocation;
+                    if (string.IsNullOrWhiteSpace(imgburnExe))
+                    {
+                        imgburnExe = @"C:\Program Files (x86)\ImgBurn\ImgBurn.exe";
+                        Properties.Settings.Default.ImgBurnFileLocation = imgburnExe;
+                        Properties.Settings.Default.Save();
+                    }
+                    var process = new System.Diagnostics.Process();
+                    process.StartInfo.FileName = imgburnExe;
+                    process.StartInfo.Arguments = $"\"{mergedBDMV}\"";
+                    process.StartInfo.UseShellExecute = true;
+                    process.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to launch ImgBurn: {ex.Message}");
+                }
+            }
+        }
+
+        private static void RemoveTempFiles(string[] bdmvDirs, string outputDir)
+        {
+            foreach (var dir in bdmvDirs)
+            {
+                try
+                {
+                    if (Directory.Exists(dir))
+                        Directory.Delete(dir, true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to delete {dir}: {ex.Message}");
+                }
+            }
+            try
+            {
+                var metaFilesToDelete = Directory.GetFiles(outputDir, "bluray*.meta");
+                foreach (var meta in metaFilesToDelete)
+                {
+                    try { File.Delete(meta); } catch { }
+                }
+            }
+            catch { }
+            try
+            {
+                var concatFilesToDelete = Directory.GetFiles(outputDir, "vidClip_*.txt");
+                foreach (var concatFile in concatFilesToDelete)
+                {
+                    try { File.Delete(concatFile); } catch { }
+                }
+            }
+            catch { }
         }
 
         private async void btnGenerateBlurayBlurayTab_DragDrop(object sender, DragEventArgs e)
@@ -305,6 +277,24 @@ namespace VideoConverter
                 if (File.Exists(src))
                     File.Copy(src, dst, true);
             }
+            CreateBluRayFiles(bdmvDirs, mergedSTREAM, mergedPLAYLIST, mergedCLIPINF);
+            RemoveTempFiles(bdmvDirs, outputDir);
+
+            // Reset progress bar
+            MessageBox.Show("Blu-ray folder created successfully!");
+            await Task.Delay(1000);
+            progressBar1.Value = 0;
+            labelProgress.Text = "0%";
+            progressBarBluRayTab.Value = 0;
+            labelProgressBluray.Text = "0%";
+
+            // Launch ImgBurn if checkbox is checked
+            OpenImgBurn(mergedBDMV);
+        }
+
+        private static void CreateBluRayFiles(string[] bdmvDirs, string mergedSTREAM, string mergedPLAYLIST,
+            string mergedCLIPINF)
+        {
             int streamIdx = 0, playlistIdx = 0, clipinfIdx = 0;
             for (int i = 0; i < bdmvDirs.Length; i++)
             {
@@ -341,70 +331,6 @@ namespace VideoConverter
                         File.Copy(file, Path.Combine(mergedCLIPINF, newName), true);
                         clipinfIdx++;
                     }
-                }
-            }
-            // --- Remove BDMV1, BDMV2, ... directories ---
-            foreach (var dir in bdmvDirs)
-            {
-                try
-                {
-                    if (Directory.Exists(dir))
-                        Directory.Delete(dir, true);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to delete {dir}: {ex.Message}");
-                }
-            }
-            // --- Remove .meta files in outputDir ---
-            try
-            {
-                var metaFilesToDelete = Directory.GetFiles(outputDir, "bluray*.meta");
-                foreach (var meta in metaFilesToDelete)
-                {
-                    try { File.Delete(meta); } catch { }
-                }
-            }
-            catch { }
-            try
-            {
-                var concatFilesToDelete = Directory.GetFiles(outputDir, "vidClip_*.txt");
-                foreach (var concatFile in concatFilesToDelete)
-                {
-                    try { File.Delete(concatFile); } catch { }
-                }
-            }
-            catch { }
-
-            // Reset progress bar
-            MessageBox.Show("Blu-ray folder created successfully!");
-            await Task.Delay(1000);
-            progressBar1.Value = 0;
-            labelProgress.Text = "0%";
-            progressBarBluRayTab.Value = 0;
-            labelProgressBluray.Text = "0%";
-
-            // Launch ImgBurn if checkbox is checked
-            if (checkboxImgBurn != null && checkboxImgBurn.Checked)
-            {
-                try
-                {
-                    string imgburnExe = Properties.Settings.Default.ImgBurnFileLocation;
-                    if (string.IsNullOrWhiteSpace(imgburnExe))
-                    {
-                        imgburnExe = @"C:\Program Files (x86)\ImgBurn\ImgBurn.exe";
-                        Properties.Settings.Default.ImgBurnFileLocation = imgburnExe;
-                        Properties.Settings.Default.Save();
-                    }
-                    var process = new System.Diagnostics.Process();
-                    process.StartInfo.FileName = imgburnExe;
-                    process.StartInfo.Arguments = $"\"{mergedBDMV}\"";
-                    process.StartInfo.UseShellExecute = true;
-                    process.Start();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to launch ImgBurn: {ex.Message}");
                 }
             }
         }

@@ -30,21 +30,9 @@ namespace VideoConverter
                 if (!newFileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
                     newFileName += ".mp4";
             }
-            if (string.IsNullOrWhiteSpace(inputFile) && string.IsNullOrWhiteSpace(outputDir))
-            {
-                MessageBox.Show("Please select both an input file and output directory.");
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(inputFile))
-            {
-                MessageBox.Show("You must select an input video file before converting.", "Missing Input File", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(outputDir))
-            {
-                MessageBox.Show("You must select an output folder before converting.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            // Validate inputs
+            if (validateInputs(inputFile, outputDir)) return;
+
             string frameRate = comboBoxFrameRate.SelectedItem?.ToString() ?? "29.97";
             string bitrate = comboBoxBitrate.SelectedItem?.ToString()?.Replace(" Mbps", "M") ?? "25M";
             string codec = comboBoxCodec.SelectedItem?.ToString() ?? "libx264";
@@ -155,6 +143,27 @@ namespace VideoConverter
             pendingInputFile = inputFile;
             pendingOutputDir = outputDir;
             pendingDuration = await GetVideoDurationAsync(inputFile);
+        }
+
+        private static bool validateInputs(string inputFile, string outputDir)
+        {
+            if (string.IsNullOrWhiteSpace(inputFile) && string.IsNullOrWhiteSpace(outputDir))
+            {
+                MessageBox.Show("Please select both an input file and output directory.");
+                return true;
+            }
+            if (string.IsNullOrWhiteSpace(inputFile))
+            {
+                MessageBox.Show("You must select an input video file before converting.", "Missing Input File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            if (string.IsNullOrWhiteSpace(outputDir))
+            {
+                MessageBox.Show("You must select an output folder before converting.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            return false;
         }
     }
 }
