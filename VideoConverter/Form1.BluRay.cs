@@ -18,11 +18,8 @@ namespace VideoConverter
                 {
                     // Show file order dialog before proceeding
                     var fileOrderDialog = new FileOrderDialog(openFileDialog.FileNames.ToList());
-                    if (fileOrderDialog.ShowDialog() != DialogResult.OK)
-                    {
-                        // User cancelled, abort
-                        return;
-                    }
+                    if (fileOrderDialog.ShowDialog() != DialogResult.OK) return;
+                    
                     var orderedFiles = fileOrderDialog.OrderedFiles;
 
                     // Validate all files: must be 1080p and AC3 audio

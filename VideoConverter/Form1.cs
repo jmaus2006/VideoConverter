@@ -97,20 +97,9 @@ namespace VideoConverter
                         lblCodecValue.Text = $"Codec: {selectedVideoInfo.Codec ?? "N/A"}";
                         lblAudioCodec.Text = $"Audio: {selectedVideoInfo.AudioCodec ?? "N/A"}";
                         selectedVideoInfo.OriginalFPS = selectedVideoInfo.Fps ?? 29.97;
-                        if (lblFpsValue.Text.Contains("29.97") || lblFpsValue.Text.Contains("23.976") || lblFpsValue.Text.Contains("23.98") || lblFpsValue.Text.Contains("24"))
-                            lblFpsValue.ForeColor = Color.Green;                        
-                        else                        
-                            lblFpsValue.ForeColor = Color.Black;                        
-
-                        if (lblCodecValue.Text.Contains("h264") || lblCodecValue.Text.Contains("vc1"))
-                            lblCodecValue.ForeColor = Color.Green;                        
-                        else                        
-                            lblCodecValue.ForeColor = Color.Black;                        
-
-                        if (lblAudioCodec.Text.Contains("ac3"))
-                            lblAudioCodec.ForeColor = Color.Green;                        
-                        else                        
-                            lblAudioCodec.ForeColor = Color.Black;                        
+                        lblFpsValue.ForeColor = (lblFpsValue.Text.Contains("29.97") || lblFpsValue.Text.Contains("23.976") || lblFpsValue.Text.Contains("23.98") || lblFpsValue.Text.Contains("24")) ? Color.Green : Color.Black;
+                        lblCodecValue.ForeColor = (lblCodecValue.Text.Contains("h264") || lblCodecValue.Text.Contains("vc1")) ? Color.Green : Color.Black;
+                        lblAudioCodec.ForeColor = lblAudioCodec.Text.Contains("ac3") ? Color.Green : Color.Black;
                     }
                     else
                     {
@@ -279,8 +268,7 @@ namespace VideoConverter
         }
 
         private void btnConcat_Click(object sender, EventArgs e)
-        {
-            // Select multiple video files
+        {          
             using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Video Files|*.mp4;*.avi;*.mov;*.wmv;*.mkv|All Files|*.*";
@@ -369,10 +357,8 @@ namespace VideoConverter
                 comboBoxAudioBitrate.SelectedItem = "640k";
                 comboBoxAudioBitrate.Enabled = false;
             }
-            else
-            {
-                comboBoxAudioBitrate.Enabled = true;
-            }
+            else            
+                comboBoxAudioBitrate.Enabled = true;            
         }
 
         private void lblSelectedFile_TextChanged(object sender, EventArgs e)
@@ -401,22 +387,12 @@ namespace VideoConverter
 
         private void txtFileName_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtFileName.Text) && !string.IsNullOrEmpty(lblSelectedFile.Text))
-            {
-                btnConvert.Enabled = true;
-            }
-            else
-            {
-                btnConvert.Enabled = false;
-            }
+            btnConvert.Enabled = !string.IsNullOrEmpty(txtFileName.Text) && !string.IsNullOrEmpty(lblSelectedFile.Text);
         }
 
         private void btnGenerateBlurayBlurayTab_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effect = DragDropEffects.Copy;
-            else
-                e.Effect = DragDropEffects.None;
+           e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
         }
               
         private void btnImgBurnLocation_Click(object sender, EventArgs e)
