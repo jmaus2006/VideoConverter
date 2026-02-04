@@ -51,7 +51,7 @@ namespace VideoConverter
             // Load last output directory if available
             string lastDir = Properties.Settings.Default.LastOutputDir;
             btnConvert.Enabled = false; //must select video first
-            if (!string.IsNullOrWhiteSpace(lastDir) && System.IO.Directory.Exists(lastDir))
+            if (!string.IsNullOrWhiteSpace(lastDir) && Directory.Exists(lastDir))
             {
                 lblOutputDir.Text = lastDir;
                 lblOutputDirectoryBlurayTab.Text = lastDir;
@@ -78,9 +78,9 @@ namespace VideoConverter
                     lblSelectedFile.Text = openFileDialog.FileName;
                     selectedVideoInfo = GetVideoInfo(openFileDialog.FileName);
                     // Set output directory to input file's folder only if output dir is empty
-                    if (string.IsNullOrWhiteSpace(lblOutputDir.Text) || !System.IO.Directory.Exists(lblOutputDir.Text))
+                    if (string.IsNullOrWhiteSpace(lblOutputDir.Text) || !Directory.Exists(lblOutputDir.Text))
                     {
-                        string inputDir = System.IO.Path.GetDirectoryName(openFileDialog.FileName);
+                        string inputDir = Path.GetDirectoryName(openFileDialog.FileName);
                         if (!string.IsNullOrWhiteSpace(inputDir))
                         {
                             lblOutputDir.Text = inputDir;
@@ -122,7 +122,7 @@ namespace VideoConverter
 
         private string GetBundledExePath(string exeName)
         {
-            return System.IO.Path.Combine(Application.StartupPath, exeName);
+            return Path.Combine(Application.StartupPath, exeName);
         }
 
         private VideoInfo GetVideoInfo(string filePath)

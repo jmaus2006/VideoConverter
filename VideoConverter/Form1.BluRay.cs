@@ -1,9 +1,3 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace VideoConverter
 {
     public partial class Form1 : Form
@@ -28,7 +22,7 @@ namespace VideoConverter
                         var info = GetVideoInfo(file);
                         if (info == null || info.AudioCodec == null || info.Height == null || info.Height != 1080 || !info.AudioCodec.ToLower().Contains("ac3"))
                         {
-                            MessageBox.Show($"File '{System.IO.Path.GetFileName(file)}' is not Blu-ray compliant. Only 1080p video with AC3 audio is allowed.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"File '{Path.GetFileName(file)}' is not Blu-ray compliant. Only 1080p video with AC3 audio is allowed.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                     }
