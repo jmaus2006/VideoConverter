@@ -169,6 +169,16 @@ namespace VideoConverter
                         }
                     }
                     catch { }
+                    try
+                    {
+                        var concatFilesToDelete = Directory.GetFiles(outputDir, "vidClip_*.txt");
+                        foreach (var concatFile in concatFilesToDelete)
+                        {
+                            try { File.Delete(concatFile); } catch { }
+                        }
+                    }
+                    catch { }
+                    
                     // Reset progress bar
                     MessageBox.Show("Blu-ray folder created successfully!");
                     await Task.Delay(1000);
@@ -356,6 +366,16 @@ namespace VideoConverter
                 }
             }
             catch { }
+            try
+            {
+                var concatFilesToDelete = Directory.GetFiles(outputDir, "vidClip_*.txt");
+                foreach (var concatFile in concatFilesToDelete)
+                {
+                    try { File.Delete(concatFile); } catch { }
+                }
+            }
+            catch { }
+
             // Reset progress bar
             MessageBox.Show("Blu-ray folder created successfully!");
             await Task.Delay(1000);
