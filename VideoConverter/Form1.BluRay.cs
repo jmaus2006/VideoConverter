@@ -261,7 +261,6 @@ namespace VideoConverter
             Directory.CreateDirectory(mergedSTREAM);
             Directory.CreateDirectory(mergedPLAYLIST);
             Directory.CreateDirectory(mergedCLIPINF);
-            // Copy index.bdmv and MovieObject.bdmv from BDMV1/BDMV
             string bdmv1BDMV = Path.Combine(bdmvDirs[0], "BDMV");
             string[] bdmvFiles = { "index.bdmv", "MovieObject.bdmv" };
             foreach (var file in bdmvFiles)

@@ -2,8 +2,7 @@ namespace VideoConverter
 {
     public partial class Form1 : Form
     {
-        // btnConvert_Click moved to this partial class file
-        private async void btnConvert_Click(object sender, EventArgs e)
+              private async void btnConvert_Click(object sender, EventArgs e)
         {
             // Get input file and output directory
             string inputFile = lblSelectedFile.Text;
@@ -56,34 +55,34 @@ namespace VideoConverter
             }
 
             //1920x816 (2.35:1) with black bars (letterboxing) to 1920x1080
-            string upscaleFilter = "crop=1920:816:0:132,pad=1920:1080:0:132,unsharp=5:5:0.8:3:3:0.0";
-            bool isBeingUpscaled = checkboxUpscale != null && checkboxUpscale.Checked;
+            string aspectRatioParam = "crop=1920:816:0:132,pad=1920:1080:0:132,unsharp=5:5:0.8:3:3:0.0";
+            bool isRatioModified = checkboxAspectRatio != null && checkboxAspectRatio.Checked;
             if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
             {
-                vfArg = isBeingUpscaled
-                    ? $"-vf \"minterpolate=fps={frameRate},{upscaleFilter}\" "
+                vfArg = isRatioModified
+                    ? $"-vf \"minterpolate=fps={frameRate},{aspectRatioParam}\" "
                     : $"-vf \"minterpolate=fps={frameRate}\" ";
                 rArg = "";
             }
             else if (interpolation.Equals("tblend", StringComparison.OrdinalIgnoreCase))
             {
-                vfArg = isBeingUpscaled
-                    ? $"-vf \"tblend=all_mode=average,{upscaleFilter}\" "
+                vfArg = isRatioModified
+                    ? $"-vf \"tblend=all_mode=average,{aspectRatioParam}\" "
                     : "-vf \"tblend=all_mode=average\" ";
             }
             else if (interpolation.Equals("None", StringComparison.OrdinalIgnoreCase))
             {
                 if (rArg != "")
                 {
-                    vfArg = isBeingUpscaled
-                        ? $"-vf \"{upscaleFilter}\" "
+                    vfArg = isRatioModified
+                        ? $"-vf \"{aspectRatioParam}\" "
                         : $"-vf \"framerate={frameRate}\" ";
                     rArg = "";
                 }
                 else
                 {
-                    vfArg = isBeingUpscaled
-                        ? $"-vf \"{upscaleFilter}\" "
+                    vfArg = isRatioModified
+                        ? $"-vf \"{aspectRatioParam}\" "
                         : "";
                 }
             }

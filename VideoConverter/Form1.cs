@@ -167,16 +167,14 @@ namespace VideoConverter
 
         private void btnOutputDir_Click(object sender, EventArgs e)
         {
-            using (var folderDialog = new FolderBrowserDialog())
+            using var folderDialog = new FolderBrowserDialog();
+            if (folderDialog.ShowDialog() == DialogResult.OK)
             {
-                if (folderDialog.ShowDialog() == DialogResult.OK)
-                {
-                    lblOutputDir.Text = folderDialog.SelectedPath;
-                    lblOutputDirectoryBlurayTab.Text = folderDialog.SelectedPath;
-                    // Save to settings
-                    Properties.Settings.Default.LastOutputDir = folderDialog.SelectedPath;
-                    Properties.Settings.Default.Save();
-                }
+                lblOutputDir.Text = folderDialog.SelectedPath;
+                lblOutputDirectoryBlurayTab.Text = folderDialog.SelectedPath;
+                // Save to settings
+                Properties.Settings.Default.LastOutputDir = folderDialog.SelectedPath;
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -335,15 +333,7 @@ namespace VideoConverter
                 comboBoxAudioBitrate.Enabled = true;
                 // Restore original frame rate options
                 comboBoxFrameRate.Items.Clear();
-                comboBoxFrameRate.Items.Add("Same as source");
-                comboBoxFrameRate.Items.Add("23.976");
-                comboBoxFrameRate.Items.Add("24");
-                comboBoxFrameRate.Items.Add("25");
-                comboBoxFrameRate.Items.Add("29.97");
-                comboBoxFrameRate.Items.Add("30");
-                comboBoxFrameRate.Items.Add("50");
-                comboBoxFrameRate.Items.Add("59.94");
-                comboBoxFrameRate.Items.Add("60");
+                comboBoxFrameRate.Items.AddRange(new object[] { "Same as source", "23.976", "24", "25", "29.97", "30", "50", "59.94", "60" });
                 comboBoxFrameRate.SelectedItem = "29.97";
             }
         }
@@ -426,6 +416,8 @@ namespace VideoConverter
                 checkboxMKV.Enabled = false;
                 checkboxAC3.Checked = true;
                 checkboxAC3.Enabled = false;
+                checkboxAspectRatio.Checked = false;
+                checkboxAspectRatio.Enabled = false;
             }
             else
             {
@@ -435,6 +427,7 @@ namespace VideoConverter
                 comboBoxBitrate.Enabled = true;
                 checkboxMKV.Enabled = true;
                 checkboxAC3.Enabled = true;
+                checkboxAspectRatio.Enabled = true;
             }
         }
 

@@ -64,7 +64,7 @@
             groupBox3 = new GroupBox();
             label11 = new Label();
             btnAudioOnly = new CheckBox();
-            checkboxUpscale = new CheckBox();
+            checkboxAspectRatio = new CheckBox();
             label4 = new Label();
             checkboxAC3 = new CheckBox();
             comboBoxAudioBitrate = new ComboBox();
@@ -467,7 +467,7 @@
             // 
             groupBox3.Controls.Add(label11);
             groupBox3.Controls.Add(btnAudioOnly);
-            groupBox3.Controls.Add(checkboxUpscale);
+            groupBox3.Controls.Add(checkboxAspectRatio);
             groupBox3.Controls.Add(label4);
             groupBox3.Controls.Add(checkboxAC3);
             groupBox3.Controls.Add(comboBoxAudioBitrate);
@@ -499,15 +499,15 @@
             btnAudioOnly.UseVisualStyleBackColor = true;
             btnAudioOnly.CheckedChanged += checkBox1_CheckedChanged;
             // 
-            // checkboxUpscale
+            // checkboxAspectRatio
             // 
-            checkboxUpscale.AutoSize = true;
-            checkboxUpscale.Location = new Point(19, 158);
-            checkboxUpscale.Name = "checkboxUpscale";
-            checkboxUpscale.Size = new Size(192, 33);
-            checkboxUpscale.TabIndex = 9;
-            checkboxUpscale.Text = "Force 2.35:1 ratio";
-            checkboxUpscale.UseVisualStyleBackColor = true;
+            checkboxAspectRatio.AutoSize = true;
+            checkboxAspectRatio.Location = new Point(19, 158);
+            checkboxAspectRatio.Name = "checkboxAspectRatio";
+            checkboxAspectRatio.Size = new Size(192, 33);
+            checkboxAspectRatio.TabIndex = 9;
+            checkboxAspectRatio.Text = "Force 2.35:1 ratio";
+            checkboxAspectRatio.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -908,7 +908,7 @@
         private TabPage stepsToConvertTab;
         private RichTextBox richTextBox1;
         private Label label5;
-        private CheckBox checkboxUpscale;
+        private CheckBox checkboxAspectRatio;
         private TabPage tabPage1;
         private RichTextBox logOutput;
         private Button button1;
