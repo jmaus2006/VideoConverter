@@ -33,7 +33,7 @@ namespace VideoConverter
             public double? OriginalFPS { get; set; }
             public int? Height { get; set; } // Video height for 1080p check
         }
-        private VideoInfo selectedVideoInfo = null;
+        private VideoInfo? selectedVideoInfo;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -80,7 +80,7 @@ namespace VideoConverter
                     // Set output directory to input file's folder only if output dir is empty
                     if (string.IsNullOrWhiteSpace(lblOutputDir.Text) || !Directory.Exists(lblOutputDir.Text))
                     {
-                        string inputDir = Path.GetDirectoryName(openFileDialog.FileName);
+                        string? inputDir = Path.GetDirectoryName(openFileDialog.FileName);
                         if (!string.IsNullOrWhiteSpace(inputDir))
                         {
                             lblOutputDir.Text = inputDir;
@@ -125,7 +125,7 @@ namespace VideoConverter
             return Path.Combine(Application.StartupPath, exeName);
         }
 
-        private VideoInfo GetVideoInfo(string filePath)
+        private VideoInfo? GetVideoInfo(string filePath)
         {
             try
             {
@@ -178,11 +178,11 @@ namespace VideoConverter
             }
         }
 
-        private string pendingArgs = null;
-        private string pendingOutputFile = null;
+        private string pendingArgs = string.Empty;
+        private string pendingOutputFile = string.Empty;
         private TimeSpan? pendingDuration = null;
-        private string pendingInputFile = null;
-        private string pendingOutputDir = null;
+        private string pendingInputFile = string.Empty;
+        private string pendingOutputDir = string.Empty;
 
         // Class-level ffmpeg process for control from any method
         private System.Diagnostics.Process? ffmpegProcess = null; 
