@@ -106,7 +106,7 @@ namespace VideoConverter
                         lblFpsValue.Text = "Frames per second: N/A";
                         lblBitrateValue.Text = "Bitrate: N/A";
                         lblCodecValue.Text = "Codec: N/A";
-                        selectedVideoInfo = new VideoInfo { OriginalFPS = 29.97 };
+                        selectedVideoInfo = new VideoInfo();
                     }
                 }
                 else
@@ -115,7 +115,7 @@ namespace VideoConverter
                     lblFpsValue.Text = string.Empty;
                     lblBitrateValue.Text = string.Empty;
                     lblCodecValue.Text = "No video selected";
-                    selectedVideoInfo = new VideoInfo { OriginalFPS = 29.97 };
+                    selectedVideoInfo = new VideoInfo();
                 }
             }
         }

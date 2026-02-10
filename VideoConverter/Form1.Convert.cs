@@ -55,7 +55,7 @@ namespace VideoConverter
             }
 
             //1920x816 (2.35:1) with black bars (letterboxing) to 1920x1080
-            string aspectRatioParam = "crop=1920:816:0:132,pad=1920:1080:0:132,unsharp=5:5:0.8:3:3:0.0";
+            const string aspectRatioParam = "crop=1920:816:0:132,pad=1920:1080:0:132,unsharp=5:5:0.8:3:3:0.0";
             bool isRatioModified = checkboxAspectRatio != null && checkboxAspectRatio.Checked;
             if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
             {
@@ -115,14 +115,16 @@ namespace VideoConverter
             }
             if (isMKV)
             {
-                if (frameRate == "24000/1001")
+                switch (frameRate)
                 {
-                    rArg = "-r 24000/1001";
+                    case "24000/1001":
+                        rArg = "-r 24000/1001";
+                        break;
+                    case "30000/1001":
+                        rArg = "-r 30000/1001";
+                        break;
                 }
-                else if (frameRate == "30000/1001")
-                {
-                    rArg = "-r 30000/1001";
-                }
+               
                 // Blu-ray compliant mkv
                 args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p {rArg} -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
             }

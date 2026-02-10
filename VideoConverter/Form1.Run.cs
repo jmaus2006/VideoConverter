@@ -102,6 +102,7 @@ public partial class Form1 : Form
 
             ffmpegProcess.WaitForExit();
         });
+
         if (File.Exists(pendingOutputFile))
         {
             progressBar1.Value = 100;
@@ -121,12 +122,20 @@ public partial class Form1 : Form
             MessageBox.Show("Conversion failed. Output file was not created.");
         }
 
+        // Clear/reset video info labels after conversion
+        lblFpsValue.Text = string.Empty;
+        lblBitrateValue.Text = string.Empty;
+        lblCodecValue.Text = "No video selected";
+        lblCodecValue.ForeColor = Color.Black;
+        lblAudioCodec.Text = string.Empty;
+        selectedVideoInfo = null;
+
         btnRun.Enabled = false;
         txtArgs.Text = string.Empty;
-        pendingArgs = null;
-        pendingOutputFile = null;
-        pendingInputFile = null;
-        pendingOutputDir = null;
+        pendingArgs = string.Empty;
+        pendingOutputFile = string.Empty;
+        pendingInputFile = string.Empty;
+        pendingOutputDir = string.Empty;
         pendingDuration = null;
     }
 }
