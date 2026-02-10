@@ -54,20 +54,35 @@ namespace VideoConverter
                 count++;
             }
 
-            //1920x816 (2.35:1) with black bars (letterboxing) to 1920x1080
-            const string aspectRatioParam = "crop=1920:816:0:132,pad=1920:1080:0:132,unsharp=5:5:0.8:3:3:0.0";
+            const string aspectRatioParam_235 = "crop=1920:816:0:132,pad=1920:1080:0:132,unsharp=5:5:0.8:3:3:0.0"; // 2.35:1
+            const string aspectRatioParam_239 = "crop=1920:803:0:139,pad=1920:1080:0:139,unsharp=5:5:0.8:3:3:0.0"; // 2.39:1
+            const string aspectRatioParam_185 = "crop=1920:1038:0:21,pad=1920:1080:0:21,unsharp=5:5:0.8:3:3:0.0";  // 1.85:1
+            string aspectRatio = "";
+            switch (ratioChoice.SelectedItem)
+            {
+                case "2.35":
+                    aspectRatio = aspectRatioParam_235;
+                    break;
+                case "2.39":
+                    aspectRatio = aspectRatioParam_239;
+                    break;
+                case "1.85":
+                    aspectRatio = aspectRatioParam_185;
+                    break;
+            }
+
             bool isRatioModified = checkboxAspectRatio != null && checkboxAspectRatio.Checked;
             if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
             {
                 vfArg = isRatioModified
-                    ? $"-vf \"minterpolate=fps={frameRate},{aspectRatioParam}\" "
+                    ? $"-vf \"minterpolate=fps={frameRate},{aspectRatio}\" "
                     : $"-vf \"minterpolate=fps={frameRate}\" ";
                 rArg = "";
             }
             else if (interpolation.Equals("tblend", StringComparison.OrdinalIgnoreCase))
             {
                 vfArg = isRatioModified
-                    ? $"-vf \"tblend=all_mode=average,{aspectRatioParam}\" "
+                    ? $"-vf \"tblend=all_mode=average,{aspectRatio}\" "
                     : "-vf \"tblend=all_mode=average\" ";
             }
             else if (interpolation.Equals("None", StringComparison.OrdinalIgnoreCase))
@@ -75,14 +90,14 @@ namespace VideoConverter
                 if (rArg != "")
                 {
                     vfArg = isRatioModified
-                        ? $"-vf \"{aspectRatioParam}\" "
+                        ? $"-vf \"{aspectRatio}\" "
                         : $"-vf \"framerate={frameRate}\" ";
                     rArg = "";
                 }
                 else
                 {
                     vfArg = isRatioModified
-                        ? $"-vf \"{aspectRatioParam}\" "
+                        ? $"-vf \"{aspectRatio}\" "
                         : "";
                 }
             }

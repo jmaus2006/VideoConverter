@@ -48,6 +48,7 @@ namespace VideoConverter
             btnGenerateBlurayBlurayTab.BackgroundImage = Properties.Resources.bluray; 
             btnGenerateBlurayBlurayTab.BackgroundImageLayout = ImageLayout.Stretch;
             btnGenerateBlurayBlurayTab.Text = string.Empty;
+            ratioChoice.SelectedItem = "2.35";
             // Load last output directory if available
             string lastDir = Properties.Settings.Default.LastOutputDir;
             btnConvert.Enabled = false; //must select video first
@@ -418,6 +419,7 @@ namespace VideoConverter
                 checkboxAC3.Enabled = false;
                 checkboxAspectRatio.Checked = false;
                 checkboxAspectRatio.Enabled = false;
+                ratioChoice.Enabled = false;
             }
             else
             {
@@ -428,6 +430,7 @@ namespace VideoConverter
                 checkboxMKV.Enabled = true;
                 checkboxAC3.Enabled = true;
                 checkboxAspectRatio.Enabled = true;
+                ratioChoice.Enabled = true;
             }
         }
 

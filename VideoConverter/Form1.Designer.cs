@@ -62,6 +62,7 @@
             pictureBox1 = new PictureBox();
             button2 = new Button();
             groupBox3 = new GroupBox();
+            ratioChoice = new ComboBox();
             label11 = new Label();
             btnAudioOnly = new CheckBox();
             checkboxAspectRatio = new CheckBox();
@@ -465,6 +466,7 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(ratioChoice);
             groupBox3.Controls.Add(label11);
             groupBox3.Controls.Add(btnAudioOnly);
             groupBox3.Controls.Add(checkboxAspectRatio);
@@ -478,6 +480,15 @@
             groupBox3.TabIndex = 33;
             groupBox3.TabStop = false;
             groupBox3.Text = "Additional Options";
+            // 
+            // ratioChoice
+            // 
+            ratioChoice.FormattingEnabled = true;
+            ratioChoice.Items.AddRange(new object[] { "1.85", "2.35", "2.39" });
+            ratioChoice.Location = new Point(109, 154);
+            ratioChoice.Name = "ratioChoice";
+            ratioChoice.Size = new Size(121, 37);
+            ratioChoice.TabIndex = 12;
             // 
             // label11
             // 
@@ -504,9 +515,9 @@
             checkboxAspectRatio.AutoSize = true;
             checkboxAspectRatio.Location = new Point(19, 158);
             checkboxAspectRatio.Name = "checkboxAspectRatio";
-            checkboxAspectRatio.Size = new Size(192, 33);
+            checkboxAspectRatio.Size = new Size(84, 33);
             checkboxAspectRatio.TabIndex = 9;
-            checkboxAspectRatio.Text = "Force 2.35:1 ratio";
+            checkboxAspectRatio.Text = "Ratio";
             checkboxAspectRatio.UseVisualStyleBackColor = true;
             // 
             // label4
@@ -928,5 +939,6 @@
         private Label label11;
         private PictureBox pictureBox4;
         private Button button3;
+        private ComboBox ratioChoice;
     }
 }
