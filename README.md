@@ -4,6 +4,11 @@
 <br>
 ffmpeg and tsmuxer are included, it should work fine, but if issues appear running ffmpeg, you may need to download the latest version and add them to the Program Files for this program :)
 <hr>
+<h1>2.4</h1>
+Updated code to prevent errors in converting.<br>
+Refactored<br>
+<strong>64-bit self-contained<br>
+64-bit version (.NET10 required)<br></strong>
 <h1>2.0</h1>
 Updated UI with nice blue graphics!<br>
 Several different versions exist now:<br><br><strong>
