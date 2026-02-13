@@ -364,12 +364,12 @@ namespace VideoConverter
                 checkboxAC3.Checked = false;            
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void BtnCopyLogOutputClick(object sender, EventArgs e)
         {
             Clipboard.SetText(logOutput.Text);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void BtnCopyParametersClick(object sender, EventArgs e)
         {
             Clipboard.SetText(txtArgs.Text);
         }
@@ -434,7 +434,7 @@ namespace VideoConverter
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void BtnCancelConvertClick(object sender, EventArgs e)
         {
             if (ffmpegProcess != null && !ffmpegProcess.HasExited)
             {

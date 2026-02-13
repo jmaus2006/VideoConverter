@@ -48,7 +48,7 @@
             btnConcat = new Button();
             txtArgs = new TextBox();
             btnRun = new Button();
-            label1 = new Label();
+            lblNewFileName = new Label();
             lblFpsValue = new Label();
             lblBitrateValue = new Label();
             lblCodecValue = new Label();
@@ -56,11 +56,11 @@
             lblAudioCodec = new Label();
             tabControl1 = new TabControl();
             ConverterTab = new TabPage();
-            button3 = new Button();
+            btnCancelConvert = new Button();
             pictureBox4 = new PictureBox();
             label8 = new Label();
             pictureBox1 = new PictureBox();
-            button2 = new Button();
+            btnCopyParameters = new Button();
             groupBox3 = new GroupBox();
             ratioChoice = new ComboBox();
             label11 = new Label();
@@ -72,27 +72,27 @@
             checkboxMKV = new CheckBox();
             groupBox2 = new GroupBox();
             BlurayTab = new TabPage();
-            label9 = new Label();
+            lblVersionNum = new Label();
             pictureBox2 = new PictureBox();
-            label7 = new Label();
+            lblWithImgBurn = new Label();
             ImgBurnLocationLabel = new Label();
             btnImgBurnLocation = new Button();
             checkboxImgBurn = new CheckBox();
-            label6 = new Label();
+            lblCreateBlu = new Label();
             labelProgressBluray = new Label();
             progressBarBluRayTab = new ProgressBar();
             lblOutputDirectoryBlurayTab = new Label();
             outputDirectoryButtonBlurayTab = new Button();
-            label3 = new Label();
-            label2 = new Label();
+            lblBDMV = new Label();
+            lblMKV = new Label();
             btnGenerateBlurayBlurayTab = new Button();
             stepsToConvertTab = new TabPage();
-            label10 = new Label();
+            lblVer = new Label();
             pictureBox3 = new PictureBox();
-            label5 = new Label();
+            lblHowTo = new Label();
             richTextBox1 = new RichTextBox();
             tabPage1 = new TabPage();
-            button1 = new Button();
+            btnCopyLogOutput = new Button();
             logOutput = new RichTextBox();
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
@@ -312,15 +312,15 @@
             btnRun.UseVisualStyleBackColor = true;
             btnRun.Click += btnRun_Click;
             // 
-            // label1
+            // lblNewFileName
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(515, 577);
-            label1.Name = "label1";
-            label1.Size = new Size(146, 29);
-            label1.TabIndex = 21;
-            label1.Text = "New File Name";
+            lblNewFileName.AutoSize = true;
+            lblNewFileName.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNewFileName.Location = new Point(515, 577);
+            lblNewFileName.Name = "lblNewFileName";
+            lblNewFileName.Size = new Size(146, 29);
+            lblNewFileName.TabIndex = 21;
+            lblNewFileName.Text = "New File Name";
             // 
             // lblFpsValue
             // 
@@ -382,11 +382,11 @@
             // 
             ConverterTab.BackColor = SystemColors.Control;
             ConverterTab.BackgroundImageLayout = ImageLayout.None;
-            ConverterTab.Controls.Add(button3);
+            ConverterTab.Controls.Add(btnCancelConvert);
             ConverterTab.Controls.Add(pictureBox4);
             ConverterTab.Controls.Add(label8);
             ConverterTab.Controls.Add(pictureBox1);
-            ConverterTab.Controls.Add(button2);
+            ConverterTab.Controls.Add(btnCopyParameters);
             ConverterTab.Controls.Add(btnSelectVid);
             ConverterTab.Controls.Add(lblOutputDir);
             ConverterTab.Controls.Add(btnConcat);
@@ -402,7 +402,7 @@
             ConverterTab.Controls.Add(btnOutputDir);
             ConverterTab.Controls.Add(groupBox1);
             ConverterTab.Controls.Add(txtFileName);
-            ConverterTab.Controls.Add(label1);
+            ConverterTab.Controls.Add(lblNewFileName);
             ConverterTab.Font = new Font("Arial Narrow", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ConverterTab.Location = new Point(4, 41);
             ConverterTab.Margin = new Padding(0);
@@ -411,16 +411,16 @@
             ConverterTab.TabIndex = 1;
             ConverterTab.Text = "Convert";
             // 
-            // button3
+            // btnCancelConvert
             // 
-            button3.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.Location = new Point(1017, 778);
-            button3.Name = "button3";
-            button3.Size = new Size(197, 94);
-            button3.TabIndex = 38;
-            button3.Text = "Cancel Conversion";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            btnCancelConvert.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCancelConvert.Location = new Point(1017, 778);
+            btnCancelConvert.Name = "btnCancelConvert";
+            btnCancelConvert.Size = new Size(197, 94);
+            btnCancelConvert.TabIndex = 38;
+            btnCancelConvert.Text = "Cancel Conversion";
+            btnCancelConvert.UseVisualStyleBackColor = true;
+            btnCancelConvert.Click += BtnCancelConvertClick;
             // 
             // pictureBox4
             // 
@@ -453,16 +453,16 @@
             pictureBox1.TabIndex = 35;
             pictureBox1.TabStop = false;
             // 
-            // button2
+            // btnCopyParameters
             // 
-            button2.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(1017, 878);
-            button2.Name = "button2";
-            button2.Size = new Size(199, 52);
-            button2.TabIndex = 34;
-            button2.Text = "Copy Parameters";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            btnCopyParameters.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCopyParameters.Location = new Point(1017, 878);
+            btnCopyParameters.Name = "btnCopyParameters";
+            btnCopyParameters.Size = new Size(199, 52);
+            btnCopyParameters.TabIndex = 34;
+            btnCopyParameters.Text = "Copy Parameters";
+            btnCopyParameters.UseVisualStyleBackColor = true;
+            btnCopyParameters.Click += BtnCopyParametersClick;
             // 
             // groupBox3
             // 
@@ -483,17 +483,18 @@
             // 
             // ratioChoice
             // 
+            ratioChoice.DropDownStyle = ComboBoxStyle.DropDownList;
             ratioChoice.FormattingEnabled = true;
             ratioChoice.Items.AddRange(new object[] { "1.85", "2.35", "2.39" });
-            ratioChoice.Location = new Point(109, 154);
+            ratioChoice.Location = new Point(47, 194);
             ratioChoice.Name = "ratioChoice";
-            ratioChoice.Size = new Size(121, 37);
+            ratioChoice.Size = new Size(183, 37);
             ratioChoice.TabIndex = 12;
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(20, 253);
+            label11.Location = new Point(19, 277);
             label11.Name = "label11";
             label11.Size = new Size(198, 29);
             label11.TabIndex = 11;
@@ -502,7 +503,7 @@
             // btnAudioOnly
             // 
             btnAudioOnly.AutoSize = true;
-            btnAudioOnly.Location = new Point(20, 217);
+            btnAudioOnly.Location = new Point(19, 241);
             btnAudioOnly.Name = "btnAudioOnly";
             btnAudioOnly.Size = new Size(201, 33);
             btnAudioOnly.TabIndex = 10;
@@ -515,9 +516,9 @@
             checkboxAspectRatio.AutoSize = true;
             checkboxAspectRatio.Location = new Point(19, 158);
             checkboxAspectRatio.Name = "checkboxAspectRatio";
-            checkboxAspectRatio.Size = new Size(84, 33);
+            checkboxAspectRatio.Size = new Size(159, 33);
             checkboxAspectRatio.TabIndex = 9;
-            checkboxAspectRatio.Text = "Ratio";
+            checkboxAspectRatio.Text = "Force ratio to:";
             checkboxAspectRatio.UseVisualStyleBackColor = true;
             // 
             // label4
@@ -583,19 +584,19 @@
             // BlurayTab
             // 
             BlurayTab.BackColor = SystemColors.Control;
-            BlurayTab.Controls.Add(label9);
+            BlurayTab.Controls.Add(lblVersionNum);
             BlurayTab.Controls.Add(pictureBox2);
-            BlurayTab.Controls.Add(label7);
+            BlurayTab.Controls.Add(lblWithImgBurn);
             BlurayTab.Controls.Add(ImgBurnLocationLabel);
             BlurayTab.Controls.Add(btnImgBurnLocation);
             BlurayTab.Controls.Add(checkboxImgBurn);
-            BlurayTab.Controls.Add(label6);
+            BlurayTab.Controls.Add(lblCreateBlu);
             BlurayTab.Controls.Add(labelProgressBluray);
             BlurayTab.Controls.Add(progressBarBluRayTab);
             BlurayTab.Controls.Add(lblOutputDirectoryBlurayTab);
             BlurayTab.Controls.Add(outputDirectoryButtonBlurayTab);
-            BlurayTab.Controls.Add(label3);
-            BlurayTab.Controls.Add(label2);
+            BlurayTab.Controls.Add(lblBDMV);
+            BlurayTab.Controls.Add(lblMKV);
             BlurayTab.Controls.Add(btnGenerateBlurayBlurayTab);
             BlurayTab.Location = new Point(4, 41);
             BlurayTab.Name = "BlurayTab";
@@ -605,16 +606,16 @@
             BlurayTab.Text = "Create Blu-ray";
             BlurayTab.Click += BlurayTab_Click;
             // 
-            // label9
+            // lblVersionNum
             // 
-            label9.AutoSize = true;
-            label9.BackColor = Color.Transparent;
-            label9.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label9.Location = new Point(1129, 174);
-            label9.Name = "label9";
-            label9.Size = new Size(54, 37);
-            label9.TabIndex = 46;
-            label9.Text = "2.4";
+            lblVersionNum.AutoSize = true;
+            lblVersionNum.BackColor = Color.Transparent;
+            lblVersionNum.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblVersionNum.Location = new Point(1129, 174);
+            lblVersionNum.Name = "lblVersionNum";
+            lblVersionNum.Size = new Size(54, 37);
+            lblVersionNum.TabIndex = 46;
+            lblVersionNum.Text = "2.4";
             // 
             // pictureBox2
             // 
@@ -626,15 +627,15 @@
             pictureBox2.TabIndex = 45;
             pictureBox2.TabStop = false;
             // 
-            // label7
+            // lblWithImgBurn
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Arial Narrow", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(904, 863);
-            label7.Name = "label7";
-            label7.Size = new Size(148, 33);
-            label7.TabIndex = 44;
-            label7.Text = "with ImgBurn";
+            lblWithImgBurn.AutoSize = true;
+            lblWithImgBurn.Font = new Font("Arial Narrow", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblWithImgBurn.Location = new Point(904, 863);
+            lblWithImgBurn.Name = "lblWithImgBurn";
+            lblWithImgBurn.Size = new Size(148, 33);
+            lblWithImgBurn.TabIndex = 44;
+            lblWithImgBurn.Text = "with ImgBurn";
             // 
             // ImgBurnLocationLabel
             // 
@@ -670,15 +671,15 @@
             checkboxImgBurn.Text = "Burn Disc / Create Image";
             checkboxImgBurn.UseVisualStyleBackColor = true;
             // 
-            // label6
+            // lblCreateBlu
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Arial Narrow", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(222, 874);
-            label6.Name = "label6";
-            label6.Size = new Size(502, 42);
-            label6.TabIndex = 40;
-            label6.Text = "Drag all files at once to create blu-ray";
+            lblCreateBlu.AutoSize = true;
+            lblCreateBlu.Font = new Font("Arial Narrow", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblCreateBlu.Location = new Point(222, 874);
+            lblCreateBlu.Name = "lblCreateBlu";
+            lblCreateBlu.Size = new Size(502, 42);
+            lblCreateBlu.TabIndex = 40;
+            lblCreateBlu.Text = "Drag all files at once to create blu-ray";
             // 
             // labelProgressBluray
             // 
@@ -720,27 +721,27 @@
             outputDirectoryButtonBlurayTab.UseVisualStyleBackColor = true;
             outputDirectoryButtonBlurayTab.Click += btnOutputDir_Click;
             // 
-            // label3
+            // lblBDMV
             // 
-            label3.AllowDrop = true;
-            label3.AutoSize = true;
-            label3.Font = new Font("Arial Narrow", 24F);
-            label3.Location = new Point(261, 413);
-            label3.Name = "label3";
-            label3.Size = new Size(413, 57);
-            label3.TabIndex = 35;
-            label3.Text = "to create BDMV folder";
+            lblBDMV.AllowDrop = true;
+            lblBDMV.AutoSize = true;
+            lblBDMV.Font = new Font("Arial Narrow", 24F);
+            lblBDMV.Location = new Point(261, 413);
+            lblBDMV.Name = "lblBDMV";
+            lblBDMV.Size = new Size(413, 57);
+            lblBDMV.TabIndex = 35;
+            lblBDMV.Text = "to create BDMV folder";
             // 
-            // label2
+            // lblMKV
             // 
-            label2.AllowDrop = true;
-            label2.AutoSize = true;
-            label2.Font = new Font("Arial Narrow", 24F);
-            label2.Location = new Point(208, 356);
-            label2.Name = "label2";
-            label2.Size = new Size(539, 57);
-            label2.TabIndex = 34;
-            label2.Text = "Click or drag MKV files below";
+            lblMKV.AllowDrop = true;
+            lblMKV.AutoSize = true;
+            lblMKV.Font = new Font("Arial Narrow", 24F);
+            lblMKV.Location = new Point(208, 356);
+            lblMKV.Name = "lblMKV";
+            lblMKV.Size = new Size(539, 57);
+            lblMKV.TabIndex = 34;
+            lblMKV.Text = "Click or drag MKV files below";
             // 
             // btnGenerateBlurayBlurayTab
             // 
@@ -757,9 +758,9 @@
             // 
             // stepsToConvertTab
             // 
-            stepsToConvertTab.Controls.Add(label10);
+            stepsToConvertTab.Controls.Add(lblVer);
             stepsToConvertTab.Controls.Add(pictureBox3);
-            stepsToConvertTab.Controls.Add(label5);
+            stepsToConvertTab.Controls.Add(lblHowTo);
             stepsToConvertTab.Controls.Add(richTextBox1);
             stepsToConvertTab.Location = new Point(4, 41);
             stepsToConvertTab.Name = "stepsToConvertTab";
@@ -769,16 +770,16 @@
             stepsToConvertTab.Text = "Steps to converting";
             stepsToConvertTab.UseVisualStyleBackColor = true;
             // 
-            // label10
+            // lblVer
             // 
-            label10.AutoSize = true;
-            label10.BackColor = Color.Transparent;
-            label10.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label10.Location = new Point(1129, 174);
-            label10.Name = "label10";
-            label10.Size = new Size(54, 37);
-            label10.TabIndex = 47;
-            label10.Text = "2.4";
+            lblVer.AutoSize = true;
+            lblVer.BackColor = Color.Transparent;
+            lblVer.Font = new Font("Arial Narrow", 16F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblVer.Location = new Point(1129, 174);
+            lblVer.Name = "lblVer";
+            lblVer.Size = new Size(54, 37);
+            lblVer.TabIndex = 47;
+            lblVer.Text = "2.4";
             // 
             // pictureBox3
             // 
@@ -791,15 +792,15 @@
             pictureBox3.TabIndex = 46;
             pictureBox3.TabStop = false;
             // 
-            // label5
+            // lblHowTo
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Arial Narrow", 28F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(173, 300);
-            label5.Name = "label5";
-            label5.Size = new Size(872, 66);
-            label5.TabIndex = 1;
-            label5.Text = "How to make a blu-ray folder from videos";
+            lblHowTo.AutoSize = true;
+            lblHowTo.Font = new Font("Arial Narrow", 28F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblHowTo.Location = new Point(173, 300);
+            lblHowTo.Name = "lblHowTo";
+            lblHowTo.Size = new Size(872, 66);
+            lblHowTo.TabIndex = 1;
+            lblHowTo.Text = "How to make a blu-ray folder from videos";
             // 
             // richTextBox1
             // 
@@ -814,7 +815,7 @@
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(button1);
+            tabPage1.Controls.Add(btnCopyLogOutput);
             tabPage1.Controls.Add(logOutput);
             tabPage1.Location = new Point(4, 41);
             tabPage1.Name = "tabPage1";
@@ -824,15 +825,15 @@
             tabPage1.Text = "Logs";
             tabPage1.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnCopyLogOutput
             // 
-            button1.Location = new Point(21, 941);
-            button1.Name = "button1";
-            button1.Size = new Size(321, 53);
-            button1.TabIndex = 2;
-            button1.Text = "Copy Log Output";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnCopyLogOutput.Location = new Point(21, 941);
+            btnCopyLogOutput.Name = "btnCopyLogOutput";
+            btnCopyLogOutput.Size = new Size(321, 53);
+            btnCopyLogOutput.TabIndex = 2;
+            btnCopyLogOutput.Text = "Copy Log Output";
+            btnCopyLogOutput.UseVisualStyleBackColor = true;
+            btnCopyLogOutput.Click += BtnCopyLogOutputClick;
             // 
             // logOutput
             // 
@@ -894,7 +895,7 @@
         private Button btnConcat;
         private TextBox txtArgs;
         private Button btnRun;
-        private Label label1;
+        private Label lblNewFileName;
         private Label lblFpsValue;
         private Label lblBitrateValue;
         private Label lblCodecValue;
@@ -909,8 +910,8 @@
         private TabControl tabControl1;
         private TabPage BlurayTab;
         private TabPage ConverterTab;
-        private Label label3;
-        private Label label2;
+        private Label lblBDMV;
+        private Label lblMKV;
         private Button btnGenerateBlurayBlurayTab;
         private Label lblOutputDirectoryBlurayTab;
         private Button outputDirectoryButtonBlurayTab;
@@ -918,27 +919,27 @@
         private ProgressBar progressBarBluRayTab;
         private TabPage stepsToConvertTab;
         private RichTextBox richTextBox1;
-        private Label label5;
+        private Label lblHowTo;
         private CheckBox checkboxAspectRatio;
         private TabPage tabPage1;
         private RichTextBox logOutput;
-        private Button button1;
-        private Button button2;
-        private Label label6;
+        private Button btnCopyLogOutput;
+        private Button btnCopyParameters;
+        private Label lblCreateBlu;
         private CheckBox checkboxImgBurn;
         private Button btnImgBurnLocation;
         private Label ImgBurnLocationLabel;
-        private Label label7;
+        private Label lblWithImgBurn;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
         private Label label8;
-        private Label label9;
-        private Label label10;
+        private Label lblVersionNum;
+        private Label lblVer;
         private CheckBox btnAudioOnly;
         private Label label11;
         private PictureBox pictureBox4;
-        private Button button3;
+        private Button btnCancelConvert;
         private ComboBox ratioChoice;
     }
 }
