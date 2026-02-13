@@ -1,6 +1,6 @@
 <img width="1536" height="425" alt="Video2Bluray" src="https://github.com/user-attachments/assets/28f1aec3-de87-46ec-b356-3e1ab4eac642" />
 <h1>NOTE: This program is free under the GPL License. ffmpeg and tsmuxer are built into this program. ffmpeg is being used under the GPL license and tsmuxer is being used under the Apache license. Licenses are attached to the source code.</h1><br><br>
-<img width="641" height="570" alt="program" src="https://github.com/user-attachments/assets/4b19f6d8-fc95-475b-8193-b77beea5072e" />
+<img width="648" height="572" alt="screen" src="https://github.com/user-attachments/assets/95c0ecbd-3e52-4941-8a39-a51c0245aac6" />
 <br>
 ffmpeg and tsmuxer are included, it should work fine, but if issues appear running ffmpeg, you may need to download the latest version and add them to the Program Files for this program :)
 <hr>
