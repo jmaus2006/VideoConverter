@@ -72,33 +72,36 @@ namespace VideoConverter
             }
 
             bool isRatioModified = checkboxAspectRatio != null && checkboxAspectRatio.Checked;
+            // Add 1080p scaling if checkbox1080 is checked
+            bool is1080 = checkbox1080 != null && checkbox1080.Checked;
+            string scaleFilter = is1080 ? "scale=1920:1080" : "";
             if (interpolation.Equals("minterpolate", StringComparison.OrdinalIgnoreCase))
             {
                 vfArg = isRatioModified
-                    ? $"-vf \"minterpolate=fps={frameRate},{aspectRatio}\" "
-                    : $"-vf \"minterpolate=fps={frameRate}\" ";
+                    ? $"-vf \"minterpolate=fps={frameRate},{aspectRatio}{(is1080 ? "," + scaleFilter : "" )}\" "
+                    : $"-vf \"minterpolate=fps={frameRate}{(is1080 ? "," + scaleFilter : "" )}\" ";
                 rArg = "";
             }
             else if (interpolation.Equals("tblend", StringComparison.OrdinalIgnoreCase))
             {
                 vfArg = isRatioModified
-                    ? $"-vf \"tblend=all_mode=average,{aspectRatio}\" "
-                    : "-vf \"tblend=all_mode=average\" ";
+                    ? $"-vf \"tblend=all_mode=average,{aspectRatio}{(is1080 ? "," + scaleFilter : "" )}\" "
+                    : $"-vf \"tblend=all_mode=average{(is1080 ? "," + scaleFilter : "" )}\" ";
             }
             else if (interpolation.Equals("None", StringComparison.OrdinalIgnoreCase))
             {
                 if (rArg != "")
                 {
                     vfArg = isRatioModified
-                        ? $"-vf \"{aspectRatio}\" "
-                        : $"-vf \"framerate={frameRate}\" ";
+                        ? $"-vf \"{aspectRatio}{(is1080 ? "," + scaleFilter : "" )}\" "
+                        : $"-vf \"framerate={frameRate}{(is1080 ? "," + scaleFilter : "" )}\" ";
                     rArg = "";
                 }
                 else
                 {
                     vfArg = isRatioModified
-                        ? $"-vf \"{aspectRatio}\" "
-                        : "";
+                        ? $"-vf \"{aspectRatio}{(is1080 ? "," + scaleFilter : "" )}\" "
+                        : (is1080 ? $"-vf \"{scaleFilter}\" " : "");
                 }
             }
             string inputArg;

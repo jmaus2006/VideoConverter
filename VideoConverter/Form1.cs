@@ -45,7 +45,7 @@ namespace VideoConverter
             lblBitrateValue.Text = string.Empty;
             lblCodecValue.Text = "No video selected";
             comboBoxAudioBitrate.SelectedItem = "Original";
-            btnGenerateBlurayBlurayTab.BackgroundImage = Properties.Resources.bluray; 
+            btnGenerateBlurayBlurayTab.BackgroundImage = Properties.Resources.bluray;
             btnGenerateBlurayBlurayTab.BackgroundImageLayout = ImageLayout.Stretch;
             btnGenerateBlurayBlurayTab.Text = string.Empty;
             ratioChoice.SelectedItem = "2.35";
@@ -60,10 +60,10 @@ namespace VideoConverter
             // Load last ImgBurn directory location if available
             string lastDirImgBurn = Properties.Settings.Default.ImgBurnFileLocation;
             if (!string.IsNullOrWhiteSpace(lastDirImgBurn))
-                 ImgBurnLocationLabel.Text = lastDirImgBurn;            
-            else            
+                ImgBurnLocationLabel.Text = lastDirImgBurn;
+            else
                 ImgBurnLocationLabel.Text = "C:\\Program Files(x86)\\ImgBurn\\ImgBurn.exe";
-            
+
             btnGenerateBlurayBlurayTab.AllowDrop = true;
             btnGenerateBlurayBlurayTab.DragEnter += btnGenerateBlurayBlurayTab_DragEnter;
             btnGenerateBlurayBlurayTab.DragDrop += btnGenerateBlurayBlurayTab_DragDrop;
@@ -186,7 +186,7 @@ namespace VideoConverter
         private string pendingOutputDir = string.Empty;
 
         // Class-level ffmpeg process for control from any method
-        private System.Diagnostics.Process? ffmpegProcess = null; 
+        private System.Diagnostics.Process? ffmpegProcess = null;
 
 
         private async Task<TimeSpan?> GetVideoDurationAsync(string inputFile)
@@ -267,7 +267,7 @@ namespace VideoConverter
         }
 
         private void btnConcat_Click(object sender, EventArgs e)
-        {          
+        {
             using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Video Files|*.mp4;*.avi;*.mov;*.wmv;*.mkv|All Files|*.*";
@@ -277,7 +277,7 @@ namespace VideoConverter
                     // Show file order dialog before proceeding
                     var fileOrderDialog = new FileOrderDialog(openFileDialog.FileNames.ToList());
                     if (fileOrderDialog.ShowDialog() != DialogResult.OK) return;
-                    
+
                     var orderedFiles = fileOrderDialog.OrderedFiles;
 
                     string outputDir = lblOutputDir.Text;
@@ -346,22 +346,22 @@ namespace VideoConverter
                 comboBoxAudioBitrate.SelectedItem = "640k";
                 comboBoxAudioBitrate.Enabled = false;
             }
-            else            
-                comboBoxAudioBitrate.Enabled = true;            
+            else
+                comboBoxAudioBitrate.Enabled = true;
         }
 
         private void lblSelectedFile_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(lblSelectedFile.Text) && !string.IsNullOrEmpty(txtFileName.Text))
-                btnConvert.Enabled = true;            
-            else            
-                btnConvert.Enabled = false;            
+                btnConvert.Enabled = true;
+            else
+                btnConvert.Enabled = false;
         }
 
         private void comboBoxAudioBitrate_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxAudioBitrate.SelectedItem != null && comboBoxAudioBitrate.SelectedItem.ToString() != "640k")
-                checkboxAC3.Checked = false;            
+                checkboxAC3.Checked = false;
         }
 
         private void BtnCopyLogOutputClick(object sender, EventArgs e)
@@ -381,9 +381,9 @@ namespace VideoConverter
 
         private void btnGenerateBlurayBlurayTab_DragEnter(object sender, DragEventArgs e)
         {
-           e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
+            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
         }
-              
+
         private void btnImgBurnLocation_Click(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog())
@@ -420,6 +420,8 @@ namespace VideoConverter
                 checkboxAspectRatio.Checked = false;
                 checkboxAspectRatio.Enabled = false;
                 ratioChoice.Enabled = false;
+                checkbox1080.Checked = false;
+                checkbox1080.Enabled = false;
             }
             else
             {
@@ -431,6 +433,7 @@ namespace VideoConverter
                 checkboxAC3.Enabled = true;
                 checkboxAspectRatio.Enabled = true;
                 ratioChoice.Enabled = true;
+                checkbox1080.Enabled = true;
             }
         }
 
@@ -460,7 +463,20 @@ namespace VideoConverter
             }
             else
                 MessageBox.Show("No conversion is currently running.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+
+        }
+
+        private void checkboxAspectRatio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkboxAspectRatio.Checked)
+            {
+                checkbox1080.Enabled = false;
+                checkbox1080.Checked = false;
+            }
+            else
+            {
+                checkbox1080.Enabled = true;
+            }
         }
     }
 }

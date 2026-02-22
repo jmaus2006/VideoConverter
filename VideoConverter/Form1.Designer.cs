@@ -62,6 +62,7 @@
             pictureBox1 = new PictureBox();
             btnCopyParameters = new Button();
             groupBox3 = new GroupBox();
+            checkbox1080 = new CheckBox();
             ratioChoice = new ComboBox();
             label11 = new Label();
             btnAudioOnly = new CheckBox();
@@ -215,7 +216,7 @@
             btnConvert.FlatAppearance.BorderSize = 0;
             btnConvert.FlatStyle = FlatStyle.Flat;
             btnConvert.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConvert.Location = new Point(440, 638);
+            btnConvert.Location = new Point(455, 690);
             btnConvert.Name = "btnConvert";
             btnConvert.Size = new Size(383, 80);
             btnConvert.TabIndex = 8;
@@ -226,7 +227,7 @@
             // 
             lblOutputDir.AutoSize = true;
             lblOutputDir.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOutputDir.Location = new Point(67, 729);
+            lblOutputDir.Location = new Point(82, 781);
             lblOutputDir.Name = "lblOutputDir";
             lblOutputDir.Size = new Size(0, 28);
             lblOutputDir.TabIndex = 13;
@@ -238,7 +239,7 @@
             btnOutputDir.FlatAppearance.BorderSize = 0;
             btnOutputDir.FlatStyle = FlatStyle.Flat;
             btnOutputDir.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnOutputDir.Location = new Point(52, 638);
+            btnOutputDir.Location = new Point(67, 690);
             btnOutputDir.Name = "btnOutputDir";
             btnOutputDir.Size = new Size(373, 80);
             btnOutputDir.TabIndex = 7;
@@ -247,7 +248,7 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(67, 945);
+            progressBar1.Location = new Point(82, 997);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(943, 50);
             progressBar1.TabIndex = 14;
@@ -255,7 +256,7 @@
             // labelProgress
             // 
             labelProgress.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelProgress.Location = new Point(1016, 945);
+            labelProgress.Location = new Point(1031, 997);
             labelProgress.Name = "labelProgress";
             labelProgress.Size = new Size(69, 50);
             labelProgress.TabIndex = 15;
@@ -265,7 +266,7 @@
             // txtFileName
             // 
             txtFileName.Font = new Font("Arial Narrow", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtFileName.Location = new Point(667, 570);
+            txtFileName.Location = new Point(657, 588);
             txtFileName.Name = "txtFileName";
             txtFileName.Size = new Size(261, 40);
             txtFileName.TabIndex = 6;
@@ -290,7 +291,7 @@
             // 
             txtArgs.BackColor = SystemColors.ControlLightLight;
             txtArgs.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtArgs.Location = new Point(67, 780);
+            txtArgs.Location = new Point(82, 832);
             txtArgs.Multiline = true;
             txtArgs.Name = "txtArgs";
             txtArgs.ReadOnly = true;
@@ -305,7 +306,7 @@
             btnRun.FlatAppearance.BorderSize = 0;
             btnRun.FlatStyle = FlatStyle.Flat;
             btnRun.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(836, 636);
+            btnRun.Location = new Point(851, 688);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(380, 80);
             btnRun.TabIndex = 10;
@@ -316,7 +317,7 @@
             // 
             lblNewFileName.AutoSize = true;
             lblNewFileName.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNewFileName.Location = new Point(515, 577);
+            lblNewFileName.Location = new Point(505, 595);
             lblNewFileName.Name = "lblNewFileName";
             lblNewFileName.Size = new Size(146, 29);
             lblNewFileName.TabIndex = 21;
@@ -375,7 +376,7 @@
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1278, 1089);
+            tabControl1.Size = new Size(1278, 1140);
             tabControl1.TabIndex = 9;
             // 
             // ConverterTab
@@ -407,14 +408,14 @@
             ConverterTab.Location = new Point(4, 41);
             ConverterTab.Margin = new Padding(0);
             ConverterTab.Name = "ConverterTab";
-            ConverterTab.Size = new Size(1270, 1044);
+            ConverterTab.Size = new Size(1270, 1095);
             ConverterTab.TabIndex = 1;
             ConverterTab.Text = "Convert";
             // 
             // btnCancelConvert
             // 
             btnCancelConvert.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCancelConvert.Location = new Point(1017, 778);
+            btnCancelConvert.Location = new Point(1032, 830);
             btnCancelConvert.Name = "btnCancelConvert";
             btnCancelConvert.Size = new Size(197, 94);
             btnCancelConvert.TabIndex = 38;
@@ -426,7 +427,7 @@
             // 
             pictureBox4.BackgroundImage = (Image)resources.GetObject("pictureBox4.BackgroundImage");
             pictureBox4.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox4.Location = new Point(106, 555);
+            pictureBox4.Location = new Point(96, 573);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(344, 89);
             pictureBox4.TabIndex = 37;
@@ -441,7 +442,7 @@
             label8.Name = "label8";
             label8.Size = new Size(54, 37);
             label8.TabIndex = 36;
-            label8.Text = "2.4";
+            label8.Text = "2.5";
             // 
             // pictureBox1
             // 
@@ -456,7 +457,7 @@
             // btnCopyParameters
             // 
             btnCopyParameters.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCopyParameters.Location = new Point(1017, 878);
+            btnCopyParameters.Location = new Point(1032, 930);
             btnCopyParameters.Name = "btnCopyParameters";
             btnCopyParameters.Size = new Size(199, 52);
             btnCopyParameters.TabIndex = 34;
@@ -466,6 +467,7 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(checkbox1080);
             groupBox3.Controls.Add(ratioChoice);
             groupBox3.Controls.Add(label11);
             groupBox3.Controls.Add(btnAudioOnly);
@@ -476,10 +478,20 @@
             groupBox3.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox3.Location = new Point(953, 275);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(241, 332);
+            groupBox3.Size = new Size(241, 369);
             groupBox3.TabIndex = 33;
             groupBox3.TabStop = false;
             groupBox3.Text = "Additional Options";
+            // 
+            // checkbox1080
+            // 
+            checkbox1080.AutoSize = true;
+            checkbox1080.Location = new Point(19, 320);
+            checkbox1080.Name = "checkbox1080";
+            checkbox1080.Size = new Size(150, 33);
+            checkbox1080.TabIndex = 13;
+            checkbox1080.Text = "Force 1080p";
+            checkbox1080.UseVisualStyleBackColor = true;
             // 
             // ratioChoice
             // 
@@ -520,6 +532,7 @@
             checkboxAspectRatio.TabIndex = 9;
             checkboxAspectRatio.Text = "Force ratio to:";
             checkboxAspectRatio.UseVisualStyleBackColor = true;
+            checkboxAspectRatio.CheckedChanged += checkboxAspectRatio_CheckedChanged;
             // 
             // label4
             // 
@@ -556,7 +569,7 @@
             // 
             checkboxMKV.AutoSize = true;
             checkboxMKV.Font = new Font("Arial Narrow", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkboxMKV.Location = new Point(78, 585);
+            checkboxMKV.Location = new Point(68, 603);
             checkboxMKV.Name = "checkboxMKV";
             checkboxMKV.Size = new Size(22, 21);
             checkboxMKV.TabIndex = 27;
@@ -601,7 +614,7 @@
             BlurayTab.Location = new Point(4, 41);
             BlurayTab.Name = "BlurayTab";
             BlurayTab.Padding = new Padding(3);
-            BlurayTab.Size = new Size(1270, 1044);
+            BlurayTab.Size = new Size(1270, 1095);
             BlurayTab.TabIndex = 0;
             BlurayTab.Text = "Create Blu-ray";
             BlurayTab.Click += BlurayTab_Click;
@@ -615,7 +628,7 @@
             lblVersionNum.Name = "lblVersionNum";
             lblVersionNum.Size = new Size(54, 37);
             lblVersionNum.TabIndex = 46;
-            lblVersionNum.Text = "2.4";
+            lblVersionNum.Text = "2.5";
             // 
             // pictureBox2
             // 
@@ -765,7 +778,7 @@
             stepsToConvertTab.Location = new Point(4, 41);
             stepsToConvertTab.Name = "stepsToConvertTab";
             stepsToConvertTab.Padding = new Padding(3);
-            stepsToConvertTab.Size = new Size(1270, 1044);
+            stepsToConvertTab.Size = new Size(1270, 1095);
             stepsToConvertTab.TabIndex = 2;
             stepsToConvertTab.Text = "Steps to converting";
             stepsToConvertTab.UseVisualStyleBackColor = true;
@@ -779,7 +792,7 @@
             lblVer.Name = "lblVer";
             lblVer.Size = new Size(54, 37);
             lblVer.TabIndex = 47;
-            lblVer.Text = "2.4";
+            lblVer.Text = "2.5";
             // 
             // pictureBox3
             // 
@@ -820,14 +833,14 @@
             tabPage1.Location = new Point(4, 41);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1270, 1044);
+            tabPage1.Size = new Size(1270, 1095);
             tabPage1.TabIndex = 3;
             tabPage1.Text = "Logs";
             tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnCopyLogOutput
             // 
-            btnCopyLogOutput.Location = new Point(21, 941);
+            btnCopyLogOutput.Location = new Point(21, 1017);
             btnCopyLogOutput.Name = "btnCopyLogOutput";
             btnCopyLogOutput.Size = new Size(321, 53);
             btnCopyLogOutput.TabIndex = 2;
@@ -840,7 +853,7 @@
             logOutput.Font = new Font("Arial Narrow", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             logOutput.Location = new Point(21, 22);
             logOutput.Name = "logOutput";
-            logOutput.Size = new Size(1224, 888);
+            logOutput.Size = new Size(1224, 960);
             logOutput.TabIndex = 1;
             logOutput.Text = "";
             // 
@@ -848,11 +861,11 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1277, 1088);
+            ClientSize = new Size(1277, 1141);
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Video2BluRay v2.4";
+            Text = "Video2BluRay v2.5";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
@@ -941,5 +954,6 @@
         private PictureBox pictureBox4;
         private Button btnCancelConvert;
         private ComboBox ratioChoice;
+        private CheckBox checkbox1080;
     }
 }
